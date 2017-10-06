@@ -249,9 +249,9 @@ class WordTokenConfig extends React.Component {
 
 
     if(this.state.part_of_output)
-      //console.log("WordTokenConfig->render: part of outputtttttttttttttttttt"); 
+      console.log("WordTokenConfig->render: part of outputtttttttttttttttttt"); 
    //alert("WordTokenConfig id="+this.props.ruleid); 
-
+   
     return (
       <div className="backdrop" >
         <div  className="modal">

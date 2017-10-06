@@ -314,8 +314,8 @@ class PunctuationTokenConfig extends React.Component {
               <div id="punctuation-div23">
 
 
-                <label className="inspeech"><input name="punctuation_lessthan" type="checkbox" checked={this.state.punctuation_lessthan} onChange={this.handleInputChange} className="wordlabels"/>	&lt;</label>
-                <label className="inspeech"><input name="punctuation_greaterthan" type="checkbox" checked={this.state.punctuation_greaterthan} onChange={this.handleInputChange} className="wordlabels"/>	&gt;</label>
+                <label className="inspeech"><input name="punctuation_lessthan" type="checkbox" checked={this.state.punctuation_lessthan} onChange={this.handleInputChange} className="wordlabels"/> &lt;</label>
+                <label className="inspeech"><input name="punctuation_greaterthan" type="checkbox" checked={this.state.punctuation_greaterthan} onChange={this.handleInputChange} className="wordlabels"/> &gt;</label>
                 <label className="inspeech"><input name="punctuation_equal" type="checkbox" checked={this.state.punctuation_equal} onChange={this.handleInputChange} className="wordlabels"/>=</label> 
                 <label className="inspeech"><input name="punctuation_percent" type="checkbox" checked={this.state.punctuation_percent} onChange={this.handleInputChange} className="wordlabels"/>%</label>
                 <label className="inspeech"><input name="punctuation_backslash" type="checkbox" checked={this.state.punctuation_backslash} onChange={this.handleInputChange} className="wordlabels"/>\</label>
