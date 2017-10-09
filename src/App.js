@@ -122,9 +122,11 @@ class App extends Component {
     /*Let's start building the JSON formatted data that will ultimately be sent to the webservice*/
     for(var i=0; i< myPattern.length ;  i++)
     {
-      myPattern[i].is_followed_by_space = myPattern[i].is_followed_by_space.toString(); 
+      myPattern[i].match_all_forms = myPattern[i].match_all_forms.toString(); 
       myPattern[i].is_required = myPattern[i].is_required.toString(); 
-      myPattern[i].is_in_output = myPattern[i].is_in_output.toString(); 
+      myPattern[i].is_in_output = myPattern[i].is_in_output.toString();
+      myPattern[i].is_in_vocabulary = myPattern[i].is_in_vocabulary.toString(); 
+      myPattern[i].is_out_of_vocabulary = myPattern[i].is_out_of_vocabulary.toString(); 
     }
 
     /*Let's build each rule token according to the JSON spec */
@@ -264,37 +266,41 @@ class App extends Component {
     /*
     Let's fetch the data from the webservice. 
     */
-    console.log(webServiceUrl); 
-    fetch(webServiceUrl, {
-      method: 'POST',  
-      headers: headers, //authentication header. 
-      body:
-          this.buildData2Send() //JSON data created earlier. 
-    }).then( (response) => {
-                return response.json() })   
-                    .then( (json) => {
+  //   console.log(webServiceUrl); 
+  //   fetch(webServiceUrl, {
+  //     method: 'POST',  
+  //     headers: headers, //authentication header. 
+  //     body:
+  //         this.buildData2Send() //JSON data created earlier. 
+  //   }).then( (response) => {
+  //               return response.json() })   
+  //                   .then( (json) => {
 
-                        if(json === undefined)
-                          return; 
+  //                       if(json === undefined)
+  //                         return; 
                         
-                        //var myArr = JSON.parse(json);
-                        console.log("Test = " + json.results); 
-                        var myResultRules=[]; 
-                        var myResultExtractions=[]; 
-                        for(var i=0; i < json.results.length; i++)
-                        {
-                          console.log("result rule_id =" +  json.results[i].context.rule_id +" value="+json.results[i].value); 
-                          //myResult[json.results[i].context.rule_id] = json.results[i].value; 
-                          myResultRules.push(json.results[i].context.rule_id); 
-                          myResultExtractions.push(json.results[i].value); 
-                        }
-                        this.setState({
-                          jsonRules: myResultRules,
-                          jsonExtraction: myResultExtractions,
-                          test_tokens: json.test_tokens,
-                          test_text: json.test_text
-                        });
-                    });
+  //                       //var myArr = JSON.parse(json);
+  //                       console.log("Test = " + json.results); 
+  //                       var myResultRules=[]; 
+  //                       var myResultExtractions=[]; 
+  //                       for(var i=0; i < json.results.length; i++)
+  //                       {
+  //                         console.log("result rule_id =" +  json.results[i].context.rule_id +" value="+json.results[i].value); 
+  //                         //myResult[json.results[i].context.rule_id] = json.results[i].value; 
+  //                         myResultRules.push(json.results[i].context.rule_id); 
+  //                         myResultExtractions.push(json.results[i].value); 
+  //                       }
+  //                       this.setState({
+  //                         jsonRules: myResultRules,
+  //                         jsonExtraction: myResultExtractions,
+  //                         test_tokens: json.test_tokens,
+  //                         test_text: json.test_text
+  //                       });
+  //                   });
+  // }
+    console.log(webServiceUrl);
+
+    console.log(this.buildData2Send());
   }
 
   /*
@@ -406,7 +412,7 @@ class App extends Component {
           </ul>
        </div>
             
-    	</div>
+      </div>
 
       
       </div>

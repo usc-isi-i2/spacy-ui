@@ -8,7 +8,6 @@ class ShapeTokenConfig extends React.Component {
       show: true,
       optional: false,
       part_of_output: false,
-      followed_by_space: false,
       length1:"",
       length2:"",
       length3:"",
@@ -81,8 +80,8 @@ class ShapeTokenConfig extends React.Component {
     if(!this.props.modify)
     {
       this.props.onAddNewToken("S",window.TYPE_SHAPE, [], this.state.optional, 
-          this.state.part_of_output,this.state.followed_by_space, this.state.length1, this.state.length2, this.state.length3,
-          this.state.prefix,this.state.suffix, this.state.notinvocabulary,
+          this.state.part_of_output,this.state.length1, this.state.length2, this.state.length3,
+          this.state.prefix,this.state.suffix, 
           this.state.noun, this.state.pronoun,this.state.punctuation, 
           this.state.propernoun, this.state.determiner, this.state.symbol, 
           this.state.adjective, this.state.conjunction, this.state.verb,
@@ -94,8 +93,8 @@ class ShapeTokenConfig extends React.Component {
     else 
     {
       this.props.onModifyToken(this.props.tokenModifyIndex, "S",window.TYPE_SHAPE, [], this.state.optional, 
-          this.state.part_of_output,this.state.followed_by_space, this.state.length1, this.state.length2, this.state.length3,
-          this.state.prefix,this.state.suffix, this.state.notinvocabulary,
+          this.state.part_of_output,this.state.length1, this.state.length2, this.state.length3,
+          this.state.prefix,this.state.suffix, 
           this.state.noun, this.state.pronoun,this.state.punctuation, 
           this.state.propernoun, this.state.determiner, this.state.symbol, 
           this.state.adjective, this.state.conjunction, this.state.verb,
@@ -146,8 +145,7 @@ class ShapeTokenConfig extends React.Component {
         interjection: tData.part_of_speech.indexOf(window.POS_interjection)>-1? true:false, 
         length1: tData.length[0], 
         length2: tData.length[1],
-        length3: tData.length[2],
-        followed_by_space: tData.is_followed_by_space
+        length3: tData.length[2]
       })
 
     } 
@@ -165,7 +163,6 @@ class ShapeTokenConfig extends React.Component {
       show:true,
       optional: false,
       part_of_output: false,
-      followed_by_space: false,
       numbers:[],
       length1:"",
       length2:"",
@@ -238,10 +235,6 @@ class ShapeTokenConfig extends React.Component {
                 part of output
                 </label>
 
-              <label>
-                <input name="followed_by_space" type="checkbox" checked={this.state.followed_by_space} onChange={this.handleInputChange} className="wordlabels" />
-                followed by space
-                </label>
             </div>
 
             <div id="shapes-div2">

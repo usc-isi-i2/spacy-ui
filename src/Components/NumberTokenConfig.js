@@ -7,7 +7,6 @@ class NumberTokenConfig extends React.Component {
     this.state = {
       optional: false,
       part_of_output: false,
-      followed_by_space: false,
       length1:"",
       length2:"",
       length3:"",
@@ -83,8 +82,8 @@ class NumberTokenConfig extends React.Component {
     {    
 
       this.props.onAddNumberToken("#",window.TYPE_NUMBERS, [], this.state.optional, 
-          this.state.part_of_output,this.state.followed_by_space, this.state.length1, this.state.length2, this.state.length3,
-          this.state.minimum,this.state.maximum, this.state.notinvocabulary,
+          this.state.part_of_output,this.state.length1, this.state.length2, this.state.length3,
+          this.state.minimum,this.state.maximum,
           this.state.noun, this.state.pronoun,this.state.punctuation, 
           this.state.propernoun, this.state.determiner, this.state.symbol, 
           this.state.adjective, this.state.conjunction, this.state.verb,
@@ -96,8 +95,8 @@ class NumberTokenConfig extends React.Component {
     else
     {
       this.props.onModifyNumberToken(this.props.tokenModifyIndex, "#",window.TYPE_NUMBERS, [], this.state.optional, 
-          this.state.part_of_output,this.state.followed_by_space, this.state.length1, this.state.length2, this.state.length3,
-          this.state.minimum,this.state.maximum, this.state.notinvocabulary,
+          this.state.part_of_output,this.state.length1, this.state.length2, this.state.length3,
+          this.state.minimum,this.state.maximum, 
           this.state.noun, this.state.pronoun,this.state.punctuation, 
           this.state.propernoun, this.state.determiner, this.state.symbol, 
           this.state.adjective, this.state.conjunction, this.state.verb,
@@ -134,8 +133,7 @@ class NumberTokenConfig extends React.Component {
         part_of_output: tData.is_in_output,
         length1: tData.length[0], 
         length2: tData.length[1],
-        length3: tData.length[2],
-        followed_by_space: tData.is_followed_by_space
+        length3: tData.length[2]
       })
 
     } 
@@ -153,7 +151,6 @@ class NumberTokenConfig extends React.Component {
       show:true,
       optional: false,
       part_of_output: false,
-      followed_by_space: false,
       numbers:[],
       allnumbers:"",
       length1:"",

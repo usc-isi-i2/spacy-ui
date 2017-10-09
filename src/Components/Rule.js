@@ -52,7 +52,11 @@ class Rule extends Component
             isModifyNumbers: false, 
             tokenModifyIndex: -1,
             isModifyShape: false, 
-            newToken2AddIndex: -1
+            newToken2AddIndex: -1,
+            contain_digit: true,
+            match_all_forms: true,
+            is_out_of_vocabulary: true,
+            is_in_vocabulary: true
 
         }
 
@@ -199,8 +203,8 @@ class Rule extends Component
             {
 
                 this.onAddWordToken("W",window.TYPE_WORD, myToken.token, !(myToken.is_required==='true'), 
-                    myToken.is_in_output==='true', myToken.is_followed_by_space === 'true', 0, 0, 0,
-                    myToken.prefix, myToken.suffix, myToken.is_in_vocabulary, (myarr.indexOf(window.POS_noun) > -1), (myarr.indexOf(window.POS_pronoun) > -1), (myarr.indexOf(window.POS_punctuation) > -1),
+                    myToken.is_in_output==='true', myToken.match_all_forms === 'true', myToken.contain_digit === 'true', 0, 0, 0,
+                    myToken.prefix, myToken.suffix, myToken.is_in_vocabulary === 'true', myToken.is_out_of_vocabulary === 'true', (myarr.indexOf(window.POS_noun) > -1), (myarr.indexOf(window.POS_pronoun) > -1), (myarr.indexOf(window.POS_punctuation) > -1),
                     (myarr.indexOf(window.POS_propernoun) > -1), (myarr.indexOf(window.POS_determiner) > -1), (myarr.indexOf(window.POS_symbol) > -1), (myarr.indexOf(window.POS_adjective) > -1), (myarr.indexOf(window.POS_conjunction) > -1),(myarr.indexOf(window.POS_verb) > -1),  
                     (myarr.indexOf("prepost_position") > -1), (myarr.indexOf(window.POS_adverb) > -1), (myarr.indexOf(window.POS_particle) > -1), (myarr.indexOf(window.POS_interjection) > -1), (myarr1.indexOf("exact") > -1),(myarr1.indexOf("lower") > -1), (myarr1.indexOf("upper") > -1),
                     (myarr1.indexOf("title") > -1), (myarr1.indexOf("mixed") > -1), myToken.numbers, window.CREATEDBY_SERVER);            
@@ -208,8 +212,8 @@ class Rule extends Component
             else if (myToken.type === window.TYPE_NUMBERS)
             {
                 this.onAddNumberToken("#",window.TYPE_NUMBERS, myToken.token, !(myToken.is_required==='true'), 
-                    myToken.is_in_output==='true', myToken.is_followed_by_space === 'true', 0, 0, 0,
-                    myToken.minimum, myToken.maximum, myToken.is_in_vocabulary, (myarr.indexOf(window.POS_noun) > -1), (myarr.indexOf(window.POS_pronoun) > -1), (myarr.indexOf(window.POS_punctuation) > -1),
+                    myToken.is_in_output==='true', myToken.match_all_forms === 'true', myToken.contain_digit === 'true', 0, 0, 0,
+                    myToken.minimum, myToken.maximum, myToken.is_in_vocabulary === 'true', myToken.is_out_of_vocabulary === 'true', (myarr.indexOf(window.POS_noun) > -1), (myarr.indexOf(window.POS_pronoun) > -1), (myarr.indexOf(window.POS_punctuation) > -1),
                     (myarr.indexOf(window.POS_propernoun) > -1), (myarr.indexOf(window.POS_determiner) > -1), (myarr.indexOf(window.POS_symbol) > -1), (myarr.indexOf(window.POS_adjective) > -1), (myarr.indexOf(window.POS_conjunction) > -1),(myarr.indexOf(window.POS_verb) > -1),  
                     (myarr.indexOf("prepost_position") > -1), (myarr.indexOf(window.POS_adverb) > -1), (myarr.indexOf(window.POS_particle) > -1), (myarr.indexOf(window.POS_interjection) > -1), (myarr1.indexOf("exact") > -1),(myarr1.indexOf("lower") > -1), (myarr1.indexOf("upper") > -1),
                     (myarr1.indexOf("title") > -1), (myarr1.indexOf("mixed") > -1), myToken.numbers, window.CREATEDBY_SERVER);            
@@ -222,8 +226,8 @@ class Rule extends Component
             else if( myToken.type === window.TYPE_SHAPE)
             {
                 this.onAddShapeToken("S",window.TYPE_SHAPE, myToken.token, !(myToken.is_required==='true'), 
-                    myToken.is_in_output==='true', myToken.is_followed_by_space === 'true', 0, 0, 0,
-                    myToken.prefix, myToken.suffix, myToken.is_in_vocabulary, (myarr.indexOf(window.POS_noun) > -1), (myarr.indexOf(window.POS_pronoun) > -1), (myarr.indexOf(window.POS_punctuation) > -1),
+                    myToken.is_in_output==='true', myToken.match_all_forms === 'true', myToken.contain_digit === 'true', 0, 0, 0,
+                    myToken.prefix, myToken.suffix, myToken.is_in_vocabulary === 'true', myToken.is_out_of_vocabulary === 'true', (myarr.indexOf(window.POS_noun) > -1), (myarr.indexOf(window.POS_pronoun) > -1), (myarr.indexOf(window.POS_punctuation) > -1),
                     (myarr.indexOf(window.POS_propernoun) > -1), (myarr.indexOf(window.POS_determiner) > -1), (myarr.indexOf(window.POS_symbol) > -1), (myarr.indexOf(window.POS_adjective) > -1), (myarr.indexOf(window.POS_conjunction) > -1),(myarr.indexOf(window.POS_verb) > -1),  
                     (myarr.indexOf("prepost_position") > -1), (myarr.indexOf(window.POS_adverb) > -1), (myarr.indexOf(window.POS_particle) > -1), (myarr.indexOf(window.POS_interjection) > -1), (myarr1.indexOf("exact") > -1),(myarr1.indexOf("lower") > -1), (myarr1.indexOf("upper") > -1),
                     (myarr1.indexOf("title") > -1), (myarr1.indexOf("mixed") > -1), myToken.numbers,myToken.shapes, window.CREATEDBY_SERVER);            
@@ -285,8 +289,8 @@ class Rule extends Component
     that the webservice is expecting. 
     */
     createWordJSON(tokenAbbreviation1,type1, allwords1, optional1, 
-            part_of_output1, followed_by_space1, length11, length21, length31,
-            prefix1, suffix1, notinvocabulary1, noun1, pronoun1, punctuation1,
+            part_of_output1, match_all_forms1, contain_digit1, length11, length21, length31,
+            prefix1, suffix1, notinvocabulary1, invocabulary1, noun1, pronoun1, punctuation1,
             propernoun1, determiner1, symbol1, adjective1, conjunction1,verb1,  
             prepost_position1, adverb1, particle1, interjection1, exact1,lower1, upper1,
             title1, mixed1, numbers1)
@@ -332,13 +336,13 @@ class Rule extends Component
             shapes: myShape,
             token: allwords1,
             numbers: myNumbers,
-            contain_digit: "",
-            is_in_vocabulary: "",
-            is_out_of_vocabulary: "",
+            is_in_vocabulary: invocabulary1,
+            is_out_of_vocabulary: notinvocabulary1,
             is_required: !optional1, 
             type: type1, 
             is_in_output: part_of_output1,
-            is_followed_by_space: false            
+            match_all_forms: match_all_forms1,
+            contain_digit: contain_digit1        
         }; 
 
         return tokenData; 
@@ -351,8 +355,8 @@ class Rule extends Component
     NewToken: a word, shape, punctionation token 
     */
     onAddWordToken(tokenAbbreviation1, type1, allwords1, optional1,
-        part_of_output1, followed_by_space1, length11, length21, length31,
-        prefix1, suffix1, notinvocabulary1, noun1, pronoun1, punctuation1,
+        part_of_output1, match_all_forms1, contain_digit1, length11, length21, length31,
+        prefix1, suffix1, notinvocabulary1, invocabulary1, noun1, pronoun1, punctuation1,
         propernoun1, determiner1, symbol1, adjective1, conjunction1, verb1,
         prepost_position1, adverb1, particle1, interjection1, exact1, lower1, upper1,
         title1, mixed1, numbers1, createdby) 
@@ -365,8 +369,8 @@ class Rule extends Component
 
         /*Get the JSON formatted data structure*/
         var newJSONTokenData = this.createWordJSON(tokenAbbreviation1,type1, allwords1, optional1, 
-            part_of_output1, followed_by_space1, length11, length21, length31,
-            prefix1, suffix1, notinvocabulary1, noun1, pronoun1, punctuation1,
+            part_of_output1, match_all_forms1, contain_digit1, length11, length21, length31,
+            prefix1, suffix1, notinvocabulary1, invocabulary1, noun1, pronoun1, punctuation1,
             propernoun1, determiner1, symbol1, adjective1, conjunction1,verb1,  
             prepost_position1, adverb1, particle1, interjection1, exact1,lower1, upper1,
             title1, mixed1, numbers1
@@ -422,8 +426,8 @@ class Rule extends Component
     Method: Modify a word token
     */
     onModifyWordToken(index, tokenAbbreviation1, type1, allwords1, optional1,
-        part_of_output1, followed_by_space1, length11, length21, length31,
-        prefix1, suffix1, notinvocabulary1, noun1, pronoun1, punctuation1,
+        part_of_output1, match_all_forms1, contain_digit1, length11, length21, length31,
+        prefix1, suffix1, notinvocabulary1, invocabulary1, noun1, pronoun1, punctuation1,
         propernoun1, determiner1, symbol1, adjective1, conjunction1, verb1,
         prepost_position1, adverb1, particle1, interjection1, exact1, lower1, upper1,
         title1, mixed1, numbers1, createdby) 
@@ -436,8 +440,8 @@ class Rule extends Component
 
         /*Get the JSON formatted data structure*/
         var newJSONTokenData = this.createWordJSON(tokenAbbreviation1,type1, allwords1, optional1, 
-            part_of_output1, followed_by_space1, length11, length21, length31,
-            prefix1, suffix1, notinvocabulary1, noun1, pronoun1, punctuation1,
+            part_of_output1, match_all_forms1, contain_digit1, length11, length21, length31,
+            prefix1, suffix1, notinvocabulary1, invocabulary1, noun1, pronoun1, punctuation1,
             propernoun1, determiner1, symbol1, adjective1, conjunction1,verb1,  
             prepost_position1, adverb1, particle1, interjection1, exact1,lower1, upper1,
             title1, mixed1, numbers1
@@ -452,8 +456,8 @@ class Rule extends Component
     that the webservice is expecting. 
     */
     createShapeJSON(tokenAbbreviation1,type1, allwords1, optional1, 
-            part_of_output1, followed_by_space1, length11, length21, length31,
-            prefix1, suffix1, notinvocabulary1, noun1, pronoun1, punctuation1,
+            part_of_output1, length11, length21, length31,
+            prefix1, suffix1, noun1, pronoun1, punctuation1,
             propernoun1, determiner1, symbol1, adjective1, conjunction1,verb1,  
             prepost_position1, adverb1, particle1, interjection1, exact1,lower1, upper1,
             title1, mixed1, numbers1, shapes)
@@ -499,13 +503,13 @@ class Rule extends Component
             shapes: shapes,
             token: [],
             numbers: [],
-            contain_digit: "",
             is_in_vocabulary: "",
             is_out_of_vocabulary: "",
             is_required: !optional1, 
             type: type1, 
             is_in_output: part_of_output1,
-            is_followed_by_space: false            
+            match_all_forms: "",
+            contain_digit: ""        
         }; 
         return tokenData; 
     }
@@ -516,8 +520,8 @@ class Rule extends Component
     NewToken: a word, shape, punctionation token 
     */
     onAddShapeToken(tokenAbbreviation1, type1, allwords1, optional1,
-        part_of_output1, followed_by_space1, length11, length21, length31,
-        prefix1, suffix1, notinvocabulary1, noun1, pronoun1, punctuation1,
+        part_of_output1, length11, length21, length31,
+        prefix1, suffix1, noun1, pronoun1, punctuation1,
         propernoun1, determiner1, symbol1, adjective1, conjunction1, verb1,
         prepost_position1, adverb1, particle1, interjection1, exact1, lower1, upper1,
         title1, mixed1, numbers1,  shapes1, createdby) 
@@ -530,8 +534,8 @@ class Rule extends Component
 
         /*Get the JSON formatted data structure*/
         var newJSONTokenData = this.createShapeJSON(tokenAbbreviation1,type1, allwords1, optional1, 
-            part_of_output1, followed_by_space1, length11, length21, length31,
-            prefix1, suffix1, notinvocabulary1, noun1, pronoun1, punctuation1,
+            part_of_output1, length11, length21, length31,
+            prefix1, suffix1, noun1, pronoun1, punctuation1,
             propernoun1, determiner1, symbol1, adjective1, conjunction1,verb1,  
             prepost_position1, adverb1, particle1, interjection1, exact1,lower1, upper1,
             title1, mixed1, numbers1, shapes1
@@ -613,8 +617,8 @@ class Rule extends Component
 
 
     onModifyShapeToken(index, tokenAbbreviation1, type1, allwords1, optional1,
-        part_of_output1, followed_by_space1, length11, length21, length31,
-        prefix1, suffix1, notinvocabulary1, noun1, pronoun1, punctuation1,
+        part_of_output1, length11, length21, length31,
+        prefix1, suffix1, noun1, pronoun1, punctuation1,
         propernoun1, determiner1, symbol1, adjective1, conjunction1, verb1,
         prepost_position1, adverb1, particle1, interjection1, exact1, lower1, upper1,
         title1, mixed1, numbers1, shapes1, createdby) 
@@ -628,8 +632,8 @@ class Rule extends Component
 
         /*Get the JSON formatted data structure*/
         var newJSONTokenData = this.createShapeJSON(tokenAbbreviation1,type1, allwords1, optional1, 
-            part_of_output1, followed_by_space1, length11, length21, length31,
-            prefix1, suffix1, notinvocabulary1, noun1, pronoun1, punctuation1,
+            part_of_output1, length11, length21, length31,
+            prefix1, suffix1, noun1, pronoun1, punctuation1,
             propernoun1, determiner1, symbol1, adjective1, conjunction1,verb1,  
             prepost_position1, adverb1, particle1, interjection1, exact1,lower1, upper1,
             title1, mixed1, numbers1, shapes1
@@ -640,8 +644,8 @@ class Rule extends Component
 
 
     onModifyNumberToken(index, tokenAbbreviation1, type1, allwords1, optional1,
-        part_of_output1, followed_by_space1, length11, length21, length31,
-        minimum1, maximum1, notinvocabulary1, noun1, pronoun1, punctuation1,
+        part_of_output1, length11, length21, length31,
+        minimum1, maximum1, noun1, pronoun1, punctuation1,
         propernoun1, determiner1, symbol1, adjective1, conjunction1, verb1,
         prepost_position1, adverb1, particle1, interjection1, exact1, lower1, upper1,
         title1, mixed1, numbers1, createdby) 
@@ -654,8 +658,8 @@ class Rule extends Component
 
         /*Get the JSON formatted data structure*/
         var newJSONTokenData = this.createNumberJSON(tokenAbbreviation1,type1, allwords1, optional1, 
-            part_of_output1, followed_by_space1, length11, length21, length31,
-            minimum1, maximum1, notinvocabulary1, noun1, pronoun1, punctuation1,
+            part_of_output1, length11, length21, length31,
+            minimum1, maximum1, noun1, pronoun1, punctuation1,
             propernoun1, determiner1, symbol1, adjective1, conjunction1,verb1,  
             prepost_position1, adverb1, particle1, interjection1, exact1,lower1, upper1,
             title1, mixed1, numbers1
@@ -665,8 +669,8 @@ class Rule extends Component
     }
 
     onAddNumberToken(tokenAbbreviation1, type1, allwords1, optional1,
-        part_of_output1, followed_by_space1, length11, length21, length31,
-        minimum1, maximum1, notinvocabulary1, noun1, pronoun1, punctuation1,
+        part_of_output1, length11, length21, length31,
+        minimum1, maximum1, noun1, pronoun1, punctuation1,
         propernoun1, determiner1, symbol1, adjective1, conjunction1, verb1,
         prepost_position1, adverb1, particle1, interjection1, exact1, lower1, upper1,
         title1, mixed1, numbers1, createdby) 
@@ -677,8 +681,8 @@ class Rule extends Component
 
         /*Get the JSON formatted data structure*/
         var newJSONTokenData = this.createNumberJSON(tokenAbbreviation1,type1, allwords1, optional1, 
-            part_of_output1, followed_by_space1, length11, length21, length31,
-            minimum1, maximum1, notinvocabulary1, noun1, pronoun1, punctuation1,
+            part_of_output1, length11, length21, length31,
+            minimum1, maximum1, noun1, pronoun1, punctuation1,
             propernoun1, determiner1, symbol1, adjective1, conjunction1,verb1,  
             prepost_position1, adverb1, particle1, interjection1, exact1,lower1, upper1,
             title1, mixed1, numbers1
@@ -746,13 +750,13 @@ class Rule extends Component
             shapes: myShape,
             token: allPunctuations,
             numbers: [],
-            contain_digit: "",
             is_in_vocabulary: "",
             is_out_of_vocabulary: "",
             is_required: !optional1, 
             type: type1, 
             is_in_output: part_of_output1,
-            is_followed_by_space: false            
+            match_all_forms: "",
+            contain_digit: ""    
         }; 
 
         return tokenData; 
@@ -762,8 +766,8 @@ class Rule extends Component
     //This method is used to format our data so that it look like the JSON 
     //that the webservice is expecting. 
     createNumberJSON(tokenAbbreviation1,type1, allwords1, optional1, 
-            part_of_output1, followed_by_space1, length11, length21, length31,
-            minimum1, maximum1, notinvocabulary1, noun1, pronoun1, punctuation1,
+            part_of_output1, length11, length21, length31,
+            minimum1, maximum1, noun1, pronoun1, punctuation1,
             propernoun1, determiner1, symbol1, adjective1, conjunction1,verb1,  
             prepost_position1, adverb1, particle1, interjection1, exact1,lower1, upper1,
             title1, mixed1, numbers1)
@@ -794,13 +798,13 @@ class Rule extends Component
             shape: myShape,
             token: [],
             numbers: numbers1,
-            contain_digit: "",
             is_in_vocabulary: "",
             is_out_of_vocabulary: "",
             is_required: !optional1, 
             type: type1, 
             is_in_output: part_of_output1,
-            is_followed_by_space: false            
+            match_all_forms: "",
+            contain_digit: ""   
         }; 
 
         return tokenData; 

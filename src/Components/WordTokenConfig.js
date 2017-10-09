@@ -22,7 +22,8 @@ class WordTokenConfig extends React.Component {
       show: true,
       optional: false,
       part_of_output: false,
-      followed_by_space: false,
+      match_all_forms: true,
+      contain_digit: false,
       numbers:[],
       length1:"",
       length2:"",
@@ -30,6 +31,7 @@ class WordTokenConfig extends React.Component {
       prefix:"",
       suffix:"",
       notinvocabulary: false,
+      invocabulary: false,
       allwords:"",
       noun:false, 
       pronoun:false, 
@@ -94,8 +96,8 @@ class WordTokenConfig extends React.Component {
     if(!this.props.modify)
     {
       this.props.onAddNewToken("W",window.TYPE_WORD, myWords, this.state.optional, 
-          this.state.part_of_output,this.state.followed_by_space, this.state.length1, this.state.length2, this.state.length3,
-          this.state.prefix,this.state.suffix, this.state.notinvocabulary,
+          this.state.part_of_output,this.state.match_all_forms, this.state.contain_digit, this.state.length1, this.state.length2, this.state.length3,
+          this.state.prefix,this.state.suffix, this.state.notinvocabulary, this.state.invocabulary,
           this.state.noun, this.state.pronoun,this.state.punctuation, 
           this.state.propernoun, this.state.determiner, this.state.symbol, 
           this.state.adjective, this.state.conjunction, this.state.verb,
@@ -107,8 +109,8 @@ class WordTokenConfig extends React.Component {
     else 
     {
       this.props.onModifyWordToken(this.props.tokenModifyIndex, "W",window.TYPE_WORD, myWords, this.state.optional, 
-          this.state.part_of_output,this.state.followed_by_space, this.state.length1, this.state.length2, this.state.length3,
-          this.state.prefix,this.state.suffix, this.state.notinvocabulary,
+          this.state.part_of_output,this.state.match_all_forms, this.state.contain_digit, this.state.length1, this.state.length2, this.state.length3,
+          this.state.prefix,this.state.suffix, this.state.notinvocabulary, this.state.invocabulary,
           this.state.noun, this.state.pronoun,this.state.punctuation, 
           this.state.propernoun, this.state.determiner, this.state.symbol, 
           this.state.adjective, this.state.conjunction, this.state.verb,
@@ -136,8 +138,7 @@ class WordTokenConfig extends React.Component {
           is_out_of_vocabulary: "false",
           is_in_vocabulary: "false",
           contain_digit: "false",
-          numbers: [], 
-
+          numbers: []
     }; 
   }
 
@@ -155,7 +156,7 @@ class WordTokenConfig extends React.Component {
     var tData = nextProps.tokenData; 
     if(nextProps.modify)
     {
-      //console.log("componentWillReceiveProps: Tokens are = " + tData.is_in_output); 
+      // console.log(tData); 
       this.setState({
         allwords: tData.token.join(" "),
         optional: !tData.is_required, 
@@ -180,7 +181,10 @@ class WordTokenConfig extends React.Component {
         length1: tData.length[0], 
         length2: tData.length[1],
         length3: tData.length[2],
-        followed_by_space: tData.is_followed_by_space
+        match_all_forms: tData.match_all_forms,
+        contain_digit: tData.contain_digit,
+        invocabulary: tData.is_in_vocabulary,
+        notinvocabulary: tData.is_out_of_vocabulary
       })
 
     } 
@@ -198,7 +202,8 @@ class WordTokenConfig extends React.Component {
       show:true,
       optional: false,
       part_of_output: false,
-      followed_by_space: false,
+      match_all_forms: false,
+      contain_digit: false,
       numbers:[],
       length1:"",
       length2:"",
@@ -206,6 +211,7 @@ class WordTokenConfig extends React.Component {
       prefix:"",
       suffix:"",
       notinvocabulary: false,
+      invocabulary: false,
       allwords:"",
       noun:false, 
       pronoun:false, 
@@ -271,8 +277,13 @@ class WordTokenConfig extends React.Component {
                 </label>
 
               <label>
-                <input name="followed_by_space" type="checkbox" checked={this.state.followed_by_space} onChange={this.handleInputChange} className="wordlabels" />
-                followed by space
+                <input name="match_all_forms" type="checkbox" checked={this.state.match_all_forms} onChange={this.handleInputChange} className="wordlabels" />
+                match lemma
+                </label>
+
+              <label>
+                <input name="contain_digit" type="checkbox" checked={this.state.contain_digit} onChange={this.handleInputChange} className="wordlabels" />
+                alphanumeric
                 </label>
             </div>
 
@@ -423,6 +434,11 @@ class WordTokenConfig extends React.Component {
               <label>
                 <input name="notinvocabulary" type="checkbox" checked={this.state.notinvocabulary} onChange={this.handleInputChange} className="wordlabels" />
                 not in vocabulary
+                </label>
+
+              <label>
+                <input name="invocabulary" type="checkbox" checked={this.state.invocabulary} onChange={this.handleInputChange} className="wordlabels" />
+                in vocabulary
                 </label>
 
             </div> 
