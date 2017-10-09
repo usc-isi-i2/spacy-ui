@@ -15,7 +15,8 @@ window.CREATEDBY_USER = "user";
 window.TYPE_WORD = "word"; 
 window.TYPE_NUMBERS = "number"; 
 window.TYPE_PUNCTUATION = "punctuation"; 
-window.TYPE_SHAPE = "shape"
+window.TYPE_SHAPE = "shape";
+window.TYPE_LINEBREAK = "linebreak";
 
 var ActionEnum =
 {
@@ -122,11 +123,11 @@ class App extends Component {
     /*Let's start building the JSON formatted data that will ultimately be sent to the webservice*/
     for(var i=0; i< myPattern.length ;  i++)
     {
-      myPattern[i].match_all_forms = myPattern[i].match_all_forms.toString(); 
+      // myPattern[i].match_all_forms = myPattern[i].match_all_forms.toString(); 
       myPattern[i].is_required = myPattern[i].is_required.toString(); 
       myPattern[i].is_in_output = myPattern[i].is_in_output.toString();
-      myPattern[i].is_in_vocabulary = myPattern[i].is_in_vocabulary.toString(); 
-      myPattern[i].is_out_of_vocabulary = myPattern[i].is_out_of_vocabulary.toString(); 
+      // myPattern[i].is_in_vocabulary = myPattern[i].is_in_vocabulary.toString(); 
+      // myPattern[i].is_out_of_vocabulary = myPattern[i].is_out_of_vocabulary.toString(); 
     }
 
     /*Let's build each rule token according to the JSON spec */

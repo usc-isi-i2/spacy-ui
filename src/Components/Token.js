@@ -98,8 +98,8 @@ class Token extends Component
                   <div className="tokenEachText" key={index}> {word}</div>
                   ));  
       }
-      
     }
+    
 
     const divStyle =  this.props.tokenPatternData.is_in_output? 
                           {border: '2px solid orange'}: {border: 'none'};  

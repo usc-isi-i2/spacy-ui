@@ -6,6 +6,7 @@ import WordTokenConfig from './WordTokenConfig';
 import ShapeTokenConfig from './ShapeTokenConfig'; 
 import NumberTokenConfig from './NumberTokenConfig'; 
 import PunctuationTokenConfig from './PunctuationTokenConfig'; 
+import LinebreakTokenConfig from './LinebreakTokenConfig'; 
 import TokenWrapper from './TokenWrapper'; 
 
 /*GLOBAL values used for token, rule ids*/
@@ -38,6 +39,7 @@ class Rule extends Component
             isNumberDialogOpen: false,
             isPunctuationDialogOpen: false,
             isShapeDialogOpen: false,
+            isLinebreakDialogOpen: false,
             allTokenData:[],
             value: 10, 
             id:RULE_BASE+(++GLOBAL_RULE_ID), 
@@ -52,6 +54,7 @@ class Rule extends Component
             isModifyNumbers: false, 
             tokenModifyIndex: -1,
             isModifyShape: false, 
+            isModifyLinebreak: false, 
             newToken2AddIndex: -1,
             contain_digit: true,
             match_all_forms: true,
@@ -71,18 +74,22 @@ class Rule extends Component
         this.toggleNumberConfigDialog = this.toggleNumberConfigDialog.bind(this); 
         this.toggleShapeConfigDialog = this.toggleShapeConfigDialog.bind(this); 
         this.togglePunctuationConfigDialog = this.togglePunctuationConfigDialog.bind(this); 
+        this.toggleLinebreakConfigDialog = this.toggleLinebreakConfigDialog.bind(this); 
         this.showWordTokenDialog = this.showWordTokenDialog.bind(this); 
         this.onAddWordToken = this.onAddWordToken.bind(this); 
         this.onAddNumberToken = this.onAddNumberToken.bind(this); 
         this.onAddPunctuationToken = this.onAddPunctuationToken.bind(this); 
         this.onAddShapeToken = this.onAddShapeToken.bind(this); 
+        this.onAddLinebreakToken = this.onAddLinebreakToken.bind(this); 
         this.createWordJSON = this.createWordJSON.bind(this); 
         this.createNumberJSON = this.createNumberJSON.bind(this); 
         this.createPunctuationJSON = this.createPunctuationJSON.bind(this); 
         this.createShapeJSON = this.createShapeJSON.bind(this); 
+        this.createLinebreakJSON = this.createLinebreakJSON.bind(this); 
         this.showNumberTokenDialog = this.showNumberTokenDialog.bind(this); 
         this.showPunctuationTokenDialog = this.showPunctuationTokenDialog.bind(this); 
         this.showShapeTokenDialog = this.showShapeTokenDialog.bind(this); 
+        this.showLinebreakTokenDialog = this.showLinebreakTokenDialog.bind(this); 
         this.deleteToken = this.deleteToken.bind(this); 
         this.handleChange_outformat = this.handleChange_outformat.bind(this); 
         this.handleChange_description = this.handleChange_description.bind(this); 
@@ -92,6 +99,7 @@ class Rule extends Component
         this.onModifyPunctuationToken = this.onModifyPunctuationToken.bind(this); 
         this.onModifyNumberToken = this.onModifyNumberToken.bind(this);
         this.onModifyShapeToken = this.onModifyShapeToken.bind(this);  
+        this.onModifyLinebreakToken = this.onModifyLinebreakToken.bind(this);  
         this.handle_onBlur = this.handle_onBlur.bind(this);
         this.updateActiveRule = this.updateActiveRule.bind(this);  
         this.onClickPlusToken = this.onClickPlusToken.bind(this); 
@@ -157,7 +165,28 @@ class Rule extends Component
     {
         this.setState({
          isNumberDialogOpen: !this.state.isNumberDialogOpen
-        });        
+        }); 
+
+        if(!this.setState.isNumberDialogOpen)
+        {   
+            this.setState({
+                isModifyNumbers:false
+            })
+        }      
+    }
+
+    toggleLinebreakConfigDialog()
+    {
+        this.setState({
+         isLinebreakDialogOpen: !this.state.isLinebreakDialogOpen
+        }); 
+
+        if(!this.setState.isLinebreakDialogOpen)
+        {   
+            this.setState({
+                isModifyLinebreak:false
+            })
+        }        
     }
 
         /*
@@ -232,6 +261,15 @@ class Rule extends Component
                     (myarr.indexOf("prepost_position") > -1), (myarr.indexOf(window.POS_adverb) > -1), (myarr.indexOf(window.POS_particle) > -1), (myarr.indexOf(window.POS_interjection) > -1), (myarr1.indexOf("exact") > -1),(myarr1.indexOf("lower") > -1), (myarr1.indexOf("upper") > -1),
                     (myarr1.indexOf("title") > -1), (myarr1.indexOf("mixed") > -1), myToken.numbers,myToken.shapes, window.CREATEDBY_SERVER);            
             }
+            else if (myToken.type === window.TYPE_LINEBREAK)
+            {
+                this.onAddNumberToken("\n",window.TYPE_LINEBREAK, myToken.token, !(myToken.is_required==='true'), 
+                    myToken.is_in_output==='true', myToken.match_all_forms === 'true', myToken.contain_digit === 'true', 0, 0, 0,
+                    myToken.minimum, myToken.maximum, myToken.is_in_vocabulary === 'true', myToken.is_out_of_vocabulary === 'true', (myarr.indexOf(window.POS_noun) > -1), (myarr.indexOf(window.POS_pronoun) > -1), (myarr.indexOf(window.POS_punctuation) > -1),
+                    (myarr.indexOf(window.POS_propernoun) > -1), (myarr.indexOf(window.POS_determiner) > -1), (myarr.indexOf(window.POS_symbol) > -1), (myarr.indexOf(window.POS_adjective) > -1), (myarr.indexOf(window.POS_conjunction) > -1),(myarr.indexOf(window.POS_verb) > -1),  
+                    (myarr.indexOf("prepost_position") > -1), (myarr.indexOf(window.POS_adverb) > -1), (myarr.indexOf(window.POS_particle) > -1), (myarr.indexOf(window.POS_interjection) > -1), (myarr1.indexOf("exact") > -1),(myarr1.indexOf("lower") > -1), (myarr1.indexOf("upper") > -1),
+                    (myarr1.indexOf("title") > -1), (myarr1.indexOf("mixed") > -1), myToken.numbers, window.CREATEDBY_SERVER);            
+            }
             
         }
     }
@@ -278,6 +316,14 @@ class Rule extends Component
             this.toggleShapeConfigDialog(); 
             this.setState({
                 isModifyShape:true,
+                tokenModifyIndex: dataIndex
+            }); 
+        }
+        else if(this.state.allTokenData[dataIndex].type === window.TYPE_LINEBREAK)
+        {
+            this.toggleLinebreakConfigDialog(); 
+            this.setState({
+                isModifyLinebreak:true,
                 tokenModifyIndex: dataIndex
             }); 
         }
@@ -668,6 +714,31 @@ class Rule extends Component
         this.processAllEditedTokens(index, newJSONTokenData, tokenAbbreviation1, createdby); 
     }
 
+    onModifyLinebreakToken(index, tokenAbbreviation1, type1, allwords1, optional1,
+        part_of_output1, length11, length21, length31,
+        minimum1, maximum1, noun1, pronoun1, punctuation1,
+        propernoun1, determiner1, symbol1, adjective1, conjunction1, verb1,
+        prepost_position1, adverb1, particle1, interjection1, exact1, lower1, upper1,
+        title1, mixed1, numbers1, createdby) 
+    {
+        console.log("Rule: Enter onModifyLinebreakToken"); 
+
+
+        if(createdby === window.CREATEDBY_USER)
+            this.toggleLinebreakConfigDialog(); 
+
+        /*Get the JSON formatted data structure*/
+        var newJSONTokenData = this.createLinebreakJSON(tokenAbbreviation1,type1, allwords1, optional1, 
+            part_of_output1, length11, length21, length31,
+            minimum1, maximum1, noun1, pronoun1, punctuation1,
+            propernoun1, determiner1, symbol1, adjective1, conjunction1,verb1,  
+            prepost_position1, adverb1, particle1, interjection1, exact1,lower1, upper1,
+            title1, mixed1, numbers1
+        )
+
+        this.processAllEditedTokens(index, newJSONTokenData, tokenAbbreviation1, createdby); 
+    }
+
     onAddNumberToken(tokenAbbreviation1, type1, allwords1, optional1,
         part_of_output1, length11, length21, length31,
         minimum1, maximum1, noun1, pronoun1, punctuation1,
@@ -681,6 +752,30 @@ class Rule extends Component
 
         /*Get the JSON formatted data structure*/
         var newJSONTokenData = this.createNumberJSON(tokenAbbreviation1,type1, allwords1, optional1, 
+            part_of_output1, length11, length21, length31,
+            minimum1, maximum1, noun1, pronoun1, punctuation1,
+            propernoun1, determiner1, symbol1, adjective1, conjunction1,verb1,  
+            prepost_position1, adverb1, particle1, interjection1, exact1,lower1, upper1,
+            title1, mixed1, numbers1
+        )
+
+        this.ProcessAllNewTokens(newJSONTokenData, tokenAbbreviation1, createdby); 
+
+    }
+
+    onAddLinebreakToken(tokenAbbreviation1, type1, allwords1, optional1,
+        part_of_output1, length11, length21, length31,
+        minimum1, maximum1, noun1, pronoun1, punctuation1,
+        propernoun1, determiner1, symbol1, adjective1, conjunction1, verb1,
+        prepost_position1, adverb1, particle1, interjection1, exact1, lower1, upper1,
+        title1, mixed1, numbers1, createdby) 
+    {
+        console.log("Rule: Enter onAddLinebreakToken"); 
+        if(createdby === window.CREATEDBY_USER)
+            this.toggleLinebreakConfigDialog(); 
+
+        /*Get the JSON formatted data structure*/
+        var newJSONTokenData = this.createLinebreakJSON(tokenAbbreviation1,type1, allwords1, optional1, 
             part_of_output1, length11, length21, length31,
             minimum1, maximum1, noun1, pronoun1, punctuation1,
             propernoun1, determiner1, symbol1, adjective1, conjunction1,verb1,  
@@ -810,6 +905,51 @@ class Rule extends Component
         return tokenData; 
     }
 
+    createLinebreakJSON(tokenAbbreviation1,type1, allwords1, optional1, 
+            part_of_output1, length11, length21, length31,
+            minimum1, maximum1, noun1, pronoun1, punctuation1,
+            propernoun1, determiner1, symbol1, adjective1, conjunction1,verb1,  
+            prepost_position1, adverb1, particle1, interjection1, exact1,lower1, upper1,
+            title1, mixed1, numbers1)
+    {
+
+        console.log("createLinebreakJSON"); 
+
+        var myCapitalization = [];
+
+        var mypartOfSpeech = []; 
+
+        var myLength=[]; 
+        if(length11>0) myLength.push(length11); 
+        if(length21>0) myLength.push(length21); 
+        if(length31>0) myLength.push(length31);     
+
+        var myShape= [];  
+
+        var tokenData=
+        {
+            prefix: "",
+            suffix: "",
+            capitalization:  myCapitalization, 
+            part_of_speech: mypartOfSpeech, 
+            length: myLength,
+            maximum:minimum1,
+            minimum:maximum1, 
+            shape: myShape,
+            token: [],
+            numbers: numbers1,
+            is_in_vocabulary: "",
+            is_out_of_vocabulary: "",
+            is_required: !optional1, 
+            type: type1, 
+            is_in_output: part_of_output1,
+            match_all_forms: "",
+            contain_digit: ""   
+        }; 
+
+        return tokenData; 
+    }
+
     showNumberTokenDialog()
     {
         const tMenu = "tokenMenu" + this.state.id; 
@@ -818,6 +958,16 @@ class Rule extends Component
         var x = document.getElementById(tMenu);
         x.style.display = 'none';
         this.toggleNumberConfigDialog();       
+    }
+
+    showLinebreakTokenDialog()
+    {
+        const tMenu = "tokenMenu" + this.state.id; 
+        
+        /*lets close the menu*/
+        var x = document.getElementById(tMenu);
+        x.style.display = 'none';
+        this.toggleLinebreakConfigDialog();       
     }
 
     showPunctuationTokenDialog()
@@ -1031,6 +1181,15 @@ class Rule extends Component
                          >
                     </NumberTokenConfig>
 
+                    <LinebreakTokenConfig show={this.state.isLinebreakDialogOpen}
+                        onAddLinebreakToken={this.onAddLinebreakToken} ruleid={this.state.id}
+                        onCloseConfigDialog={this.toggleLinebreakConfigDialog}
+                        modify={this.state.isModifyLinebreak} tokenModifyIndex={this.state.tokenModifyIndex}
+                        tokenData={this.state.allTokenData[this.state.tokenModifyIndex]}
+                        onModifyLinebreakToken={this.onModifyLinebreakToken}
+                         >
+                    </LinebreakTokenConfig>
+
                     <ShapeTokenConfig show={this.state.isShapeDialogOpen}
                         onAddNewToken={this.onAddShapeToken} ruleid={this.state.id}
                         onCloseConfigDialog={this.toggleShapeConfigDialog}
@@ -1059,6 +1218,7 @@ class Rule extends Component
                             <div onClick={this.showNumberTokenDialog} className="tokenMenu_item">Number </div> 
                             <div onClick={this.showPunctuationTokenDialog} className="tokenMenu_item">  Punctuation </div>
                             <div onClick={this.showShapeTokenDialog} className="tokenMenu_item"> Shape </div>
+                            <div onClick={this.showLinebreakTokenDialog} className="tokenMenu_item"> Linebreak </div>
                         </div>   
 
                         <div className="arrangeRuleTokens"> 
