@@ -129,8 +129,8 @@ class LinebreakTokenConfig extends React.Component {
     {
       this.setState({
         // allnumbers: tData.numbers.join(" "),
-        // optional: !tData.is_required, 
-        // part_of_output: tData.is_in_output,
+        optional: !tData.is_required, 
+        part_of_output: tData.is_in_output,
         length1: tData.length[0], 
         // length2: tData.length[1],
         // length3: tData.length[2]
@@ -196,6 +196,10 @@ class LinebreakTokenConfig extends React.Component {
           {displayHeader}
           <div className="modal-body">
             <div id="linebreak-div1">
+            <label>
+            optional
+                <input name="optional" type="checkbox" checked={this.state.optional} onChange={this.handleInputChange} className="wordlabels" />
+                </label>
 
               <label>
                       part of output
