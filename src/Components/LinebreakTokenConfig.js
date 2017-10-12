@@ -182,11 +182,11 @@ class LinebreakTokenConfig extends React.Component {
     var displayHeader; 
     if(this.props.modify)
     {
-       displayHeader = <div className="number-modal-header">Modify Linebreak Token </div>
+       displayHeader = <div className="linebreak-modal-header">Modify Linebreak Token </div>
     }
     else
     {
-       displayHeader = <div className="number-modal-header">Create Linebreak Token </div>
+       displayHeader = <div className="linebreak-modal-header">Create Linebreak Token </div>
     }
 
     return (
