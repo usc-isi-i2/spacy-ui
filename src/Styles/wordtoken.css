@@ -263,6 +263,58 @@
 /********END NUMBER TOKEN *****/
 
 
+/****** BEGIN LINEBREAK TOKEN *********/
+/****** All this a specific to linebreak token */
+
+.linebreak-modal-header
+{
+   background-color: #A2A1B2;
+   width: 360;
+   height: 25px;
+   text-align: left;
+   border-top-left-radius: 5px; 
+   border-top-right-radius: 5px;   
+   padding-left: 10px;
+   padding-top: 5px;
+}
+
+.linebreak-modal
+{
+    background-color:#fff; 
+    border-radius: 5px; 
+    max-width: 360px; 
+    min-Height: 280px; 
+    margin: auto; 
+}
+
+#linebreak-div1
+{
+   /*padding: 10px; */
+   margin-left:5px;
+   padding-top: 5px;
+   padding-bottom: 5px;
+}
+
+#linebreak-lengths
+{
+   border-color: red;
+   margin-top: 15px; 
+   height: auto;
+   width: 100%;
+   display: inlilne-block;
+}
+
+
+#linebreaktoken-footer
+{
+  float: right;
+  margin: 10px;
+}
+
+/********END NUMBER TOKEN *****/
+
+
+
 /*******************SHAPE TOKEN ************************/
 
 .shape-modal-header

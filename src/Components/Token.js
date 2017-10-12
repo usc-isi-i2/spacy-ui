@@ -98,8 +98,23 @@ class Token extends Component
                   <div className="tokenEachText" key={index}> {word}</div>
                   ));  
       }
-      
     }
+    else if(this.props.tokenPatternData.type === window.TYPE_LINEBREAK)
+    {
+      /*if there is no word text, keep
+      the space for formatting otherwise the tokens will be misaligned. */
+      if(this.props.tokenPatternData.numbers.length === 0)
+      {
+        tokenText = <div className="tokenEachText"></div>
+      }
+      else
+      {
+        tokenText = this.props.tokenPatternData.numbers.map((word, index) => (
+                  <div className="tokenEachText" key={index}> {word}</div>
+                  ));  
+      }
+    }
+
 
     const divStyle =  this.props.tokenPatternData.is_in_output? 
                           {border: '2px solid orange'}: {border: 'none'};  

@@ -1,7 +1,7 @@
 import React from 'react';
 import "../Styles/wordtoken.css"
 
-class NumberTokenConfig extends React.Component {
+class LinebreakTokenConfig extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -81,7 +81,7 @@ class NumberTokenConfig extends React.Component {
     if(!this.props.modify)
     {    
 
-      this.props.onAddNumberToken("#",window.TYPE_NUMBERS, [], this.state.optional, 
+      this.props.onAddLinebreakToken("LB",window.TYPE_LINEBREAK, [], this.state.optional, 
           this.state.part_of_output,this.state.length1, this.state.length2, this.state.length3,
           this.state.minimum,this.state.maximum,
           this.state.noun, this.state.pronoun,this.state.punctuation, 
@@ -94,7 +94,7 @@ class NumberTokenConfig extends React.Component {
     }
     else
     {
-      this.props.onModifyNumberToken(this.props.tokenModifyIndex, "#",window.TYPE_NUMBERS, [], this.state.optional, 
+      this.props.onModifyLinebreakToken(this.props.tokenModifyIndex, "LB",window.TYPE_LINEBREAK, [], this.state.optional, 
           this.state.part_of_output,this.state.length1, this.state.length2, this.state.length3,
           this.state.minimum,this.state.maximum, 
           this.state.noun, this.state.pronoun,this.state.punctuation, 
@@ -128,12 +128,12 @@ class NumberTokenConfig extends React.Component {
     if(nextProps.modify)
     {
       this.setState({
-        allnumbers: tData.numbers.join(" "),
+        // allnumbers: tData.numbers.join(" "),
         optional: !tData.is_required, 
         part_of_output: tData.is_in_output,
         length1: tData.length[0], 
-        length2: tData.length[1],
-        length3: tData.length[2]
+        // length2: tData.length[1],
+        // length3: tData.length[2]
       })
 
     } 
@@ -182,82 +182,40 @@ class NumberTokenConfig extends React.Component {
     var displayHeader; 
     if(this.props.modify)
     {
-       displayHeader = <div className="number-modal-header">Modify Number Token </div>
+       displayHeader = <div className="linebreak-modal-header">Modify Linebreak Token </div>
     }
     else
     {
-       displayHeader = <div className="number-modal-header">Create Number Token </div>
+       displayHeader = <div className="linebreak-modal-header">Create Linebreak Token </div>
     }
 
     return (
       <div className="backdrop" >
-        <div className="number-modal">
+        <div className="linebreak-modal">
           {this.props.children}
           {displayHeader}
           <div className="modal-body">
-            <div id="number-div1">
-              <label>
+            <div id="linebreak-div1">
+            <label>
+            optional
                 <input name="optional" type="checkbox" checked={this.state.optional} onChange={this.handleInputChange} className="wordlabels" />
-                optional
                 </label>
 
               <label>
+                      part of output
                 <input name="part_of_output" type="checkbox" checked={this.state.part_of_output} onChange={this.handleInputChange} className="wordlabels" />
-                part of output
                 </label>
 
-
-            </div>
-
-            <div id="number-div2">
-
-              <div id="number-div21"> 
                 <label>
-                  <b>Numbers:</b>
-                  <textarea name="allnumbers" value={this.state.allnumbers} onChange={this.handleInputChange}  rows="10" cols="10"  className="allwords"/>
-                </label>
-              </div> 
-
-              <div id="number-div22">
-
-                <div id="number-lengths">
-                <label>
-                Length 1:
+                Quantity:
                 <input name="length1" type="text" value={this.state.length1} onChange={this.handleInputChange} size="10" />
                 </label>
 
-              <label>
-                Length 2: 
-                <input name="length2" type="text" value={this.state.length2} onChange={this.handleInputChange}  size="10"  />
-                </label>
-
-              <label>
-                Length 3:
-                <input name="length3" type="text" value={this.state.length3} onChange={this.handleInputChange} size="10"  />
-                </label>              
-
-
-                </div>
-
-
-                <div id="number-prefix-suffix">
-                <label>
-                Min: 
-                <input name="minimum" type="text" value={this.state.minimum} onChange={this.handleInputChange}   size="10" className="num_minmax" />
-              </label> 
-
-              <label>
-                Max: 
-                <input name="maximum" type="text" value={this.state.maximum} onChange={this.handleInputChange}  size="10"  className="num_minmax"/>
-              </label> 
-                                                   
-                </div> 
-              </div> 
             </div>
 
           </div>
 
-          <div id="numbertoken-footer">
+          <div id="linebreaktoken-footer">
             <button onClick={this.cancelDialog} className="button">
               cancel
                 </button>
@@ -278,4 +236,4 @@ NumberTokenConfig.propTypes = {
   children: React.PropTypes.node
 };
 */
-export default NumberTokenConfig;
+export default LinebreakTokenConfig;

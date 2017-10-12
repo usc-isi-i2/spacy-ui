@@ -15,7 +15,8 @@ window.CREATEDBY_USER = "user";
 window.TYPE_WORD = "word"; 
 window.TYPE_NUMBERS = "number"; 
 window.TYPE_PUNCTUATION = "punctuation"; 
-window.TYPE_SHAPE = "shape"
+window.TYPE_SHAPE = "shape";
+window.TYPE_LINEBREAK = "linebreak";
 
 var ActionEnum =
 {
@@ -122,9 +123,11 @@ class App extends Component {
     /*Let's start building the JSON formatted data that will ultimately be sent to the webservice*/
     for(var i=0; i< myPattern.length ;  i++)
     {
-      myPattern[i].is_followed_by_space = myPattern[i].is_followed_by_space.toString(); 
+      // myPattern[i].match_all_forms = myPattern[i].match_all_forms.toString(); 
       myPattern[i].is_required = myPattern[i].is_required.toString(); 
-      myPattern[i].is_in_output = myPattern[i].is_in_output.toString(); 
+      myPattern[i].is_in_output = myPattern[i].is_in_output.toString();
+      // myPattern[i].is_in_vocabulary = myPattern[i].is_in_vocabulary.toString(); 
+      // myPattern[i].is_out_of_vocabulary = myPattern[i].is_out_of_vocabulary.toString(); 
     }
 
     /*Let's build each rule token according to the JSON spec */
@@ -258,8 +261,8 @@ class App extends Component {
     console.log("Enter SendData: about post json to the SERVER");
 
     //This is how you authenticate using base64(username:password. )
-    var headers = new Headers();
-    headers.append("Authorization", "Basic " + base64.encode("memex:digdig"));
+    // var headers = new Headers();
+    // headers.append("Authorization", "Basic " + base64.encode("user:pwd"));
 
     /*
     Let's fetch the data from the webservice. 
@@ -267,7 +270,7 @@ class App extends Component {
     console.log(webServiceUrl); 
     fetch(webServiceUrl, {
       method: 'POST',  
-      headers: headers, //authentication header. 
+      // headers: headers, //authentication header. 
       body:
           this.buildData2Send() //JSON data created earlier. 
     }).then( (response) => {
@@ -295,6 +298,9 @@ class App extends Component {
                           test_text: json.test_text
                         });
                     });
+
+    // console.log(webServiceUrl);
+    // console.log(this.buildData2Send());
   }
 
   /*
@@ -406,7 +412,7 @@ class App extends Component {
           </ul>
        </div>
             
-    	</div>
+      </div>
 
       
       </div>
