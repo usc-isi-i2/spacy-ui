@@ -5,7 +5,7 @@ import "./Styles/layout.css";
 
 /*We need base.64 for the authentication*/
 const base64 = require('base-64');
-var webServiceUrl = "123"; 
+var webServiceUrl = ""; 
 var webServiceUrlAllRules = ""
 
 var RULE_NUM = 0; 
