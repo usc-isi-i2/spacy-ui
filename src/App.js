@@ -5,7 +5,7 @@ import "./Styles/layout.css";
 
 /*We need base.64 for the authentication*/
 const base64 = require('base-64');
-var webServiceUrl = ""; 
+var webServiceUrl = "123"; 
 var webServiceUrlAllRules = ""
 
 var RULE_NUM = 0; 
@@ -261,47 +261,46 @@ class App extends Component {
     console.log("Enter SendData: about post json to the SERVER");
 
     //This is how you authenticate using base64(username:password. )
-    var headers = new Headers();
-    headers.append("Authorization", "Basic " + base64.encode("memex:digdig"));
+    // var headers = new Headers();
+    // headers.append("Authorization", "Basic " + base64.encode("user:pwd"));
 
     /*
     Let's fetch the data from the webservice. 
     */
-  //   console.log(webServiceUrl); 
-  //   fetch(webServiceUrl, {
-  //     method: 'POST',  
-  //     headers: headers, //authentication header. 
-  //     body:
-  //         this.buildData2Send() //JSON data created earlier. 
-  //   }).then( (response) => {
-  //               return response.json() })   
-  //                   .then( (json) => {
+    console.log(webServiceUrl); 
+    fetch(webServiceUrl, {
+      method: 'POST',  
+      // headers: headers, //authentication header. 
+      body:
+          this.buildData2Send() //JSON data created earlier. 
+    }).then( (response) => {
+                return response.json() })   
+                    .then( (json) => {
 
-  //                       if(json === undefined)
-  //                         return; 
+                        if(json === undefined)
+                          return; 
                         
-  //                       //var myArr = JSON.parse(json);
-  //                       console.log("Test = " + json.results); 
-  //                       var myResultRules=[]; 
-  //                       var myResultExtractions=[]; 
-  //                       for(var i=0; i < json.results.length; i++)
-  //                       {
-  //                         console.log("result rule_id =" +  json.results[i].context.rule_id +" value="+json.results[i].value); 
-  //                         //myResult[json.results[i].context.rule_id] = json.results[i].value; 
-  //                         myResultRules.push(json.results[i].context.rule_id); 
-  //                         myResultExtractions.push(json.results[i].value); 
-  //                       }
-  //                       this.setState({
-  //                         jsonRules: myResultRules,
-  //                         jsonExtraction: myResultExtractions,
-  //                         test_tokens: json.test_tokens,
-  //                         test_text: json.test_text
-  //                       });
-  //                   });
-  // }
-    console.log(webServiceUrl);
+                        //var myArr = JSON.parse(json);
+                        console.log("Test = " + json.results); 
+                        var myResultRules=[]; 
+                        var myResultExtractions=[]; 
+                        for(var i=0; i < json.results.length; i++)
+                        {
+                          console.log("result rule_id =" +  json.results[i].context.rule_id +" value="+json.results[i].value); 
+                          //myResult[json.results[i].context.rule_id] = json.results[i].value; 
+                          myResultRules.push(json.results[i].context.rule_id); 
+                          myResultExtractions.push(json.results[i].value); 
+                        }
+                        this.setState({
+                          jsonRules: myResultRules,
+                          jsonExtraction: myResultExtractions,
+                          test_tokens: json.test_tokens,
+                          test_text: json.test_text
+                        });
+                    });
 
-    console.log(this.buildData2Send());
+    // console.log(webServiceUrl);
+    // console.log(this.buildData2Send());
   }
 
   /*
