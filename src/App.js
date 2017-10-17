@@ -77,14 +77,15 @@ class App extends Component {
   {
     //This is the development Server IP. 
     //http://52.36.12.77:9879/projects/pedro_test_01/fields/name/spacy_rules'
-    console.log("Server name = " + this.props.params.serverName);
+    var serverName = base64.decode(this.props.params.serverName);
+    console.log("Server name = " + serverName);
 
     if(this.props.params.projectName === undefined || this.props.params.fieldName === undefined)
     {
       console.log("No project/field name specified. They are both required!!!!!"); 
     }
 
-    webServiceUrl = 'http://' + this.props.params.serverName  +'/projects/' + this.props.params.projectName + '/fields/'+
+    webServiceUrl = 'http://' + serverName  +'/projects/' + this.props.params.projectName + '/fields/'+
                  this.props.params.fieldName + '/spacy_rules'; 
 
     //Type=all grabs all the rules, test_text, token, results etc. 

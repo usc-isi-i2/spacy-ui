@@ -2,7 +2,7 @@
   "name": "theextractor",
   "version": "1.0.12",
   "private": true,
-  "homepage" : "http://xnet.nextcentury.com/wiser/spacy",
+  "homepage" : ".",
   "dependencies": {
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
