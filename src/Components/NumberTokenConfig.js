@@ -133,7 +133,9 @@ class NumberTokenConfig extends React.Component {
         part_of_output: tData.is_in_output,
         length1: tData.length[0], 
         length2: tData.length[1],
-        length3: tData.length[2]
+        length3: tData.length[2],
+        minimum: tData.minimum,
+        maximum: tData.maximum
       })
 
     } 
