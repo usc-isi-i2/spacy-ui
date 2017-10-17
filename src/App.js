@@ -77,6 +77,11 @@ class App extends Component {
   {
     //This is the development Server IP. 
     //http://52.36.12.77:9879/projects/pedro_test_01/fields/name/spacy_rules'
+    if (this.props.params.serverName === undefined) {
+      console.log("No project name");
+      return;
+    }
+
     var serverName = base64.decode(this.props.params.serverName);
     console.log("Server name = " + serverName);
 
@@ -202,7 +207,9 @@ class App extends Component {
 
     //This is how you authenticate using base64(username:password. )
     var headers = new Headers();
+    headers.append("Authorization", "Basic " + this.props.params.auth);
     headers.append("accept", "application/json"); 
+    // console.log(headers)
     /*
     Let's fetch the data from the webservice. 
     */
@@ -261,8 +268,8 @@ class App extends Component {
     console.log("Enter SendData: about post json to the SERVER");
 
     //This is how you authenticate using base64(username:password. )
-    // var headers = new Headers();
-    // headers.append("Authorization", "Basic " + base64.encode("user:pwd"));
+    var headers = new Headers();
+    headers.append("Authorization", "Basic " + this.props.params.auth);
 
     /*
     Let's fetch the data from the webservice. 
@@ -270,7 +277,7 @@ class App extends Component {
     console.log(webServiceUrl); 
     fetch(webServiceUrl, {
       method: 'POST',  
-      // headers: headers, //authentication header. 
+      headers: headers, //authentication header. 
       body:
           this.buildData2Send() //JSON data created earlier. 
     }).then( (response) => {

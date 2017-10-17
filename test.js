@@ -222,6 +222,7 @@ class App extends Component {
 
     //This is how you authenticate using base64(username:password. )
     var headers = new Headers();
+    headers.append("Authorization", "Basic " + this.props.params.auth);
     headers.append("accept", "application/json"); 
     /*
     Let's fetch the data from the webservice. 
@@ -290,6 +291,7 @@ class App extends Component {
 
     //This is how you authenticate using base64(username:password. )
     var headers = new Headers();
+    headers.append("Authorization", "Basic " + this.props.params.auth);
     headers.append("accept", "application/json"); 
     /*
     Let's fetch the data from the webservice. 
@@ -355,6 +357,7 @@ class App extends Component {
 
     //This is how you authenticate using base64(username:password. )
     var headers = new Headers();
+    headers.append("Authorization", "Basic " + this.props.params.auth);
 
     /*
     Let's fetch the data from the webservice. 

@@ -14,7 +14,7 @@ ReactDOM.render((
     <Route path="/" component={App}>
       <Route path="/" component={App}/>
       {/* add the new route */}
-      <Route path=":serverName/:projectName/:fieldName" component={App}/>
+      <Route path=":auth/:serverName/:projectName/:fieldName" component={App}/>
     </Route>
   </Router>
 ), document.getElementById('root'))
