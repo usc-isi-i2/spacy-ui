@@ -44,7 +44,7 @@ class Rule extends Component
             value: 10, 
             id:RULE_BASE+(++GLOBAL_RULE_ID), 
             description:"", 
-            polarity: [],
+            polarity: "true",
             output_format:"",
             is_active: true, 
             identifier:"",
