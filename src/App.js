@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import Rule from './Components/Rule'; 
 import "./Styles/layout.css"; 
+//abc
 
 /*We need base.64 for the authentication*/
 const base64 = require('base-64');
@@ -203,7 +204,7 @@ class App extends Component {
 
   getData()
   {
-    console.log("getData  from webservice=" +webServiceUrlAllRules);
+    console.log("getData  from webservice=" + webServiceUrlAllRules);
 
     //This is how you authenticate using base64(username:password. )
     var headers = new Headers();
@@ -401,14 +402,16 @@ class App extends Component {
           </div>
         <br/>
         <div> 
-          <span className="extractionText"> Text/Tokens</span>
+          <span className="extractionText"> Text/Tokens </span>
           <div className="rulesText"> 
             <textarea name="test_text" onChange={this.handleChange}  rows="5" className="textInput" value={this.state.test_text}/>
             <div className ="textInput2"> {displayToken} </div>
            </div> 
         </div>
         <br/>
-       <div id="run-rules"> <button className="button" onClick={this.sendData} >Run Rules </button> </div>
+       <div id="run-rules"> 
+       <button className="button" onClick={this.sendData} >Run Rules </button>
+       </div>
 
         <span className="extractionText"> Results </span>
         <div id="result">
