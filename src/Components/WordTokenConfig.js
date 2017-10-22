@@ -184,7 +184,9 @@ class WordTokenConfig extends React.Component {
         match_all_forms: tData.match_all_forms,
         contain_digit: tData.contain_digit,
         invocabulary: tData.is_in_vocabulary,
-        notinvocabulary: tData.is_out_of_vocabulary
+        notinvocabulary: tData.is_out_of_vocabulary,
+        prefix: tData.prefix,
+        suffix: tData.suffix
       })
 
     } 
@@ -202,7 +204,7 @@ class WordTokenConfig extends React.Component {
       show:true,
       optional: false,
       part_of_output: false,
-      match_all_forms: false,
+      match_all_forms: true,
       contain_digit: false,
       numbers:[],
       length1:"",

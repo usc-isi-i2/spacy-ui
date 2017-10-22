@@ -131,6 +131,7 @@ class App extends Component {
     for(var i=0; i< myPattern.length ;  i++)
     {
       myPattern[i].match_all_forms = myPattern[i].match_all_forms.toString(); 
+      myPattern[i].contain_digit = myPattern[i].contain_digit.toString(); 
       myPattern[i].is_required = myPattern[i].is_required.toString(); 
       myPattern[i].is_in_output = myPattern[i].is_in_output.toString();
       myPattern[i].is_in_vocabulary = myPattern[i].is_in_vocabulary.toString(); 

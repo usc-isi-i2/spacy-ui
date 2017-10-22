@@ -13,6 +13,9 @@ class ShapeTokenConfig extends React.Component {
       length3:"",
       prefix:"",
       suffix:"",
+      match_all_forms: true,
+      contain_digit: false,
+      invocabulary: false,
       notinvocabulary: false,
       allwords:"",
       shapes:"",
@@ -80,8 +83,8 @@ class ShapeTokenConfig extends React.Component {
     if(!this.props.modify)
     {
       this.props.onAddNewToken("S",window.TYPE_SHAPE, [], this.state.optional, 
-          this.state.part_of_output,this.state.length1, this.state.length2, this.state.length3,
-          this.state.prefix,this.state.suffix, 
+          this.state.part_of_output, this.state.match_all_forms, this.state.contain_digit,this.state.length1, this.state.length2, this.state.length3,
+          this.state.prefix,this.state.suffix, this.state.notinvocabulary, this.state.invocabulary,
           this.state.noun, this.state.pronoun,this.state.punctuation, 
           this.state.propernoun, this.state.determiner, this.state.symbol, 
           this.state.adjective, this.state.conjunction, this.state.verb,
@@ -93,8 +96,8 @@ class ShapeTokenConfig extends React.Component {
     else 
     {
       this.props.onModifyToken(this.props.tokenModifyIndex, "S",window.TYPE_SHAPE, [], this.state.optional, 
-          this.state.part_of_output,this.state.length1, this.state.length2, this.state.length3,
-          this.state.prefix,this.state.suffix, 
+          this.state.part_of_output,this.state.match_all_forms, this.state.contain_digit,this.state.length1, this.state.length2, this.state.length3,
+          this.state.prefix,this.state.suffix, this.state.notinvocabulary, this.state.invocabulary,
           this.state.noun, this.state.pronoun,this.state.punctuation, 
           this.state.propernoun, this.state.determiner, this.state.symbol, 
           this.state.adjective, this.state.conjunction, this.state.verb,
@@ -145,7 +148,9 @@ class ShapeTokenConfig extends React.Component {
         interjection: tData.part_of_speech.indexOf(window.POS_interjection)>-1? true:false, 
         length1: tData.length[0], 
         length2: tData.length[1],
-        length3: tData.length[2]
+        length3: tData.length[2],
+        prefix: tData.prefix,
+        suffix: tData.suffix
       })
 
     } 
@@ -163,6 +168,8 @@ class ShapeTokenConfig extends React.Component {
       show:true,
       optional: false,
       part_of_output: false,
+      match_all_forms: true,
+      contain_digit: false,
       numbers:[],
       length1:"",
       length2:"",
@@ -170,6 +177,7 @@ class ShapeTokenConfig extends React.Component {
       prefix:"",
       suffix:"",
       notinvocabulary: false,
+      invocabulary: false,
       allwords:"",
       shapes:"" ,
       noun:false, 

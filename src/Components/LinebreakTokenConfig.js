@@ -6,6 +6,8 @@ class LinebreakTokenConfig extends React.Component {
     super(props);
     this.state = {
       optional: false,
+      match_all_forms: true,
+      contain_digit: false,
       part_of_output: false,
       length1:"",
       length2:"",
@@ -13,6 +15,7 @@ class LinebreakTokenConfig extends React.Component {
       prefix:"",
       suffix:"",
       notinvocabulary: false,
+      invocabulary: false,
       allwords:"",
       allnumbers:"",
       noun:false, 
@@ -82,8 +85,8 @@ class LinebreakTokenConfig extends React.Component {
     {    
 
       this.props.onAddLinebreakToken("LB",window.TYPE_LINEBREAK, [], this.state.optional, 
-          this.state.part_of_output,this.state.length1, this.state.length2, this.state.length3,
-          this.state.minimum,this.state.maximum,
+          this.state.part_of_output,this.state.match_all_forms, this.state.contain_digit,this.state.length1, this.state.length2, this.state.length3,
+          this.state.minimum,this.state.maximum,this.state.notinvocabulary, this.state.invocabulary,
           this.state.noun, this.state.pronoun,this.state.punctuation, 
           this.state.propernoun, this.state.determiner, this.state.symbol, 
           this.state.adjective, this.state.conjunction, this.state.verb,
@@ -95,8 +98,8 @@ class LinebreakTokenConfig extends React.Component {
     else
     {
       this.props.onModifyLinebreakToken(this.props.tokenModifyIndex, "LB",window.TYPE_LINEBREAK, [], this.state.optional, 
-          this.state.part_of_output,this.state.length1, this.state.length2, this.state.length3,
-          this.state.minimum,this.state.maximum, 
+          this.state.part_of_output,this.state.match_all_forms, this.state.contain_digit,this.state.length1, this.state.length2, this.state.length3,
+          this.state.minimum,this.state.maximum, this.state.notinvocabulary, this.state.invocabulary,
           this.state.noun, this.state.pronoun,this.state.punctuation, 
           this.state.propernoun, this.state.determiner, this.state.symbol, 
           this.state.adjective, this.state.conjunction, this.state.verb,
@@ -151,6 +154,8 @@ class LinebreakTokenConfig extends React.Component {
       show:true,
       optional: false,
       part_of_output: false,
+      match_all_forms: true,
+      contain_digit: false,
       numbers:[],
       allnumbers:"",
       length1:"",
@@ -161,6 +166,7 @@ class LinebreakTokenConfig extends React.Component {
       prefix:"",
       suffix:"",
       notinvocabulary: false,
+      invocabulary: false,
       allwords:"",
     };
 
