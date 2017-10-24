@@ -295,6 +295,19 @@
    padding-bottom: 5px;
 }
 
+#linebreak-div2
+{
+   overflow: hidden;
+}
+
+#linebreak-div22
+{
+   width: 275px;
+   padding: 0px 10px 10px 10px;
+   margin-left:10px;
+   height:  150px;
+}
+
 #linebreak-lengths
 {
    border-color: red;

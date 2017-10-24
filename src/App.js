@@ -7,7 +7,8 @@ import "./Styles/layout.css";
 /*We need base.64 for the authentication*/
 const base64 = require('base-64');
 var webServiceUrl = ""; 
-var webServiceUrlAllRules = ""
+var webServiceUrlAllRules = "";
+var webServiceUrlFields = "";
 
 var RULE_NUM = 0; 
 
@@ -99,6 +100,8 @@ class App extends Component {
 
     console.log("webservice url = " + webServiceUrl); 
     console.log("Address for getting rules:" +webServiceUrlAllRules); 
+
+    webServiceUrlFields = 'http://' + serverName  +'/projects/' + this.props.params.projectName + '/fields';
 
     this.getData(); 
   }
@@ -206,6 +209,7 @@ class App extends Component {
   getData()
   {
     console.log("getData  from webservice=" + webServiceUrlAllRules);
+    console.log("==========:" + webServiceUrlFields)
 
     //This is how you authenticate using base64(username:password. )
     var headers = new Headers();
@@ -215,8 +219,53 @@ class App extends Component {
     /*
     Let's fetch the data from the webservice. 
     */
-    //alert(webServiceUrl); 
+    // alert(webServiceUrl); 
     fetch(webServiceUrlAllRules, {
+      method: 'GET',  
+      headers: headers, //authentication header. 
+    }).then( (response) => {
+      return response.json() })   
+          .then( (json) => {
+              //alert("GETDATA WoRKED"); 
+              if(json === undefined)
+                return; 
+
+              /*If there is an error, then there is no json.rules - it's undefined. 
+              *
+              */
+              if(json.rules !== undefined)
+              {
+                console.log("Received 200 ok"); 
+                if(json.rules.length < 1 )
+                {
+                  console.log("There are NO rules from this project/field combination");
+                  return; 
+                }
+
+                // I overwrite the rules identifier with our own naming. Sometimes these rules
+                // *are created on the server and no identifier is provided.
+                
+                for(var i=0; i<json.rules.length; i++)
+                {
+                  json.rules[i].identifier = "rule_"+(++RULE_NUM); 
+                }
+          
+                this.setState({
+                  createdby: window.CREATEDBY_SERVER,
+                  allServerRules: json,
+                  test_text: json.test_text,
+                  test_tokens: json.test_tokens
+                });
+
+              }
+              else
+              {
+                console.log("Error code " + json.status_code + "received"); 
+                console.log("Error msg = " + json.error_message); 
+              }
+          });
+
+    fetch(webServiceUrlFields, {
       method: 'GET',  
       headers: headers, //authentication header. 
     }).then( (response) => {
@@ -229,36 +278,7 @@ class App extends Component {
                         /*If there is an error, then there is no json.rules - it's undefined. 
                         *
                         */
-                        if(json.rules !== undefined)
-                        {
-                          console.log("Received 200 ok"); 
-                          if(json.rules.length < 1 )
-                          {
-                            console.log("There are NO rules from this project/field combination");
-                            return; 
-                          }
-
-                          /*I overwrite the rules identifier with our own naming. Sometimes these rules
-                          *are created on the server and no identifier is provided.
-                          */
-                          for(var i=0; i<json.rules.length; i++)
-                          {
-                            json.rules[i].identifier = "rule_"+(++RULE_NUM); 
-                          }
-                    
-                          this.setState({
-                            createdby: window.CREATEDBY_SERVER,
-                            allServerRules: json,
-                            test_text: json.test_text,
-                            test_tokens: json.test_tokens
-                          });
-
-                        }
-                        else
-                        {
-                          console.log("Error code " + json.status_code + "received"); 
-                          console.log("Error msg = " + json.error_message); 
-                        }
+                        console.log(json);
                     });
   }
 
@@ -276,7 +296,6 @@ class App extends Component {
     /*
     Let's fetch the data from the webservice. 
     */
-    console.log(webServiceUrl); 
     fetch(webServiceUrl, {
       method: 'POST',  
       headers: headers, //authentication header. 

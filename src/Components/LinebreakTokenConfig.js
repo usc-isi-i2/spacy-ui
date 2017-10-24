@@ -9,7 +9,7 @@ class LinebreakTokenConfig extends React.Component {
       match_all_forms: true,
       contain_digit: false,
       part_of_output: false,
-      length1:"",
+      length1:"1",
       length2:"",
       length3:"",
       prefix:"",
@@ -158,7 +158,7 @@ class LinebreakTokenConfig extends React.Component {
       contain_digit: false,
       numbers:[],
       allnumbers:"",
-      length1:"",
+      length1:"1",
       length2:"",
       length3:"",
       minimum:"",
@@ -203,20 +203,26 @@ class LinebreakTokenConfig extends React.Component {
           <div className="modal-body">
             <div id="linebreak-div1">
             <label>
-            optional
                 <input name="optional" type="checkbox" checked={this.state.optional} onChange={this.handleInputChange} className="wordlabels" />
+                            optional
                 </label>
 
-              <label>
-                      part of output
+              <label>              
                 <input name="part_of_output" type="checkbox" checked={this.state.part_of_output} onChange={this.handleInputChange} className="wordlabels" />
+                part of output
                 </label>
 
+            </div>
+            <div id="linebreak-div2">
+            <div id="linebreak-div22">
+
+                <div id="linebreak-lengths">
                 <label>
-                Quantity:
-                <input name="length1" type="text" value={this.state.length1} onChange={this.handleInputChange} size="10" />
+                # of line breaks
+                <input name="length1" type="text" value={this.state.length1} onChange={this.handleInputChange} size="10" style={{"width": "25px"}}/>
                 </label>
-
+                </div>
+            </div>
             </div>
 
           </div>
