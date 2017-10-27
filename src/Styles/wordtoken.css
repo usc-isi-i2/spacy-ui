@@ -38,6 +38,10 @@
     margin-right:5px;   
 }
 
+.wordlabels_wrapper {
+  display: inline-block;
+}
+
 .wordlabels2
 {
     margin-left:5px;
@@ -110,6 +114,13 @@
     height: 15px; 
 }
 #number-div22 input
+{
+    margin: 10px; 
+    width:30px; 
+    height: 15px;     
+}
+
+#entity-div22 input
 {
     margin: 10px; 
     width:30px; 
@@ -262,6 +273,102 @@
 
 /********END NUMBER TOKEN *****/
 
+/****** BEGIN ENTITY TOKEN *********/
+/****** All this a specific to entity token */
+
+.entity-modal-header
+{
+   background-color: #A2A1B2;
+   width: 360;
+   height: 25px;
+   text-align: left;
+   border-top-left-radius: 5px; 
+   border-top-right-radius: 5px;   
+   padding-left: 10px;
+   padding-top: 5px;
+}
+
+.entity-modal
+{
+    background-color:#fff; 
+    border-radius: 5px; 
+    max-width: 360px; 
+    min-Height: 280px; 
+    margin: auto; 
+}
+
+.num_minmax
+{
+   margin-left:0px;
+   margin-right:10px;  
+   width:10px;
+   font-size: 10pt;
+   vertical-align: top; 
+}
+
+#entity-div1
+{
+   /*padding: 10px; */
+   padding-top: 5px;
+   padding-bottom: 5px;
+}
+
+#entity-div2
+{
+   overflow: hidden;
+}
+
+#entity-div21
+{
+   padding: 0px 10px 10px 10px;
+   width: 100px;
+   float: left; 
+
+}
+
+#entity-div22
+{
+   width: 275px;
+   padding: 0px 10px 10px 10px;
+   margin-left:100px;
+   height:  150px;
+}
+
+#entitytoken-footer
+{
+  float: right;
+  margin: 0px;
+}
+
+#entity-lengths
+{
+   border-color: red;
+   margin-top: 15px; 
+   height: auto;
+   width: 100%;
+   display: inlilne-block;
+}
+
+#entity-prefix-suffix
+{
+   border-color: blue;
+   display: inlilne-block;
+   margin-top: 20px;
+}
+
+#entity-prefix-suffix input
+{
+    width:50px; 
+    /*vertical-align: top; */
+}
+
+#entitytoken-footer
+{
+  float: right;
+  margin: 10px;
+}
+
+/********END ENTITY TOKEN *****/
 
 /****** BEGIN LINEBREAK TOKEN *********/
 /****** All this a specific to linebreak token */
@@ -324,7 +431,7 @@
   margin: 10px;
 }
 
-/********END NUMBER TOKEN *****/
+/********END LINEBREAK TOKEN *****/
 
 
 

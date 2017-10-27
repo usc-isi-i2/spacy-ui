@@ -6,7 +6,8 @@ import WordTokenConfig from './WordTokenConfig';
 import ShapeTokenConfig from './ShapeTokenConfig'; 
 import NumberTokenConfig from './NumberTokenConfig'; 
 import PunctuationTokenConfig from './PunctuationTokenConfig'; 
-import LinebreakTokenConfig from './LinebreakTokenConfig'; 
+import LinebreakTokenConfig from './LinebreakTokenConfig';
+import EntityTokenConfig from './EntityTokenConfig'; 
 import TokenWrapper from './TokenWrapper'; 
 
 /*GLOBAL values used for token, rule ids*/
@@ -17,21 +18,21 @@ var RULE_BASE = 7000;
 var GLOBAL_RULE_ID = 1; 
 
 
-
 /*
 The Rule class holds the different token. There currently 5 types of tokens: 
 1. word token
 2. punctuation token
 3. shape token
 4. number token
-5. linebreak token. 
+5. linebreak token
+6. entity token
 */
 class Rule extends Component
 {
     constructor(props)
     {
         super(props); 
-        
+
         const btt = <PlusToken  id={PTOKEN_BASE+(++GLOBAL_ID)}/>; 
         this.state = {
             array:[btt], 
@@ -40,6 +41,7 @@ class Rule extends Component
             isPunctuationDialogOpen: false,
             isShapeDialogOpen: false,
             isLinebreakDialogOpen: false,
+            isEntityDialogOpen: false,
             allTokenData:[],
             value: 10, 
             id:RULE_BASE+(++GLOBAL_RULE_ID), 
@@ -55,6 +57,7 @@ class Rule extends Component
             tokenModifyIndex: -1,
             isModifyShape: false, 
             isModifyLinebreak: false, 
+            isModifyEntity: false, 
             newToken2AddIndex: -1,
             contain_digit: true,
             match_all_forms: true,
@@ -75,21 +78,25 @@ class Rule extends Component
         this.toggleShapeConfigDialog = this.toggleShapeConfigDialog.bind(this); 
         this.togglePunctuationConfigDialog = this.togglePunctuationConfigDialog.bind(this); 
         this.toggleLinebreakConfigDialog = this.toggleLinebreakConfigDialog.bind(this); 
+        this.toggleEntityConfigDialog = this.toggleEntityConfigDialog.bind(this); 
         this.showWordTokenDialog = this.showWordTokenDialog.bind(this); 
         this.onAddWordToken = this.onAddWordToken.bind(this); 
         this.onAddNumberToken = this.onAddNumberToken.bind(this); 
         this.onAddPunctuationToken = this.onAddPunctuationToken.bind(this); 
         this.onAddShapeToken = this.onAddShapeToken.bind(this); 
         this.onAddLinebreakToken = this.onAddLinebreakToken.bind(this); 
+        this.onAddEntityToken = this.onAddEntityToken.bind(this); 
         this.createWordJSON = this.createWordJSON.bind(this); 
         this.createNumberJSON = this.createNumberJSON.bind(this); 
         this.createPunctuationJSON = this.createPunctuationJSON.bind(this); 
         this.createShapeJSON = this.createShapeJSON.bind(this); 
         this.createLinebreakJSON = this.createLinebreakJSON.bind(this); 
+        this.createEntityJSON = this.createEntityJSON.bind(this); 
         this.showNumberTokenDialog = this.showNumberTokenDialog.bind(this); 
         this.showPunctuationTokenDialog = this.showPunctuationTokenDialog.bind(this); 
         this.showShapeTokenDialog = this.showShapeTokenDialog.bind(this); 
         this.showLinebreakTokenDialog = this.showLinebreakTokenDialog.bind(this); 
+        this.showEntityTokenDialog = this.showEntityTokenDialog.bind(this); 
         this.deleteToken = this.deleteToken.bind(this); 
         this.handleChange_outformat = this.handleChange_outformat.bind(this); 
         this.handleChange_description = this.handleChange_description.bind(this); 
@@ -100,6 +107,7 @@ class Rule extends Component
         this.onModifyNumberToken = this.onModifyNumberToken.bind(this);
         this.onModifyShapeToken = this.onModifyShapeToken.bind(this);  
         this.onModifyLinebreakToken = this.onModifyLinebreakToken.bind(this);  
+        this.onModifyEntityToken = this.onModifyEntityToken.bind(this);  
         this.handle_onBlur = this.handle_onBlur.bind(this);
         this.updateActiveRule = this.updateActiveRule.bind(this);  
         this.onClickPlusToken = this.onClickPlusToken.bind(this); 
@@ -189,6 +197,20 @@ class Rule extends Component
         }        
     }
 
+    toggleEntityConfigDialog()
+    {
+        this.setState({
+         isEntityDialogOpen: !this.state.isEntityDialogOpen
+        }); 
+
+        if(!this.setState.isEntityDialogOpen)
+        {   
+            this.setState({
+                isModifyEntity:false
+            })
+        }      
+    }
+
         /*
     This method is used to determine when to open or close the token dialog
     */
@@ -226,7 +248,6 @@ class Rule extends Component
         for(var i = 0; i < count; i++) 
         {
             myToken = this.props.ruleObj.pattern[i]; 
-            console.log(myToken)
             var myarr = myToken.part_of_speech; 
             var myarr1 = myToken.capitalization; 
             if( myToken.type === window.TYPE_WORD)
@@ -265,6 +286,15 @@ class Rule extends Component
             else if (myToken.type === window.TYPE_LINEBREAK)
             {
                 this.onAddLinebreakToken("LB",window.TYPE_LINEBREAK, myToken.token, !(myToken.is_required==='true'), 
+                    myToken.is_in_output==='true', myToken.match_all_forms === 'true', myToken.contain_digit === 'true', 0, 0, 0,
+                    myToken.minimum, myToken.maximum, myToken.is_out_of_vocabulary === 'true', myToken.is_in_vocabulary === 'true', (myarr.indexOf(window.POS_noun) > -1), (myarr.indexOf(window.POS_pronoun) > -1), (myarr.indexOf(window.POS_punctuation) > -1),
+                    (myarr.indexOf(window.POS_propernoun) > -1), (myarr.indexOf(window.POS_determiner) > -1), (myarr.indexOf(window.POS_symbol) > -1), (myarr.indexOf(window.POS_adjective) > -1), (myarr.indexOf(window.POS_conjunction) > -1),(myarr.indexOf(window.POS_verb) > -1),  
+                    (myarr.indexOf("prepost_position") > -1), (myarr.indexOf(window.POS_adverb) > -1), (myarr.indexOf(window.POS_particle) > -1), (myarr.indexOf(window.POS_interjection) > -1), (myarr1.indexOf("exact") > -1),(myarr1.indexOf("lower") > -1), (myarr1.indexOf("upper") > -1),
+                    (myarr1.indexOf("title") > -1), (myarr1.indexOf("mixed") > -1), myToken.numbers, window.CREATEDBY_SERVER);            
+            }
+            else if (myToken.type === window.TYPE_ENTITY)
+            {
+                this.onAddEntityToken("E",window.TYPE_ENTITY, myToken.token, !(myToken.is_required==='true'), 
                     myToken.is_in_output==='true', myToken.match_all_forms === 'true', myToken.contain_digit === 'true', 0, 0, 0,
                     myToken.minimum, myToken.maximum, myToken.is_out_of_vocabulary === 'true', myToken.is_in_vocabulary === 'true', (myarr.indexOf(window.POS_noun) > -1), (myarr.indexOf(window.POS_pronoun) > -1), (myarr.indexOf(window.POS_punctuation) > -1),
                     (myarr.indexOf(window.POS_propernoun) > -1), (myarr.indexOf(window.POS_determiner) > -1), (myarr.indexOf(window.POS_symbol) > -1), (myarr.indexOf(window.POS_adjective) > -1), (myarr.indexOf(window.POS_conjunction) > -1),(myarr.indexOf(window.POS_verb) > -1),  
@@ -325,6 +355,14 @@ class Rule extends Component
             this.toggleLinebreakConfigDialog(); 
             this.setState({
                 isModifyLinebreak:true,
+                tokenModifyIndex: dataIndex
+            }); 
+        }
+        else if(this.state.allTokenData[dataIndex].type === window.TYPE_ENTITY)
+        {
+            this.toggleEntityConfigDialog(); 
+            this.setState({
+                isModifyEntity:true,
                 tokenModifyIndex: dataIndex
             }); 
         }
@@ -422,7 +460,6 @@ class Rule extends Component
             prepost_position1, adverb1, particle1, interjection1, exact1,lower1, upper1,
             title1, mixed1, numbers1
         )
-        console.log(newJSONTokenData)
         this.ProcessAllNewTokens(newJSONTokenData, tokenAbbreviation1, createdby); 
     }  
 
@@ -715,6 +752,31 @@ class Rule extends Component
         this.processAllEditedTokens(index, newJSONTokenData, tokenAbbreviation1, createdby); 
     }
 
+    onModifyEntityToken(index, tokenAbbreviation1, type1, allwords1, optional1,
+        part_of_output1, match_all_forms1, contain_digit1, length11, length21, length31,
+        minimum1, maximum1, notinvocabulary1, invocabulary1, noun1, pronoun1, punctuation1,
+        propernoun1, determiner1, symbol1, adjective1, conjunction1, verb1,
+        prepost_position1, adverb1, particle1, interjection1, exact1, lower1, upper1,
+        title1, mixed1, numbers1, createdby) 
+    {
+        console.log("Rule: Enter onModifyEntityToken"); 
+
+
+        if(createdby === window.CREATEDBY_USER)
+            this.toggleEntityConfigDialog(); 
+
+        /*Get the JSON formatted data structure*/
+        var newJSONTokenData = this.createEntityJSON(tokenAbbreviation1,type1, allwords1, optional1, 
+            part_of_output1, match_all_forms1, contain_digit1, length11, length21, length31,
+            minimum1, maximum1, notinvocabulary1, invocabulary1, noun1, pronoun1, punctuation1,
+            propernoun1, determiner1, symbol1, adjective1, conjunction1,verb1,  
+            prepost_position1, adverb1, particle1, interjection1, exact1,lower1, upper1,
+            title1, mixed1, numbers1
+        )
+
+        this.processAllEditedTokens(index, newJSONTokenData, tokenAbbreviation1, createdby); 
+    }
+
     onModifyLinebreakToken(index, tokenAbbreviation1, type1, allwords1, optional1,
         part_of_output1, match_all_forms1, contain_digit1, length11, length21, length31,
         minimum1, maximum1, notinvocabulary1, invocabulary1, noun1, pronoun1, punctuation1,
@@ -753,6 +815,29 @@ class Rule extends Component
 
         /*Get the JSON formatted data structure*/
         var newJSONTokenData = this.createNumberJSON(tokenAbbreviation1,type1, allwords1, optional1, 
+            part_of_output1, match_all_forms1, contain_digit1, length11, length21, length31,
+            minimum1, maximum1, notinvocabulary1, invocabulary1, noun1, pronoun1, punctuation1,
+            propernoun1, determiner1, symbol1, adjective1, conjunction1,verb1,  
+            prepost_position1, adverb1, particle1, interjection1, exact1,lower1, upper1,
+            title1, mixed1, numbers1
+        )
+        this.ProcessAllNewTokens(newJSONTokenData, tokenAbbreviation1, createdby); 
+
+    }
+
+    onAddEntityToken(tokenAbbreviation1, type1, allwords1, optional1,
+        part_of_output1, match_all_forms1, contain_digit1, length11, length21, length31,
+        minimum1, maximum1, notinvocabulary1, invocabulary1, noun1, pronoun1, punctuation1,
+        propernoun1, determiner1, symbol1, adjective1, conjunction1, verb1,
+        prepost_position1, adverb1, particle1, interjection1, exact1, lower1, upper1,
+        title1, mixed1, numbers1, createdby) 
+    {
+        console.log("Rule: Enter onAddEntityToken"); 
+        if(createdby === window.CREATEDBY_USER)
+            this.toggleEntityConfigDialog(); 
+
+        /*Get the JSON formatted data structure*/
+        var newJSONTokenData = this.createEntityJSON(tokenAbbreviation1,type1, allwords1, optional1, 
             part_of_output1, match_all_forms1, contain_digit1, length11, length21, length31,
             minimum1, maximum1, notinvocabulary1, invocabulary1, noun1, pronoun1, punctuation1,
             propernoun1, determiner1, symbol1, adjective1, conjunction1,verb1,  
@@ -904,6 +989,51 @@ class Rule extends Component
         return tokenData; 
     }
 
+    createEntityJSON(tokenAbbreviation1,type1, allwords1, optional1, 
+            part_of_output1, match_all_forms1, contain_digit1, length11, length21, length31,
+            minimum1, maximum1, notinvocabulary1, invocabulary1, noun1, pronoun1, punctuation1,
+            propernoun1, determiner1, symbol1, adjective1, conjunction1,verb1,  
+            prepost_position1, adverb1, particle1, interjection1, exact1,lower1, upper1,
+            title1, mixed1, numbers1)
+    {
+
+        console.log("createEntityJSON"); 
+        console.log("dadaddwd", numbers1)
+        var myCapitalization = [];
+
+        var mypartOfSpeech = []; 
+
+        var myLength=[]; 
+        if(length11>0) myLength.push(length11); 
+        if(length21>0) myLength.push(length21); 
+        if(length31>0) myLength.push(length31);     
+
+        var myShape= [];  
+
+        var tokenData=
+        {
+            prefix: "",
+            suffix: "",
+            capitalization:  myCapitalization, 
+            part_of_speech: mypartOfSpeech, 
+            length: myLength,
+            maximum:maximum1,
+            minimum:minimum1, 
+            shape: myShape,
+            token: [],
+            numbers: numbers1,
+            is_in_vocabulary: invocabulary1,
+            is_out_of_vocabulary: notinvocabulary1,
+            is_required: !optional1, 
+            type: type1, 
+            is_in_output: part_of_output1,
+            match_all_forms: match_all_forms1,
+            contain_digit: contain_digit1   
+        }; 
+
+        return tokenData; 
+    }
+
     createLinebreakJSON(tokenAbbreviation1,type1, allwords1, optional1, 
             part_of_output1, match_all_forms1, contain_digit1, length11, length21, length31,
             minimum1, maximum1, notinvocabulary1, invocabulary1, noun1, pronoun1, punctuation1,
@@ -957,6 +1087,16 @@ class Rule extends Component
         var x = document.getElementById(tMenu);
         x.style.display = 'none';
         this.toggleNumberConfigDialog();       
+    }
+
+    showEntityTokenDialog()
+    {
+        const tMenu = "tokenMenu" + this.state.id; 
+        
+        /*lets close the menu*/
+        var x = document.getElementById(tMenu);
+        x.style.display = 'none';
+        this.toggleEntityConfigDialog();       
     }
 
     showLinebreakTokenDialog()
@@ -1182,6 +1322,16 @@ class Rule extends Component
                          >
                     </NumberTokenConfig>
 
+                    <EntityTokenConfig show={this.state.isEntityDialogOpen}
+                        onAddEntityToken={this.onAddEntityToken} ruleid={this.state.id}
+                        onCloseConfigDialog={this.toggleEntityConfigDialog}
+                        modify={this.state.isModifyEntity} tokenModifyIndex={this.state.tokenModifyIndex}
+                        tokenData={this.state.allTokenData[this.state.tokenModifyIndex]}
+                        onModifyEntityToken={this.onModifyEntityToken}
+                        allfields = {this.props.allfields}
+                         >
+                    </EntityTokenConfig>
+
                     <LinebreakTokenConfig show={this.state.isLinebreakDialogOpen}
                         onAddLinebreakToken={this.onAddLinebreakToken} ruleid={this.state.id}
                         onCloseConfigDialog={this.toggleLinebreakConfigDialog}
@@ -1220,6 +1370,7 @@ class Rule extends Component
                             <div onClick={this.showPunctuationTokenDialog} className="tokenMenu_item">  Punctuation </div>
                             <div onClick={this.showShapeTokenDialog} className="tokenMenu_item"> Shape </div>
                             <div onClick={this.showLinebreakTokenDialog} className="tokenMenu_item"> Linebreak </div>
+                            <div onClick={this.showEntityTokenDialog} className="tokenMenu_item"> Entity </div>
                         </div>   
 
                         <div className="arrangeRuleTokens"> 

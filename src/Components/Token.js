@@ -70,6 +70,22 @@ class Token extends Component
                   ));  
 
       }
+    } else if (this.props.tokenPatternData.type ===window.TYPE_ENTITY)
+    {
+      console.log(this.props)
+      /*if there is no word text, keep
+      the space for formatting otherwise the tokens will be misaligned. */
+      if(this.props.tokenPatternData.numbers.length === 0)
+      {
+          tokenText = <div className="tokenEachText"></div>
+      }
+      else
+      {
+          tokenText = this.props.tokenPatternData.numbers.map((num, index) => (
+                  <div className="tokenEachText" key={index}> {num} </div>
+                  ));  
+
+      }
     } else if(this.props.tokenPatternData.type === window.TYPE_PUNCTUATION)
     {
       /*if there is no word text, keep
