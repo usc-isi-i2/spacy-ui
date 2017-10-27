@@ -19,6 +19,7 @@ window.TYPE_NUMBERS = "number";
 window.TYPE_PUNCTUATION = "punctuation"; 
 window.TYPE_SHAPE = "shape";
 window.TYPE_LINEBREAK = "linebreak";
+window.TYPE_ENTITY = "entity";
 
 var ActionEnum =
 {
@@ -56,6 +57,7 @@ class App extends Component {
       jsonExtraction:[],
       allServerRules:{rules:[]},
       createdby:window.CREATEDBY_SERVER,
+      all_fields:[]
     }
 
     this.allRuleData = {}; 
@@ -249,7 +251,7 @@ class App extends Component {
                 {
                   json.rules[i].identifier = "rule_"+(++RULE_NUM); 
                 }
-          
+                
                 this.setState({
                   createdby: window.CREATEDBY_SERVER,
                   allServerRules: json,
@@ -278,7 +280,9 @@ class App extends Component {
                         /*If there is an error, then there is no json.rules - it's undefined. 
                         *
                         */
-                        console.log(json);
+                        this.setState({
+                          all_fields : Object.keys(json)
+                        });
                     });
   }
 
@@ -389,7 +393,7 @@ class App extends Component {
   {
     var displayedRules = this.state.allServerRules.rules.map((rule,i)=>(
                             <div className="help" key={rule.identifier} >  <Rule rulenum={i+1} index={i} key={rule.identifier} onDeleteRule={this.onDeleteRule} onDuplicateRule={this.onDuplicateRule}
-                              onProcessJSONData={this.ProcessJSONData}  ruleObj={rule} createdby={this.state.createdby}/> 
+                              onProcessJSONData={this.ProcessJSONData}  ruleObj={rule} createdby={this.state.createdby} allfields = {this.state.all_fields}/> 
                           </div>
                         )); 
 
