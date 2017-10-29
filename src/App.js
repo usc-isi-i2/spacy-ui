@@ -251,7 +251,7 @@ class App extends Component {
                 {
                   json.rules[i].identifier = "rule_"+(++RULE_NUM); 
                 }
-                
+
                 this.setState({
                   createdby: window.CREATEDBY_SERVER,
                   allServerRules: json,

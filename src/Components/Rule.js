@@ -251,10 +251,14 @@ class Rule extends Component
             var myarr = myToken.part_of_speech; 
             var myarr1 = myToken.capitalization; 
             if( myToken.type === window.TYPE_WORD)
-            {
-
+            {   
+                var ll = ["0","0","0"]
+                for (var j = 0; j < myToken.length.length; j++) { 
+                    ll[j] = ""+myToken.length[j]
+                }
+                console.log(ll)
                 this.onAddWordToken("W",window.TYPE_WORD, myToken.token, !(myToken.is_required==='true'), 
-                    myToken.is_in_output==='true', myToken.match_all_forms === 'true', myToken.contain_digit === 'true', 0, 0, 0,
+                    myToken.is_in_output==='true', myToken.match_all_forms === 'true', myToken.contain_digit === 'true', ll[0], ll[1], ll[2],
                     myToken.prefix, myToken.suffix, myToken.is_out_of_vocabulary === 'true', myToken.is_in_vocabulary === 'true', (myarr.indexOf(window.POS_noun) > -1), (myarr.indexOf(window.POS_pronoun) > -1), (myarr.indexOf(window.POS_punctuation) > -1),
                     (myarr.indexOf(window.POS_propernoun) > -1), (myarr.indexOf(window.POS_determiner) > -1), (myarr.indexOf(window.POS_symbol) > -1), (myarr.indexOf(window.POS_adjective) > -1), (myarr.indexOf(window.POS_conjunction) > -1),(myarr.indexOf(window.POS_verb) > -1),  
                     (myarr.indexOf("prepost_position") > -1), (myarr.indexOf(window.POS_adverb) > -1), (myarr.indexOf(window.POS_particle) > -1), (myarr.indexOf(window.POS_interjection) > -1), (myarr1.indexOf("exact") > -1),(myarr1.indexOf("lower") > -1), (myarr1.indexOf("upper") > -1),
@@ -262,8 +266,12 @@ class Rule extends Component
             }
             else if (myToken.type === window.TYPE_NUMBERS)
             {
+                var ll = ["0","0","0"]
+                for (var j = 0; j < myToken.length.length; j++) { 
+                    ll[j] = ""+myToken.length[j]
+                }
                 this.onAddNumberToken("#",window.TYPE_NUMBERS, myToken.token, !(myToken.is_required==='true'), 
-                    myToken.is_in_output==='true', myToken.match_all_forms === 'true', myToken.contain_digit === 'true', 0, 0, 0,
+                    myToken.is_in_output==='true', myToken.match_all_forms === 'true', myToken.contain_digit === 'true', ll[0], ll[1], ll[2],
                     myToken.minimum, myToken.maximum, myToken.is_out_of_vocabulary === 'true', myToken.is_in_vocabulary === 'true', (myarr.indexOf(window.POS_noun) > -1), (myarr.indexOf(window.POS_pronoun) > -1), (myarr.indexOf(window.POS_punctuation) > -1),
                     (myarr.indexOf(window.POS_propernoun) > -1), (myarr.indexOf(window.POS_determiner) > -1), (myarr.indexOf(window.POS_symbol) > -1), (myarr.indexOf(window.POS_adjective) > -1), (myarr.indexOf(window.POS_conjunction) > -1),(myarr.indexOf(window.POS_verb) > -1),  
                     (myarr.indexOf("prepost_position") > -1), (myarr.indexOf(window.POS_adverb) > -1), (myarr.indexOf(window.POS_particle) > -1), (myarr.indexOf(window.POS_interjection) > -1), (myarr1.indexOf("exact") > -1),(myarr1.indexOf("lower") > -1), (myarr1.indexOf("upper") > -1),
@@ -286,7 +294,7 @@ class Rule extends Component
             else if (myToken.type === window.TYPE_LINEBREAK)
             {
                 this.onAddLinebreakToken("LB",window.TYPE_LINEBREAK, myToken.token, !(myToken.is_required==='true'), 
-                    myToken.is_in_output==='true', myToken.match_all_forms === 'true', myToken.contain_digit === 'true', 0, 0, 0,
+                    myToken.is_in_output==='true', myToken.match_all_forms === 'true', myToken.contain_digit === 'true', myToken.length[0], 0, 0,
                     myToken.minimum, myToken.maximum, myToken.is_out_of_vocabulary === 'true', myToken.is_in_vocabulary === 'true', (myarr.indexOf(window.POS_noun) > -1), (myarr.indexOf(window.POS_pronoun) > -1), (myarr.indexOf(window.POS_punctuation) > -1),
                     (myarr.indexOf(window.POS_propernoun) > -1), (myarr.indexOf(window.POS_determiner) > -1), (myarr.indexOf(window.POS_symbol) > -1), (myarr.indexOf(window.POS_adjective) > -1), (myarr.indexOf(window.POS_conjunction) > -1),(myarr.indexOf(window.POS_verb) > -1),  
                     (myarr.indexOf("prepost_position") > -1), (myarr.indexOf(window.POS_adverb) > -1), (myarr.indexOf(window.POS_particle) > -1), (myarr.indexOf(window.POS_interjection) > -1), (myarr1.indexOf("exact") > -1),(myarr1.indexOf("lower") > -1), (myarr1.indexOf("upper") > -1),
@@ -1370,7 +1378,6 @@ class Rule extends Component
                             <div onClick={this.showPunctuationTokenDialog} className="tokenMenu_item">  Punctuation </div>
                             <div onClick={this.showShapeTokenDialog} className="tokenMenu_item"> Shape </div>
                             <div onClick={this.showLinebreakTokenDialog} className="tokenMenu_item"> Linebreak </div>
-                            <div onClick={this.showEntityTokenDialog} className="tokenMenu_item"> Entity </div>
                         </div>   
 
                         <div className="arrangeRuleTokens"> 
