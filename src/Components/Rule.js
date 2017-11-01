@@ -49,7 +49,7 @@ class Rule extends Component
             polarity: "true",
             output_format:"",
             is_active: true, 
-            identifier:"",
+            identifier: "",
             is_in_output:true,
             isModifyWord: false,
             isModifyPunctuation: false, 
@@ -121,7 +121,13 @@ class Rule extends Component
     {
         if(this.props.createdby !== window.CREATEDBY_SERVER)
         {
-            console.log("Rule was created by user")
+            console.log("Rule was created by user");
+            this.setState({
+                description : this.props.ruleObj.description,
+                output_format : this.props.ruleObj.output_format,
+                is_active : (this.props.ruleObj.is_active === "true"),
+                identifier : this.props.ruleObj.identifier
+            })
         }
         else
         {
@@ -252,13 +258,12 @@ class Rule extends Component
             var myarr1 = myToken.capitalization; 
             if( myToken.type === window.TYPE_WORD)
             {   
-                var ll = ["0","0","0"]
+                var llw = ["0","0","0"]
                 for (var j = 0; j < myToken.length.length; j++) { 
-                    ll[j] = ""+myToken.length[j]
+                    llw[j] = ""+myToken.length[j]
                 }
-                console.log(ll)
                 this.onAddWordToken("W",window.TYPE_WORD, myToken.token, !(myToken.is_required==='true'), 
-                    myToken.is_in_output==='true', myToken.match_all_forms === 'true', myToken.contain_digit === 'true', ll[0], ll[1], ll[2],
+                    myToken.is_in_output==='true', myToken.match_all_forms === 'true', myToken.contain_digit === 'true', llw[0], llw[1], llw[2],
                     myToken.prefix, myToken.suffix, myToken.is_out_of_vocabulary === 'true', myToken.is_in_vocabulary === 'true', (myarr.indexOf(window.POS_noun) > -1), (myarr.indexOf(window.POS_pronoun) > -1), (myarr.indexOf(window.POS_punctuation) > -1),
                     (myarr.indexOf(window.POS_propernoun) > -1), (myarr.indexOf(window.POS_determiner) > -1), (myarr.indexOf(window.POS_symbol) > -1), (myarr.indexOf(window.POS_adjective) > -1), (myarr.indexOf(window.POS_conjunction) > -1),(myarr.indexOf(window.POS_verb) > -1),  
                     (myarr.indexOf("prepost_position") > -1), (myarr.indexOf(window.POS_adverb) > -1), (myarr.indexOf(window.POS_particle) > -1), (myarr.indexOf(window.POS_interjection) > -1), (myarr1.indexOf("exact") > -1),(myarr1.indexOf("lower") > -1), (myarr1.indexOf("upper") > -1),
@@ -266,12 +271,12 @@ class Rule extends Component
             }
             else if (myToken.type === window.TYPE_NUMBERS)
             {
-                var ll = ["0","0","0"]
+                var lln = ["0","0","0"]
                 for (var j = 0; j < myToken.length.length; j++) { 
-                    ll[j] = ""+myToken.length[j]
+                    lln[j] = ""+myToken.length[j]
                 }
                 this.onAddNumberToken("#",window.TYPE_NUMBERS, myToken.token, !(myToken.is_required==='true'), 
-                    myToken.is_in_output==='true', myToken.match_all_forms === 'true', myToken.contain_digit === 'true', ll[0], ll[1], ll[2],
+                    myToken.is_in_output==='true', myToken.match_all_forms === 'true', myToken.contain_digit === 'true', lln[0], lln[1], lln[2],
                     myToken.minimum, myToken.maximum, myToken.is_out_of_vocabulary === 'true', myToken.is_in_vocabulary === 'true', (myarr.indexOf(window.POS_noun) > -1), (myarr.indexOf(window.POS_pronoun) > -1), (myarr.indexOf(window.POS_punctuation) > -1),
                     (myarr.indexOf(window.POS_propernoun) > -1), (myarr.indexOf(window.POS_determiner) > -1), (myarr.indexOf(window.POS_symbol) > -1), (myarr.indexOf(window.POS_adjective) > -1), (myarr.indexOf(window.POS_conjunction) > -1),(myarr.indexOf(window.POS_verb) > -1),  
                     (myarr.indexOf("prepost_position") > -1), (myarr.indexOf(window.POS_adverb) > -1), (myarr.indexOf(window.POS_particle) > -1), (myarr.indexOf(window.POS_interjection) > -1), (myarr1.indexOf("exact") > -1),(myarr1.indexOf("lower") > -1), (myarr1.indexOf("upper") > -1),
@@ -1197,7 +1202,6 @@ class Rule extends Component
         /* Let's determine when to show/close the menu when the 
         plus token is clicked. 
         */
-
         //reset some variable. 
         this.setState({
             newToken2AddIndex: index
