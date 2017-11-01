@@ -130,7 +130,7 @@ class NumberTokenConfig extends React.Component {
     var tData = nextProps.tokenData; 
     if(nextProps.modify)
     {
-      console.log(tData),
+      console.log(tData);
 
       this.setState({
         allnumbers: tData.numbers.join(" "),

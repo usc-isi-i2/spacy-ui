@@ -56,7 +56,6 @@ class Token extends Component
     }
     else if (this.props.tokenPatternData.type ===window.TYPE_NUMBERS)
     {
-      console.log(this)
       /*if there is no word text, keep
       the space for formatting otherwise the tokens will be misaligned. */
       if(this.props.tokenPatternData.numbers.length === 0)
@@ -72,7 +71,6 @@ class Token extends Component
       }
     } else if (this.props.tokenPatternData.type ===window.TYPE_ENTITY)
     {
-      console.log(this.props)
       /*if there is no word text, keep
       the space for formatting otherwise the tokens will be misaligned. */
       if(this.props.tokenPatternData.numbers.length === 0)

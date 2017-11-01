@@ -142,7 +142,7 @@ class App extends Component {
       myPattern[i].is_in_vocabulary = myPattern[i].is_in_vocabulary.toString(); 
       myPattern[i].is_out_of_vocabulary = myPattern[i].is_out_of_vocabulary.toString(); 
     }
-
+    console.log(identifier1)
     /*Let's build each rule token according to the JSON spec */
     this.allRuleData[identifier1] = {
         polarity: polarity1, 
@@ -152,7 +152,15 @@ class App extends Component {
         is_active: is_active1? "true":"false", //requires a string for true or false. 
         identifier: identifier1
     } ;
-
+    let updated_rules = this.state.allServerRules.rules.map( ele => { 
+      if( ele.identifier === identifier1 ){
+        ele.pattern = myPattern;
+      }
+      return ele;
+    } );
+    console.log("-----updated_rules-----", updated_rules)
+    this.setState({allServerRules: { rules: updated_rules}})
+    console.log(this)
     /*
       if the rules/tokens are originally created by the user then we send it back to webservice.Otherwise there is no need to 
       send rules that came from the webservice back. We just need to accumulate the JSON array/data and keep adding to it. 
@@ -352,7 +360,7 @@ class App extends Component {
     ({
         allServerRules: {rules:allRules}
     }));
-    
+    console.log(this)
 
   }
 
@@ -374,6 +382,10 @@ class App extends Component {
     ({
         allServerRules: {rules:allRules}
     }));
+    for (var i = 0; i < allRules.length; i++) { 
+      this.allRuleData[i] = allRules[i];
+    };
+    console.log(this)
 
   }
 
@@ -392,8 +404,15 @@ class App extends Component {
   render() 
   {
     var displayedRules = this.state.allServerRules.rules.map((rule,i)=>(
-                            <div className="help" key={rule.identifier} >  <Rule rulenum={i+1} index={i} key={rule.identifier} onDeleteRule={this.onDeleteRule} onDuplicateRule={this.onDuplicateRule}
-                              onProcessJSONData={this.ProcessJSONData}  ruleObj={rule} createdby={this.state.createdby} allfields = {this.state.all_fields}/> 
+                            console.log(rule),
+                            <div className="help" key={rule.identifier} >  
+                              <Rule rulenum={i+1} index={i} key={rule.identifier} 
+                                onDeleteRule={this.onDeleteRule} 
+                                onDuplicateRule={this.onDuplicateRule}
+                                onProcessJSONData={this.ProcessJSONData}  
+                                ruleObj={rule} createdby={this.state.createdby} 
+                                allfields = {this.state.all_fields}
+                              /> 
                           </div>
                         )); 
 
