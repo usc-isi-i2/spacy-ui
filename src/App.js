@@ -525,10 +525,11 @@ class App extends Component {
         <br/>
         <div> 
           <span className="extractionText"> Test Text </span>
+          <span className="tokensTitle"> Tokens </span>
           <div className="rulesText"> 
             <textarea name="test_text" onChange={this.handleChange}  rows="5" className="textInput" value={this.state.test_text}/>
             <div className ="textInput2"> {displayToken} </div>
-            </div> 
+          </div> 
         </div>
         <div> 
           <span className="extractionText"> Positive Examples </span>

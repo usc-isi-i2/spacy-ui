@@ -42,10 +42,11 @@ body {
     cursor: pointer;
 }
 */
-.extractionText{
-  display: inline; 
+.extractionText, .tokensTitle{
+  display: inline-block; 
   font-weight: bold; 
   font-size: 1.2em; 
+  width: 50%;
 }
 
 #appHeader
