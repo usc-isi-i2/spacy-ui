@@ -1382,6 +1382,7 @@ class Rule extends Component
                             <div onClick={this.showPunctuationTokenDialog} className="tokenMenu_item">  Punctuation </div>
                             <div onClick={this.showShapeTokenDialog} className="tokenMenu_item"> Shape </div>
                             <div onClick={this.showLinebreakTokenDialog} className="tokenMenu_item"> Linebreak </div>
+                            <div onClick={this.showEntityTokenDialog} className="tokenMenu_item"> Entity </div>
                         </div>   
 
                         <div className="arrangeRuleTokens"> 
