@@ -57,7 +57,9 @@ class App extends Component {
       jsonExtraction:[],
       allServerRules:{rules:[]},
       createdby:window.CREATEDBY_SERVER,
-      all_fields:[]
+      all_fields:[],
+      positive_examples:[],
+      positive_examples_text: ""
     }
 
     this.allRuleData = {}; 
@@ -74,6 +76,9 @@ class App extends Component {
     this.getInitState = this.getInitState.bind(this); 
     this.onDeleteRule = this.onDeleteRule.bind(this); 
     this.onDuplicateRule = this.onDuplicateRule.bind(this); 
+    this.handleChangeExample = this.handleChangeExample.bind(this);
+    this.sendPositiveExample = this.sendPositiveExample.bind(this);
+    this.buildExample2Send = this.buildExample2Send.bind(this);
   }
 
 
@@ -121,6 +126,11 @@ class App extends Component {
   handleChange(event) 
   {
     this.setState({test_text: event.target.value});
+  }
+
+  handleChangeExample(event) 
+  {
+    this.setState({positive_examples_text: event.target.value});
   }
 
   /*
@@ -214,6 +224,28 @@ class App extends Component {
     var data2Send = JSON.stringify(myData2Send);
     console.log(data2Send)
     return data2Send; 
+  }
+
+  buildExample2Send()
+  {
+    console.log(this.state.positive_examples_text);
+    const positive_examples_lst = [];
+    var pos_lst = this.state.positive_examples_text.split("\n");
+    for (var i = 0; i < pos_lst.length; i++) {
+      positive_examples_lst.push(pos_lst[i].split(" "));
+    };
+    this.setState({
+      positive_examples: positive_examples_lst
+    });
+    var myData2Send = {};
+    myData2Send={
+      test_text:this.state.test_text,
+      positive_examples: positive_examples_lst 
+    };
+    console.log(myData2Send)
+    var data2Send = JSON.stringify(myData2Send);
+    console.log(data2Send)
+    return data2Send;
   }
 
   getData()
@@ -322,6 +354,7 @@ class App extends Component {
                         
                         //var myArr = JSON.parse(json);
                         console.log("Test = " + json.results); 
+                        console.log("++++++++++",json)
                         var myResultRules=[]; 
                         var myResultExtractions=[]; 
                         for(var i=0; i < json.results.length; i++)
@@ -343,6 +376,52 @@ class App extends Component {
     // console.log(this.buildData2Send());
   }
 
+  /*
+  Send positive examples
+  */
+  sendPositiveExample()
+  {
+    // console.log("Enter SendData: about post positive examples to the SERVER");
+
+    // //This is how you authenticate using base64(username:password. )
+    // var headers = new Headers();
+    // headers.append("Authorization", "Basic " + this.props.params.auth);
+
+    // /*
+    // Let's fetch the data from the webservice. 
+    // */
+    // fetch(webServiceUrl, {
+    //   method: 'POST',  
+    //   headers: headers, //authentication header. 
+    //   body:
+          this.buildExample2Send() //JSON data created earlier. 
+    // }).then( (response) => {
+    //             return response.json() })   
+    //                 .then( (json) => {
+
+    //                     if(json === undefined)
+    //                       return; 
+                        
+    //                     //var myArr = JSON.parse(json);
+    //                     console.log("Test = " + json.results); 
+    //                     var myResultRules=[]; 
+    //                     var myResultExtractions=[]; 
+    //                     for(var i=0; i < json.results.length; i++)
+    //                     {
+    //                       console.log("result rule_id =" +  json.results[i].context.rule_id +" value="+json.results[i].value); 
+    //                       //myResult[json.results[i].context.rule_id] = json.results[i].value; 
+    //                       myResultRules.push(json.results[i].context.rule_id); 
+    //                       myResultExtractions.push(json.results[i].value); 
+    //                     }
+    //                     this.setState({
+    //                       jsonRules: myResultRules,
+    //                       jsonExtraction: myResultExtractions,
+    //                       test_tokens: json.test_tokens,
+    //                       test_text: json.test_text
+    //                     });
+    //                 });
+
+  }
   /*
     This method is for adding new rule to the rule list. 
   */
@@ -385,7 +464,8 @@ class App extends Component {
     for (var i = 0; i < allRules.length; i++) { 
       this.allRuleData[i] = allRules[i];
     };
-    console.log(this)
+    console.log(this);
+    // this.sendData();
 
   }
 
@@ -404,7 +484,6 @@ class App extends Component {
   render() 
   {
     var displayedRules = this.state.allServerRules.rules.map((rule,i)=>(
-                            console.log(rule),
                             <div className="help" key={rule.identifier} >  
                               <Rule rulenum={i+1} index={i} key={rule.identifier} 
                                 onDeleteRule={this.onDeleteRule} 
@@ -445,15 +524,27 @@ class App extends Component {
           </div>
         <br/>
         <div> 
-          <span className="extractionText"> Text/Tokens </span>
+          <span className="extractionText"> Test Text </span>
+          <span className="tokensTitle"> Tokens </span>
           <div className="rulesText"> 
             <textarea name="test_text" onChange={this.handleChange}  rows="5" className="textInput" value={this.state.test_text}/>
             <div className ="textInput2"> {displayToken} </div>
-           </div> 
+          </div> 
+        </div>
+        <div> 
+          <span className="extractionText"> Positive Examples </span>
+          <div className="rulesText"> 
+            <textarea name="test_text" 
+                      onChange={this.handleChangeExample}  
+                      rows="5" className="textInput3" 
+                      value={this.state.positive_examples_text}
+                      placeholder= "Enter positive examples according to tokens above, one example per line"/>
+          </div> 
         </div>
         <br/>
        <div id="run-rules"> 
        <button className="button" onClick={this.sendData} >Run Rules </button>
+       <button className="button" onClick={this.sendPositiveExample} >Infer Rules </button>
        </div>
 
         <span className="extractionText"> Results </span>
