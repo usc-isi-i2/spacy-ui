@@ -228,8 +228,8 @@ class App extends Component {
 
   buildExample2Send()
   {
-    console.log(this.state.positive_examples_text);
     const positive_examples_lst = [];
+    const values = Object.values(this.allRuleData); 
     var pos_lst = this.state.positive_examples_text.split("\n");
     for (var i = 0; i < pos_lst.length; i++) {
       positive_examples_lst.push(pos_lst[i].split(" "));
@@ -238,11 +238,16 @@ class App extends Component {
       positive_examples: positive_examples_lst
     });
     var myData2Send = {};
+    var infer_flag = false;
+    if (this.state.positive_examples_text) {
+      infer_flag = true;
+    }
     myData2Send={
       test_text:this.state.test_text,
-      positive_examples: positive_examples_lst 
+      positive_examples: positive_examples_lst,
+      rules: values,
+      infer_rule: infer_flag
     };
-    console.log(myData2Send)
     var data2Send = JSON.stringify(myData2Send);
     console.log(data2Send)
     return data2Send;
@@ -381,45 +386,47 @@ class App extends Component {
   */
   sendPositiveExample()
   {
-    // console.log("Enter SendData: about post positive examples to the SERVER");
+    console.log("Enter SendData: about post positive examples to the SERVER");
 
-    // //This is how you authenticate using base64(username:password. )
-    // var headers = new Headers();
-    // headers.append("Authorization", "Basic " + this.props.params.auth);
+    //This is how you authenticate using base64(username:password. )
+    var headers = new Headers();
+    headers.append("Authorization", "Basic " + this.props.params.auth);
 
-    // /*
-    // Let's fetch the data from the webservice. 
-    // */
-    // fetch(webServiceUrl, {
-    //   method: 'POST',  
-    //   headers: headers, //authentication header. 
-    //   body:
+    /*
+    Let's fetch the data from the webservice. 
+    */
+    fetch(webServiceUrl, {
+      method: 'POST',  
+      headers: headers, //authentication header. 
+      body:
           this.buildExample2Send() //JSON data created earlier. 
-    // }).then( (response) => {
-    //             return response.json() })   
-    //                 .then( (json) => {
+    }).then( (response) => {
+                return response.json() })   
+                    .then( (json) => {
 
-    //                     if(json === undefined)
-    //                       return; 
+                        console.log(json)
+
+                        // if(json === undefined)
+                        //   return; 
                         
-    //                     //var myArr = JSON.parse(json);
-    //                     console.log("Test = " + json.results); 
-    //                     var myResultRules=[]; 
-    //                     var myResultExtractions=[]; 
-    //                     for(var i=0; i < json.results.length; i++)
-    //                     {
-    //                       console.log("result rule_id =" +  json.results[i].context.rule_id +" value="+json.results[i].value); 
-    //                       //myResult[json.results[i].context.rule_id] = json.results[i].value; 
-    //                       myResultRules.push(json.results[i].context.rule_id); 
-    //                       myResultExtractions.push(json.results[i].value); 
-    //                     }
-    //                     this.setState({
-    //                       jsonRules: myResultRules,
-    //                       jsonExtraction: myResultExtractions,
-    //                       test_tokens: json.test_tokens,
-    //                       test_text: json.test_text
-    //                     });
-    //                 });
+                        // //var myArr = JSON.parse(json);
+                        // console.log("Test = " + json.results); 
+                        // var myResultRules=[]; 
+                        // var myResultExtractions=[]; 
+                        // for(var i=0; i < json.results.length; i++)
+                        // {
+                        //   console.log("result rule_id =" +  json.results[i].context.rule_id +" value="+json.results[i].value); 
+                        //   //myResult[json.results[i].context.rule_id] = json.results[i].value; 
+                        //   myResultRules.push(json.results[i].context.rule_id); 
+                        //   myResultExtractions.push(json.results[i].value); 
+                        // }
+                        // this.setState({
+                        //   jsonRules: myResultRules,
+                        //   jsonExtraction: myResultExtractions,
+                        //   test_tokens: json.test_tokens,
+                        //   test_text: json.test_text
+                        // });
+                    });
 
   }
   /*
