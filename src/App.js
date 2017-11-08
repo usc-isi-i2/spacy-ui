@@ -538,7 +538,7 @@ class App extends Component {
             <div className ="textInput2"> {displayToken} </div>
           </div> 
         </div>
-        <div> 
+        {/*<div> 
           <span className="extractionText"> Positive Examples </span>
           <div className="rulesText"> 
             <textarea name="test_text" 
@@ -546,12 +546,12 @@ class App extends Component {
                       rows="5" className="textInput3" 
                       value={this.state.positive_examples_text}
                       placeholder= "Enter positive examples according to tokens above, one example per line"/>
-          </div> 
-        </div>
+          </div>
+        </div>*/}
         <br/>
        <div id="run-rules"> 
        <button className="button" onClick={this.sendData} >Run Rules </button>
-       <button className="button" onClick={this.sendPositiveExample} >Infer Rules </button>
+       {/*<button className="button" onClick={this.sendPositiveExample} >Infer Rules </button>*/}
        </div>
 
         <span className="extractionText"> Results </span>
