@@ -472,7 +472,7 @@ class App extends Component {
       this.allRuleData[i] = allRules[i];
     };
     console.log(this);
-    // this.sendData();
+    this.sendData();
 
   }
 
