@@ -152,6 +152,7 @@ class App extends Component {
       myPattern[i].is_in_vocabulary = myPattern[i].is_in_vocabulary.toString(); 
       myPattern[i].is_out_of_vocabulary = myPattern[i].is_out_of_vocabulary.toString(); 
     }
+    // console.log(this)
     console.log(identifier1)
     /*Let's build each rule token according to the JSON spec */
     this.allRuleData[identifier1] = {
@@ -170,7 +171,7 @@ class App extends Component {
     } );
     console.log("-----updated_rules-----", updated_rules)
     this.setState({allServerRules: { rules: updated_rules}})
-    console.log(this)
+    // console.log(this)
     /*
       if the rules/tokens are originally created by the user then we send it back to webservice.Otherwise there is no need to 
       send rules that came from the webservice back. We just need to accumulate the JSON array/data and keep adding to it. 
@@ -359,7 +360,7 @@ class App extends Component {
                         
                         //var myArr = JSON.parse(json);
                         console.log("Test = " + json.results); 
-                        console.log("++++++++++",json)
+                        // console.log("++++++++++",json)
                         var myResultRules=[]; 
                         var myResultExtractions=[]; 
                         for(var i=0; i < json.results.length; i++)
@@ -386,6 +387,8 @@ class App extends Component {
   */
   sendPositiveExample()
   {
+    // RULE_NUM = 0
+    // getData()
     console.log("Enter SendData: about post positive examples to the SERVER");
 
     //This is how you authenticate using base64(username:password. )
@@ -404,29 +407,46 @@ class App extends Component {
                 return response.json() })   
                     .then( (json) => {
 
-                        console.log(json)
 
-                        // if(json === undefined)
-                        //   return; 
+                        if(json === undefined)
+                          return; 
                         
-                        // //var myArr = JSON.parse(json);
-                        // console.log("Test = " + json.results); 
-                        // var myResultRules=[]; 
-                        // var myResultExtractions=[]; 
-                        // for(var i=0; i < json.results.length; i++)
-                        // {
-                        //   console.log("result rule_id =" +  json.results[i].context.rule_id +" value="+json.results[i].value); 
-                        //   //myResult[json.results[i].context.rule_id] = json.results[i].value; 
-                        //   myResultRules.push(json.results[i].context.rule_id); 
-                        //   myResultExtractions.push(json.results[i].value); 
-                        // }
-                        // this.setState({
-                        //   jsonRules: myResultRules,
-                        //   jsonExtraction: myResultExtractions,
-                        //   test_tokens: json.test_tokens,
-                        //   test_text: json.test_text
-                        // });
+                        //var myArr = JSON.parse(json);
+                        console.log("Test = " + json.results); 
+                        var myResultRules=[]; 
+                        var myResultExtractions=[]; 
+                        for(var i=0; i < json.results.length; i++)
+                        {
+                          console.log("result rule_id =" +  json.results[i].context.rule_id +" value="+json.results[i].value); 
+                          //myResult[json.results[i].context.rule_id] = json.results[i].value; 
+                          myResultRules.push(json.results[i].context.rule_id); 
+                          myResultExtractions.push(json.results[i].value); 
+                        }
+                        for(var i=0; i < json.rules.length; i++)
+                        {
+                          if (json.rules[i]["identifier"] === "infer_rule") {
+                            json.rules[i]["identifier"] = "rule_"+(++RULE_NUM);
+                          }
+                        }
+                        // console.log(json)
+
+                        this.setState({
+                          jsonRules: myResultRules,
+                          jsonExtraction: myResultExtractions,
+                          test_tokens: json.test_tokens,
+                          test_text: json.test_text,
+                          allServerRules: json,
+                          createdby: window.CREATEDBY_SERVER
+                        });
+
+                        this.allRuleData = {}; 
+                      
+                        for (var i = 0; i < json.rules.length; i++) { 
+                          this.allRuleData[json.rules[i].identifier] = json.rules[i];
+                        };
                     });
+                    // console.log(this)
+                    // console.log(RULE_NUM)
 
   }
   /*
@@ -446,7 +466,7 @@ class App extends Component {
     ({
         allServerRules: {rules:allRules}
     }));
-    console.log(this)
+    // console.log(this)
 
   }
 
@@ -456,7 +476,9 @@ class App extends Component {
   onDeleteRule(myIndex)
   {
     //console.log("Apps->onDeleteRule....delete index = " + myIndex); 
-    
+    // console.log(this.state.allServerRules)
+    // console.log(this.allRuleData)
+    let prev_rule = this.allRuleData
     this.allRuleData = {}; 
 
     let allRules = this.state.allServerRules.rules; 
@@ -469,10 +491,11 @@ class App extends Component {
         allServerRules: {rules:allRules}
     }));
     for (var i = 0; i < allRules.length; i++) { 
-      this.allRuleData[i] = allRules[i];
+      this.allRuleData[allRules[i].identifier] = allRules[i];
+      this.allRuleData[allRules[i].identifier].is_active = prev_rule[allRules[i].identifier].is_active
     };
-    console.log(this);
     this.sendData();
+    // console.log(this)
 
   }
 
@@ -538,7 +561,7 @@ class App extends Component {
             <div className ="textInput2"> {displayToken} </div>
           </div> 
         </div>
-        {/*<div> 
+        <div> 
           <span className="extractionText"> Positive Examples </span>
           <div className="rulesText"> 
             <textarea name="test_text" 
@@ -547,11 +570,11 @@ class App extends Component {
                       value={this.state.positive_examples_text}
                       placeholder= "Enter positive examples according to tokens above, one example per line"/>
           </div>
-        </div>*/}
+        </div>
         <br/>
        <div id="run-rules"> 
        <button className="button" onClick={this.sendData} >Run Rules </button>
-       {/*<button className="button" onClick={this.sendPositiveExample} >Infer Rules </button>*/}
+       <button className="button" onClick={this.sendPositiveExample} >Infer Rules </button>
        </div>
 
         <span className="extractionText"> Results </span>
