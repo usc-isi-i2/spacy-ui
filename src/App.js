@@ -152,7 +152,7 @@ class App extends Component {
       myPattern[i].is_in_vocabulary = myPattern[i].is_in_vocabulary.toString(); 
       myPattern[i].is_out_of_vocabulary = myPattern[i].is_out_of_vocabulary.toString(); 
     }
-    console.log(this)
+    // console.log(this)
     console.log(identifier1)
     /*Let's build each rule token according to the JSON spec */
     this.allRuleData[identifier1] = {
@@ -171,7 +171,7 @@ class App extends Component {
     } );
     console.log("-----updated_rules-----", updated_rules)
     this.setState({allServerRules: { rules: updated_rules}})
-    console.log(this)
+    // console.log(this)
     /*
       if the rules/tokens are originally created by the user then we send it back to webservice.Otherwise there is no need to 
       send rules that came from the webservice back. We just need to accumulate the JSON array/data and keep adding to it. 
@@ -360,7 +360,7 @@ class App extends Component {
                         
                         //var myArr = JSON.parse(json);
                         console.log("Test = " + json.results); 
-                        console.log("++++++++++",json)
+                        // console.log("++++++++++",json)
                         var myResultRules=[]; 
                         var myResultExtractions=[]; 
                         for(var i=0; i < json.results.length; i++)
@@ -428,7 +428,7 @@ class App extends Component {
                             json.rules[i]["identifier"] = "rule_"+(++RULE_NUM);
                           }
                         }
-                        console.log(json)
+                        // console.log(json)
 
                         this.setState({
                           jsonRules: myResultRules,
@@ -445,8 +445,8 @@ class App extends Component {
                           this.allRuleData[json.rules[i].identifier] = json.rules[i];
                         };
                     });
-                    console.log(this)
-                    console.log(RULE_NUM)
+                    // console.log(this)
+                    // console.log(RULE_NUM)
 
   }
   /*
@@ -466,7 +466,7 @@ class App extends Component {
     ({
         allServerRules: {rules:allRules}
     }));
-    console.log(this)
+    // console.log(this)
 
   }
 
@@ -513,7 +513,6 @@ class App extends Component {
   */  
   render() 
   {
-    console.log(this.state.allServerRules)
     var displayedRules = this.state.allServerRules.rules.map((rule,i)=>(
                             <div className="help" key={rule.identifier} >  
                               <Rule rulenum={i+1} index={i} key={rule.identifier} 
