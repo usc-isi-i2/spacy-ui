@@ -44,9 +44,7 @@ class NumberEditor extends Component {
       length3: '',
       length: [],
       max: '',
-      min: '',
-      error: null,
-      errorInfo: null
+      min: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleValChange = this.handleValChange.bind(this);
@@ -141,30 +139,8 @@ class NumberEditor extends Component {
     });
   };
 
-  componentDidCatch(error, errorInfo) {
-    // Catch errors in any components below and re-render with error message
-    this.setState({
-      error: error,
-      errorInfo: errorInfo
-    });
-    // You can also log error messages to an error reporting service here
-  }
-
   render() {
     console.log('number editor');
-    if (this.state.errorInfo) {
-      // Error path
-      return (
-        <div>
-          <h2>Sorry, we have some errors.</h2>
-          <details style={{ whiteSpace: 'pre-wrap' }}>
-            {this.state.error && this.state.error.toString()}
-            <br />
-            {this.state.errorInfo.componentStack}
-          </details>
-        </div>
-      );
-    }
     const { classes } = this.props;
     const inputProps = {
       disableUnderline: true
