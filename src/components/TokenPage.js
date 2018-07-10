@@ -3,6 +3,7 @@ import Base64 from 'base-64';
 import { Link } from 'react-router-dom';
 import TokenList from './TokenList';
 import TestArea from './TestArea';
+import ErrorDialog from './ErrorDialog';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import BackIcon from '@material-ui/icons/ArrowBack';
@@ -29,8 +30,9 @@ class TokenPage extends Component {
     console.log('token page');
     console.log(this.props.location.state.test_text);
     this.state = {
-      error: null,
-      errorInfo: null,
+      error_display: false,
+      error_message: '',
+      error_detail: '',
       results: [],
       test_tokens: [],
       test_text: this.props.location.state.test_text,
@@ -108,7 +110,14 @@ class TokenPage extends Component {
         return response.json();
       })
       .then(json => {
-        if (json === undefined) return;
+        if (json === undefined) {
+          this.setState({
+            error_display: true,
+            error_message: 'Request Error',
+            error_detail: 'Json undefined'
+          });
+          return;
+        }
 
         //var myArr = JSON.parse(json);
         console.log('Test = ' + json.results);
@@ -133,6 +142,11 @@ class TokenPage extends Component {
       .catch(err => {
         if (typeof err.text === 'function') {
           err.text().then(errorMessage => {
+            this.setState({
+              error_display: true,
+              error_message: 'Request Error',
+              error_detail: errorMessage
+            });
             console.log('Error Message: ', errorMessage);
           });
         } else {
@@ -213,27 +227,21 @@ class TokenPage extends Component {
   componentDidCatch(error, errorInfo) {
     // Catch errors in any components below and re-render with error message
     this.setState({
-      error: error,
-      errorInfo: errorInfo
+      error_display: true,
+      error_message: error.toString(),
+      error_detail: errorInfo.componentStack
     });
     // You can also log error messages to an error reporting service here
   }
 
+  handleDialogClose = child_open => {
+    this.setState({
+      error_display: child_open
+    });
+  };
+
   render() {
     console.log('token page');
-    if (this.state.errorInfo) {
-      // Error path
-      return (
-        <div>
-          <h2>Sorry, we have some errors.</h2>
-          <details style={{ whiteSpace: 'pre-wrap' }}>
-            {this.state.error && this.state.error.toString()}
-            <br />
-            {this.state.errorInfo.componentStack}
-          </details>
-        </div>
-      );
-    }
 
     const { classes } = this.props;
     return (
@@ -277,7 +285,12 @@ class TokenPage extends Component {
             />
           </Grid>
         </Grid>
-        <div />
+        <ErrorDialog
+          errorDisplay={this.state.error_display}
+          error_message={this.state.error_message}
+          error_detail={this.state.error_detail}
+          handleDialogClose={this.handleDialogClose}
+        />
       </div>
     );
   }

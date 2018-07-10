@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Base64 from 'base-64';
 import RuleList from './RuleList';
 import TestArea from './TestArea';
+import ErrorDialog from './ErrorDialog';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -26,11 +27,9 @@ const styles = theme => ({
 
 /*We need base.64 for the authentication*/
 
-var webServiceUrl =
-  'http://localhost:12497/mydig/projects/test/fields/test/spacy_rules';
-var webServiceUrlAllRules =
-  'http://localhost:12497/mydig/projects/test/fields/test/spacy_rules?type=all';
-var webServiceUrlFields = 'http://localhost:12497/mydig/projects/test/fields';
+var webServiceUrl = '';
+var webServiceUrlAllRules = '';
+// var webServiceUrlFields = '';
 window.CREATEDBY_SERVER = 'server';
 window.CREATEDBY_USER = 'user';
 window.isFirstopen = 1;
@@ -58,7 +57,10 @@ class Rule extends Component {
         results: [],
         test_tokens: [],
         test_text: ''
-      }
+      },
+      error_display: false,
+      error_message: '',
+      error_detail: ''
     };
 
     this.handleRulesUpdate = this.handleRulesUpdate.bind(this);
@@ -142,7 +144,14 @@ class Rule extends Component {
         return response.json();
       })
       .then(json => {
-        if (json === undefined) return;
+        if (json === undefined) {
+          this.setState({
+            error_display: true,
+            error_message: 'Request Error',
+            error_detail: 'Json undefined'
+          });
+          return;
+        }
 
         /*If there is an error, then there is no json.rules - it's undefined.
                 *
@@ -151,6 +160,12 @@ class Rule extends Component {
           console.log('Received 200 ok');
           console.log(json);
           if (json.rules.length < 1) {
+            this.setState({
+              error_display: true,
+              error_message: 'Project Warning',
+              error_detail:
+                'There are NO rules from this project/field combination'
+            });
             console.log(
               'There are NO rules from this project/field combination'
             );
@@ -185,6 +200,11 @@ class Rule extends Component {
             output_loc: temp_output_loc
           });
         } else {
+          this.setState({
+            error_display: true,
+            error_message: 'Error code ' + json.status_code + 'received',
+            error_detail: json.error_message
+          });
           console.log('Error code ' + json.status_code + 'received');
           console.log('Error msg = ' + json.error_message);
         }
@@ -237,7 +257,14 @@ class Rule extends Component {
         return response.json(); //we only get here if there is no error
       })
       .then(json => {
-        if (json === undefined) return;
+        if (json === undefined) {
+          this.setState({
+            error_display: true,
+            error_message: 'Request Error',
+            error_detail: 'Json undefined'
+          });
+          return;
+        }
 
         console.log('Test = ' + json.results);
         console.log('++++++++++', json);
@@ -263,6 +290,11 @@ class Rule extends Component {
       .catch(err => {
         if (typeof err.text === 'function') {
           err.text().then(errorMessage => {
+            this.setState({
+              error_display: true,
+              error_message: 'Request Error',
+              error_detail: errorMessage
+            });
             console.log('Error Message: ', errorMessage);
           });
         } else {
@@ -272,17 +304,24 @@ class Rule extends Component {
   }
 
   componentWillMount() {
-    // this.handleFirstOpen();
-    // this.sendData();
-
     if (window.isFirstopen === 1) {
       console.log('isFirstopen', window.isFirstopen);
       if (this.props.params === undefined) {
+        this.setState({
+          error_display: true,
+          error_message: 'Unable to get params',
+          error_detail: 'this.props.params undefined'
+        });
         console.log('this.props.params', this.props.params);
         return;
       }
 
       if (this.props.params.serverName === undefined) {
+        this.setState({
+          error_display: true,
+          error_message: 'No project name',
+          error_detail: 'this.props.params.serverName undefined'
+        });
         console.log('No project name');
         return;
       }
@@ -294,6 +333,12 @@ class Rule extends Component {
         this.props.params.projectName === undefined ||
         this.props.params.fieldName === undefined
       ) {
+        this.setState({
+          error_display: true,
+          error_message:
+            'No project/field name specified. They are both required!!!!!',
+          error_detail: 'this.props.params.projectName and fieldName undefined'
+        });
         console.log(
           'No project/field name specified. They are both required!!!!!'
         );
@@ -404,11 +449,18 @@ class Rule extends Component {
     console.log('catch error');
     // Catch errors in any components below and re-render with error message
     this.setState({
-      error: error,
-      errorInfo: errorInfo
+      error_display: true,
+      error_message: error.toString(),
+      error_detail: errorInfo.componentStack
     });
     // You can also log error messages to an error reporting service here
   }
+
+  handleDialogClose = child_open => {
+    this.setState({
+      error_display: child_open
+    });
+  };
 
   render() {
     if (this.state.errorInfo) {
@@ -457,7 +509,12 @@ class Rule extends Component {
             />
           </Grid>
         </Grid>
-        <div />
+        <ErrorDialog
+          errorDisplay={this.state.error_display}
+          error_message={this.state.error_message}
+          error_detail={this.state.error_detail}
+          handleDialogClose={this.handleDialogClose}
+        />
       </div>
     );
   }
