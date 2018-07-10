@@ -120,7 +120,7 @@ class Rule extends Component {
   // get data from API
   getData() {
     console.log('getData  from webservice=' + webServiceUrlAllRules);
-    console.log('==========:' + webServiceUrlFields);
+    // console.log('==========:' + webServiceUrlFields);
 
     //This is how you authenticate using base64(username:password. )
     var headers = new Headers();
