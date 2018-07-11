@@ -45,7 +45,7 @@ class TokenPage extends Component {
       autoRefresh_TP: true,
       webServiceUrl: this.props.webServiceUrl,
       path: {
-        pathname: '/',
+        pathname: this.props.relative_url,
         state: {
           rules: [],
           test_text: ''
@@ -92,7 +92,6 @@ class TokenPage extends Component {
 
   sendData() {
     console.log('Enter SendData: about post json to the SERVER');
-
     /*
     Let's fetch the data from the webservice.
     */

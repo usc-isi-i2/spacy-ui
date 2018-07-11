@@ -64,8 +64,6 @@ class RuleList extends Component {
     super(props);
 
     this.state = {
-      error: null,
-      errorInfo: null,
       rules_json: [],
       path: {},
       autoRefresh: true
@@ -81,7 +79,7 @@ class RuleList extends Component {
   componentWillMount() {
     console.log('rules_json from rule page', this.props.rules_json);
     var ini_path = {
-      pathname: '/token',
+      pathname: this.props.relative_url + 'token',
       state: {
         rule: {
           polarity: true,
@@ -107,7 +105,7 @@ class RuleList extends Component {
   componentWillReceiveProps(nextProps) {
     console.log('rules_json from rule page', nextProps.rules_json);
     var ini_path = {
-      pathname: '/token',
+      pathname: this.props.relative_url + 'token',
       state: {
         rule: {
           polarity: true,
@@ -181,30 +179,7 @@ class RuleList extends Component {
     this.props.autoRefresh(event.target.checked);
   };
 
-  componentDidCatch(error, errorInfo) {
-    // Catch errors in any components below and re-render with error message
-    this.setState({
-      error: error,
-      errorInfo: errorInfo
-    });
-    // You can also log error messages to an error reporting service here
-  }
-
   render() {
-    if (this.state.errorInfo) {
-      // Error path
-      return (
-        <div>
-          <h2>Sorry, we have some errors.</h2>
-          <details style={{ whiteSpace: 'pre-wrap' }}>
-            {this.state.error && this.state.error.toString()}
-            <br />
-            {this.state.errorInfo.componentStack}
-          </details>
-        </div>
-      );
-    }
-
     const { classes } = this.props;
 
     console.log('render rule list and path');
@@ -247,6 +222,7 @@ class RuleList extends Component {
                 index={index}
                 test_text={this.props.test_text}
                 webServiceUrl={this.props.webServiceUrl}
+                relative_url={this.props.relative_url}
                 deleteItem={this.handleItemDelete}
                 handleActive={this.handleActive}
               />

@@ -29,6 +29,7 @@ const styles = theme => ({
 
 var webServiceUrl = '';
 var webServiceUrlAllRules = '';
+var relative_url = '';
 // var webServiceUrlFields = '';
 window.CREATEDBY_SERVER = 'server';
 window.CREATEDBY_USER = 'user';
@@ -65,7 +66,8 @@ class Rule extends Component {
 
     this.handleRulesUpdate = this.handleRulesUpdate.bind(this);
     this.handleTextUpdate = this.handleTextUpdate.bind(this);
-    // this.handleFirstOpen = this.handleFirstOpen.bind(this);
+    this.getUrlProps = this.getUrlProps.bind(this);
+    this.getUrlProps_demo = this.getUrlProps_demo.bind(this);
     this.runAllRules = this.runAllRules.bind(this);
     this.handleAutoRefresh = this.handleAutoRefresh.bind(this);
     this.getData = this.getData.bind(this);
@@ -117,14 +119,36 @@ class Rule extends Component {
   //   this.getData();
   // }
 
+  // get Url props by regular expression
+  getUrlProps() {
+    console.log('window.location.href', window.location.href);
+    var pos = window.location.href.indexOf('/#/');
+    var url_props = [];
+    if (pos !== -1) {
+      url_props = window.location.href.slice(pos + 3).split('/');
+      console.log('url_props', url_props);
+    }
+    return url_props;
+  }
+
+  getUrlProps_demo(url) {
+    var pos = url.indexOf('/#/');
+    var url_props = [];
+    if (pos !== -1) {
+      url_props = url.slice(pos + 3).split('/');
+      console.log('short_url', url.slice(pos + 3));
+      console.log('url_props', url_props);
+    }
+    return url_props;
+  }
+
   // get data from API
   getData() {
     console.log('getData  from webservice=' + webServiceUrlAllRules);
-    // console.log('==========:' + webServiceUrlFields);
 
     //This is how you authenticate using base64(username:password. )
     var headers = new Headers();
-    headers.append('Authorization', 'Basic ' + this.props.params.auth);
+    headers.append('Authorization', 'Basic ' + this.props.match.params.auth);
     headers.append('accept', 'application/json');
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
@@ -209,28 +233,6 @@ class Rule extends Component {
           console.log('Error msg = ' + json.error_message);
         }
       });
-
-    // fetch(webServiceUrlFields, {
-    //   method: 'GET',
-    //   // headers: headers, //authentication header.
-    //   mode: 'cors',
-    //   credentials: 'include'
-    // })
-    //   .then(response => {
-    //     return response.json();
-    //   })
-    //   .then(json => {
-    //     console.log('webServiceUrlFields', json);
-    //     //alert("GETDATA WoRKED");
-    //     if (json === undefined) return;
-    //
-    //     /*If there is an error, then there is no json.rules - it's undefined.
-    //                       *
-    //                       */
-    //     this.setState({
-    //       all_fields: Object.keys(json)
-    //     });
-    //   });
   }
 
   // send data to backend server
@@ -239,7 +241,7 @@ class Rule extends Component {
 
     //This is how you authenticate using base64(username:password. )
     var headers = new Headers();
-    headers.append('Authorization', 'Basic ' + this.props.params.auth);
+    headers.append('Authorization', 'Basic ' + this.props.match.params.auth);
     /*
     Let's fetch the data from the webservice.
     */
@@ -306,52 +308,110 @@ class Rule extends Component {
   componentWillMount() {
     if (window.isFirstopen === 1) {
       console.log('isFirstopen', window.isFirstopen);
-      if (this.props.params === undefined) {
-        this.setState({
-          error_display: true,
-          error_message: 'Unable to get params',
-          error_detail: 'this.props.params undefined'
-        });
-        console.log('this.props.params', this.props.params);
-        return;
+      // var demo_url =
+      //   '';
+      // this.getUrlProps_demo(demo_url);
+      //not sure the relative_url should choose match.url or match.path or this.props.loaction
+      relative_url = this.props.match.url;
+      console.log(
+        'this.props.match.params',
+        this.props.match.params,
+        'relative_url',
+        relative_url,
+        'window.location.href',
+        window.location.href,
+        this.props
+      );
+
+      //receive props from the url
+      if (Object.keys(this.props.match.params).length === 0) {
+        var url_props_arr = this.getUrlProps();
+        if (url_props_arr.length === 4) {
+          if (url_props_arr[1] === undefined) {
+            this.setState({
+              error_display: true,
+              error_message: 'No server name',
+              error_detail: 'this.props.params.serverName undefined'
+            });
+            console.log('No server name');
+            return;
+          }
+
+          var serverName = Base64.decode(url_props_arr[1]);
+          console.log('Server name = ' + serverName);
+
+          if (
+            url_props_arr[2] === undefined ||
+            url_props_arr[3] === undefined
+          ) {
+            this.setState({
+              error_display: true,
+              error_message:
+                'No project/field name specified. They are both required!!!!!',
+              error_detail:
+                'this.props.params.projectName and fieldName undefined'
+            });
+            console.log(
+              'No project/field name specified. They are both required!!!!!'
+            );
+          }
+
+          webServiceUrl =
+            'http://' +
+            serverName +
+            '/projects/' +
+            url_props_arr[2] +
+            '/fields/' +
+            url_props_arr[3] +
+            '/spacy_rules';
+        } else {
+          this.setState({
+            error_display: true,
+            error_message: 'Unable to get url props',
+            error_detail:
+              'this.props.match.params is empty or the length of url_props_arr is less than 4'
+          });
+          return;
+        }
+      } else {
+        if (this.props.match.params.serverName === undefined) {
+          this.setState({
+            error_display: true,
+            error_message: 'No server name',
+            error_detail: 'this.props.params.serverName undefined'
+          });
+          console.log('No server name');
+          return;
+        }
+
+        var serverName = Base64.decode(this.props.match.params.serverName);
+        console.log('Server name = ' + serverName);
+
+        if (
+          this.props.params.match.projectName === undefined ||
+          this.props.params.match.fieldName === undefined
+        ) {
+          this.setState({
+            error_display: true,
+            error_message:
+              'No project/field name specified. They are both required!!!!!',
+            error_detail:
+              'this.props.params.projectName and fieldName undefined'
+          });
+          console.log(
+            'No project/field name specified. They are both required!!!!!'
+          );
+        }
+
+        webServiceUrl =
+          'http://' +
+          serverName +
+          '/projects/' +
+          this.props.params.match.projectName +
+          '/fields/' +
+          this.props.params.match.fieldName +
+          '/spacy_rules';
       }
-
-      if (this.props.params.serverName === undefined) {
-        this.setState({
-          error_display: true,
-          error_message: 'No project name',
-          error_detail: 'this.props.params.serverName undefined'
-        });
-        console.log('No project name');
-        return;
-      }
-
-      var serverName = Base64.decode(this.props.params.serverName);
-      console.log('Server name = ' + serverName);
-
-      if (
-        this.props.params.projectName === undefined ||
-        this.props.params.fieldName === undefined
-      ) {
-        this.setState({
-          error_display: true,
-          error_message:
-            'No project/field name specified. They are both required!!!!!',
-          error_detail: 'this.props.params.projectName and fieldName undefined'
-        });
-        console.log(
-          'No project/field name specified. They are both required!!!!!'
-        );
-      }
-
-      webServiceUrl =
-        'http://' +
-        serverName +
-        '/projects/' +
-        this.props.params.projectName +
-        '/fields/' +
-        this.props.params.fieldName +
-        '/spacy_rules';
 
       //Type=all grabs all the rules, test_text, token, results etc.
       webServiceUrlAllRules = webServiceUrl + '?type=all';
@@ -390,9 +450,6 @@ class Rule extends Component {
   componentWillReceiveProps(nextProps) {
     console.log('next props');
     console.log(this.props.location.state);
-    // this.setState({
-    //   rules_json: nextProps.rules
-    // });
   }
 
   handleAutoRefresh = autoRefresh => {
@@ -463,19 +520,6 @@ class Rule extends Component {
   };
 
   render() {
-    if (this.state.errorInfo) {
-      // Error path
-      return (
-        <div>
-          <h2>Sorry, we have some errors.</h2>
-          <details style={{ whiteSpace: 'pre-wrap' }}>
-            {this.state.error && this.state.error.toString()}
-            <br />
-            {this.state.errorInfo.componentStack}
-          </details>
-        </div>
-      );
-    }
     const { classes } = this.props;
     return (
       <div className={classes.root}>
@@ -493,6 +537,7 @@ class Rule extends Component {
             <RuleList
               rules_json={this.state.rules_json}
               webServiceUrl={webServiceUrl}
+              relative_url={relative_url}
               test_text={this.state.test_text}
               autoRefresh={this.handleAutoRefresh}
               updateRules={this.handleRulesUpdate}

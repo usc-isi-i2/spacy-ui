@@ -64,8 +64,6 @@ const styles = theme => ({
 });
 
 const initialState = {
-  error: null,
-  errorInfo: null,
   token_json: [],
   dialogdisplay: false,
   polarity: 'true',
@@ -263,29 +261,7 @@ class TokenList extends Component {
     this.props.autoRefresh(event.target.checked);
   };
 
-  componentDidCatch(error, errorInfo) {
-    // Catch errors in any components below and re-render with error message
-    this.setState({
-      error: error,
-      errorInfo: errorInfo
-    });
-    // You can also log error messages to an error reporting service here
-  }
-
   render() {
-    if (this.state.errorInfo) {
-      // Error path
-      return (
-        <div>
-          <h2>Sorry, we have some errors.</h2>
-          <details style={{ whiteSpace: 'pre-wrap' }}>
-            {this.state.error && this.state.error.toString()}
-            <br />
-            {this.state.errorInfo.componentStack}
-          </details>
-        </div>
-      );
-    }
     const { classes } = this.props;
     const inputProps = {
       disableUnderline: true

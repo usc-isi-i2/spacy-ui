@@ -36,14 +36,9 @@ class App extends Component {
         </div>
       );
     }
-    // try {
-    //   // Do something that could throw
-    // } catch (error) {
-    //   this.setState({ error });
-    // }
 
     return (
-      <BrowserRouter>
+      <BrowserRouter basenbame="/mydig/spacy-ui">
         <div>
           <Route exact path="/" component={Rule} />
           <Route exact path="/token" component={Token} />
@@ -60,7 +55,6 @@ class App extends Component {
       </BrowserRouter>
     );
   }
-  // registerServiceWorker()
 }
 
 export default App;
