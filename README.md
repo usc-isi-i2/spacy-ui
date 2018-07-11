@@ -1,9 +1,6 @@
 This is the Spacy GUI project. The following are the required React Modules: 
 1. react-router - this is needed for the url mapping to props in the component. 
-
-
-## Design
-See `spacygui-design.pdf` for a uml diagram. 
+ 
 
 For deployment, you need to run 
 
@@ -54,35 +51,33 @@ We are always open to [your feedback](https://github.com/facebookincubator/creat
 ```
 SPACY-UI/
   README.md
-  spacygui-design.pdf
   package.json
+  package-lock.json
   node_modules/
   public/
     index.html
     favicon.ico
   src/
-    App.js
-    App.test.js
     index.css
     index.js
-    logo.svg
-    Components/
-      Modal.js
-      NumberTokenConfig.js
-      PlusToken.js
-      PunctuationTokenConfig.js
-      Rule.js
-      ShapeTokenConfig.js
-      Token.js
-      TokenWrapper.js
-      WordTokenConfig.js
-    Styles/
-      layout.css
-      numbertoken.css
-      punctuationtoken.css
-      rule.css
-      token.css
-      wordtoken.css
+    components/
+      App.js
+      EditorModal.js
+      ErrorDialog.js
+      TokenPage.js
+      TokenList.js
+      TokenItem.js
+      RulePage.js
+      RulelList.js
+      RuleItem.js
+      ShapeEditor.js
+      NumberEditor.js
+      PuncEditor.js
+      WordEditor.js
+      LineBreakEditor.js
+      TestArea.js
+    styles/
+      Listitem.css
 ```
 
 For the project to build, **these files must exist with exact filenames**:
