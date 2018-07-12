@@ -8,7 +8,7 @@ Desktop.ini
 Thumbs.db
 
 .gitignore
-node_modules
+# node_modules
 
 *.DS_Store
 .cache/
