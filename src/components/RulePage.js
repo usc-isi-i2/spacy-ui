@@ -64,60 +64,15 @@ class Rule extends Component {
       error_detail: ''
     };
 
-    this.handleRulesUpdate = this.handleRulesUpdate.bind(this);
-    this.handleTextUpdate = this.handleTextUpdate.bind(this);
+    // this.handleRulesUpdate = this.handleRulesUpdate.bind(this);
+    // this.handleTextUpdate = this.handleTextUpdate.bind(this);
     this.getUrlProps = this.getUrlProps.bind(this);
     this.getUrlProps_demo = this.getUrlProps_demo.bind(this);
-    this.runAllRules = this.runAllRules.bind(this);
-    this.handleAutoRefresh = this.handleAutoRefresh.bind(this);
+    // this.runAllRules = this.runAllRules.bind(this);
+    // this.handleAutoRefresh = this.handleAutoRefresh.bind(this);
     this.getData = this.getData.bind(this);
     this.sendData = this.sendData.bind(this);
   }
-
-  // handleFirstOpen() {
-  //   //This is the development Server IP.
-  //   //http://52.36.12.77:9879/projects/pedro_test_01/fields/name/spacy_rules'
-  //   if (this.props.params.serverName === undefined) {
-  //     console.log('No project name');
-  //     return;
-  //   }
-  //
-  //   var serverName = Base64.decode(this.props.params.serverName);
-  //   console.log('Server name = ' + serverName);
-  //
-  //   if (
-  //     this.props.params.projectName === undefined ||
-  //     this.props.params.fieldName === undefined
-  //   ) {
-  //     console.log(
-  //       'No project/field name specified. They are both required!!!!!'
-  //     );
-  //   }
-  //
-  //   webServiceUrl =
-  //     'http://' +
-  //     serverName +
-  //     '/projects/' +
-  //     this.props.params.projectName +
-  //     '/fields/' +
-  //     this.props.params.fieldName +
-  //     '/spacy_rules';
-  //
-  //   //Type=all grabs all the rules, test_text, token, results etc.
-  //   webServiceUrlAllRules = webServiceUrl + '?type=all';
-  //
-  //   console.log('webservice url = ' + webServiceUrl);
-  //   console.log('Address for getting rules:' + webServiceUrlAllRules);
-  //
-  //   // webServiceUrlFields =
-  //   //   'http://' +
-  //   //   serverName +
-  //   //   '/projects/' +
-  //   //   this.props.params.projectName
-  //   //   '/fields';
-  //
-  //   this.getData();
-  // }
 
   // get Url props by regular expression
   getUrlProps() {

@@ -47,7 +47,7 @@ class EditorModal extends React.Component {
       error: null,
       errorInfo: null
     };
-    this.handleChange = this.handleChange.bind(this);
+    // this.handleChange = this.handleChange.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
     this.updateData = this.updateData.bind(this);
     this.handleSummit = this.handleSummit.bind(this);

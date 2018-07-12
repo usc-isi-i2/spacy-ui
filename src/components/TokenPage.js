@@ -53,10 +53,10 @@ class TokenPage extends Component {
       }
     };
 
-    this.handleTextUpdate = this.handleTextUpdate.bind(this);
-    this.handleRuleUpdate = this.handleRuleUpdate.bind(this);
-    this.handleAutoRefresh = this.handleAutoRefresh.bind(this);
-    this.runOneRule = this.runOneRule.bind(this);
+    // this.handleTextUpdate = this.handleTextUpdate.bind(this);
+    // this.handleRuleUpdate = this.handleRuleUpdate.bind(this);
+    // this.handleAutoRefresh = this.handleAutoRefresh.bind(this);
+    // this.runOneRule = this.runOneRule.bind(this);
     this.sendData = this.sendData.bind(this);
   }
 
