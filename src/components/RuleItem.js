@@ -47,7 +47,7 @@ class RuleItem extends Component {
       rule_json: {},
       pattern: [],
       path: {
-        pathname: this.props.relative_url + 'token',
+        pathname: this.props.relative_url + '/token',
         state: {}
       }
     };
@@ -73,7 +73,8 @@ class RuleItem extends Component {
       rule_index: this.props.index,
       rules_data: this.props.rules_json,
       test_text: this.props.test_text,
-      webServiceUrl: this.props.webServiceUrl
+      webServiceUrl: this.props.webServiceUrl,
+      relative_url: this.props.relative_url
     };
     console.log('single_rule_json.is_active');
     console.log(this.props.single_rule_json.is_active);
@@ -123,7 +124,8 @@ class RuleItem extends Component {
       rule_index: nextProps.index,
       rules_data: nextProps.rules_json,
       test_text: nextProps.test_text,
-      webServiceUrl: nextProps.webServiceUrl
+      webServiceUrl: nextProps.webServiceUrl,
+      relative_url: nextProps.relative_url
     };
 
     this.setState({

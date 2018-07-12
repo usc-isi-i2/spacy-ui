@@ -26,9 +26,9 @@ const styles = theme => ({
 class TokenPage extends Component {
   constructor(props) {
     super(props);
-    var webServiceUrl = this.props.webServiceUrl;
+    var webServiceUrl = this.props.location.state.webServiceUrl;
     console.log('token page');
-    console.log(this.props.location.state.test_text);
+    console.log(this.props.location.state.relative_url);
     this.state = {
       error_display: false,
       error_message: '',
@@ -45,7 +45,7 @@ class TokenPage extends Component {
       autoRefresh_TP: true,
       webServiceUrl: this.props.webServiceUrl,
       path: {
-        pathname: this.props.relative_url,
+        pathname: this.props.location.state.relative_url,
         state: {
           rules: [],
           test_text: ''

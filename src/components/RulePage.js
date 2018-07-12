@@ -343,8 +343,8 @@ class Rule extends Component {
         console.log('Server name = ' + serverName);
 
         if (
-          this.props.params.match.projectName === undefined ||
-          this.props.params.match.fieldName === undefined
+          this.props.match.params.projectName === undefined ||
+          this.props.match.params.fieldName === undefined
         ) {
           this.setState({
             error_display: true,
@@ -362,9 +362,9 @@ class Rule extends Component {
           'http://' +
           serverName +
           '/projects/' +
-          this.props.params.match.projectName +
+          this.props.match.params.projectName +
           '/fields/' +
-          this.props.params.match.fieldName +
+          this.props.match.params.fieldName +
           '/spacy_rules';
       }
 

@@ -36,21 +36,21 @@ class App extends Component {
         </div>
       );
     }
-
+    // basename="/mydig/spacy_ui/#"
     return (
-      <BrowserRouter basenbame="/mydig/spacy-ui">
+      <BrowserRouter basename="mydig/spacy_ui/#">
         <div>
-          <Route exact path="/" component={Rule} />
-          <Route exact path="/token" component={Token} />
           <Route
-            path=":auth/:serverName/:projectName/:fieldName"
+            exact
+            path="/:auth/:serverName/:projectName/:fieldName"
             component={Rule}
           />
           <Route
-            exact
-            path=":auth/:serverName/:projectName/:fieldName/token"
+            path="/:auth/:serverName/:projectName/:fieldName/token"
             component={Token}
           />
+          <Route exact path="/" component={Rule} />
+          <Route exact path="/token" component={Token} />
         </div>
       </BrowserRouter>
     );

@@ -79,7 +79,7 @@ class RuleList extends Component {
   componentWillMount() {
     console.log('rules_json from rule page', this.props.rules_json);
     var ini_path = {
-      pathname: this.props.relative_url + 'token',
+      pathname: this.props.relative_url + '/token',
       state: {
         rule: {
           polarity: true,
@@ -93,6 +93,7 @@ class RuleList extends Component {
         rules_data: this.props.rules_json,
         rule_index: '',
         webServiceUrl: this.props.webServiceUrl,
+        relative_url: this.props.relative_url,
         test_text: this.props.test_text
       }
     };
@@ -105,7 +106,7 @@ class RuleList extends Component {
   componentWillReceiveProps(nextProps) {
     console.log('rules_json from rule page', nextProps.rules_json);
     var ini_path = {
-      pathname: this.props.relative_url + 'token',
+      pathname: this.props.relative_url + '/token',
       state: {
         rule: {
           polarity: true,
@@ -119,6 +120,7 @@ class RuleList extends Component {
         rules_data: nextProps.rules_json,
         rule_index: '',
         webServiceUrl: nextProps.webServiceUrl,
+        relative_url: nextProps.relative_url,
         test_text: nextProps.test_text
       }
     };
