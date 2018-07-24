@@ -138,18 +138,6 @@ class Rule extends Component {
         if (json.rules !== undefined) {
           console.log('Received 200 ok');
           console.log(json);
-          if (json.rules.length < 1) {
-            this.setState({
-              error_display: true,
-              error_message: 'Project Warning',
-              error_detail:
-                'There are NO rules from this project/field combination'
-            });
-            console.log(
-              'There are NO rules from this project/field combination'
-            );
-            return;
-          }
 
           // I overwrite the rules identifier with our own naming. Sometimes these rules
           // *are created on the server and no identifier is provided.
@@ -179,11 +167,21 @@ class Rule extends Component {
             output_loc: temp_output_loc
           });
         } else {
-          this.setState({
-            error_display: true,
-            error_message: 'Error code ' + json.status_code + 'received',
-            error_detail: json.error_message
-          });
+          if (json.error_message === 'no spacy rules') {
+            this.setState({
+              error_display: true,
+              error_message: 'Error code ' + json.status_code + ' received',
+              error_detail:
+                json.error_message +
+                '! If it is a new field, please ignore this message'
+            });
+          } else {
+            this.setState({
+              error_display: true,
+              error_message: 'Error code ' + json.status_code + ' received',
+              error_detail: json.error_message
+            });
+          }
           console.log('Error code ' + json.status_code + 'received');
           console.log('Error msg = ' + json.error_message);
         }

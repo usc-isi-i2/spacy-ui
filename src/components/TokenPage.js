@@ -43,7 +43,7 @@ class TokenPage extends Component {
       orignal_active: this.props.location.state.rule.is_active,
       output_loc: {},
       autoRefresh_TP: true,
-      webServiceUrl: this.props.webServiceUrl,
+      webServiceUrl: this.props.location.state.webServiceUrl,
       path: {
         pathname: this.props.location.state.relative_url,
         state: {
