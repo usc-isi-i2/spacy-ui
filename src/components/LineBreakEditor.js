@@ -67,12 +67,14 @@ class LineBreakEditor extends Component {
   }
 
   componentWillMount() {
-    if (this.props.is_new === 0) {
+    if (this.props.token_data.type === 'linebreak' && this.props.is_new === 0) {
       this.setState({
         token_data: this.props.token_data,
         output: this.props.token_data.is_in_output,
         required: this.props.token_data.is_required,
         length: this.props.token_data.length[0]
+          ? this.props.token_data.length[0]
+          : ''
       });
     } else {
       this.resetState();

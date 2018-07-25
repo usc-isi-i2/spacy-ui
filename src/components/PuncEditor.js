@@ -122,7 +122,10 @@ class PuncEditor extends Component {
   }
 
   componentWillMount() {
-    if (this.props.is_new === 0) {
+    if (
+      this.props.token_data.type === 'punctuation' &&
+      this.props.is_new === 0
+    ) {
       this.setState({
         token_data: this.props.token_data,
         output: this.props.token_data.is_in_output,
@@ -184,7 +187,7 @@ class PuncEditor extends Component {
     if (this.state.punctuation_comma) allPunct.push(',');
     if (this.state.punctuation_period) allPunct.push('.');
     if (this.state.punctuation_semicomma) allPunct.push(';');
-    if (this.state.punctuation_qmark) allPunct.push(')');
+    if (this.state.punctuation_qmark) allPunct.push('?');
     if (this.state.punctuation_tilde) allPunct.push('~');
     if (this.state.punctuation_colon) allPunct.push(':');
     if (this.state.punctuation_2quote) allPunct.push('"');

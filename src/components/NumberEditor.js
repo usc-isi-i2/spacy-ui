@@ -86,15 +86,21 @@ class NumberEditor extends Component {
   }
 
   componentWillMount() {
-    if (this.props.is_new === 0) {
+    if (this.props.token_data.type === 'number' && this.props.is_new === 0) {
       this.setState({
         token_data: this.props.token_data,
         output: this.props.token_data.is_in_output,
         required: this.props.token_data.is_required,
         numbers: this.props.token_data.numbers.join(' '),
-        length1: this.props.token_data.length[0],
-        length2: this.props.token_data.length[1],
-        length3: this.props.token_data.length[2],
+        length1: this.props.token_data.length[0]
+          ? this.props.token_data.length[0]
+          : '',
+        length2: this.props.token_data.length[1]
+          ? this.props.token_data.length[1]
+          : '',
+        length3: this.props.token_data.length[2]
+          ? this.props.token_data.length[2]
+          : '',
         max: this.props.token_data.maximum,
         min: this.props.token_data.minimum
       });
@@ -126,12 +132,18 @@ class NumberEditor extends Component {
       } else {
         if (this.state.length1 !== '') {
           temp['length'][0] = this.state.length1;
+        } else {
+          temp['length'][0] = '';
         }
         if (this.state.length2 !== '') {
           temp['length'][1] = this.state.length2;
+        } else {
+          temp['length'][1] = '';
         }
         if (this.state.length3 !== '') {
           temp['length'][2] = this.state.length3;
+        } else {
+          temp['length'][2] = '';
         }
       }
       temp['type'] = 'number';

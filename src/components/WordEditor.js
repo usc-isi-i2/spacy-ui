@@ -150,7 +150,7 @@ class WordEditor extends Component {
   }
 
   componentWillMount() {
-    if (this.props.is_new === 0) {
+    if (this.props.token_data.type === 'word' && this.props.is_new === 0) {
       this.setState({
         token_data: this.props.token_data,
         output: this.props.token_data.is_in_output,
@@ -238,9 +238,15 @@ class WordEditor extends Component {
           this.props.token_data.capitalization.indexOf('mixed') > -1
             ? true
             : false,
-        length1: this.props.token_data.length[0],
-        length2: this.props.token_data.length[1],
-        length3: this.props.token_data.length[2],
+        length1: this.props.token_data.length[0]
+          ? this.props.token_data.length[0]
+          : '',
+        length2: this.props.token_data.length[1]
+          ? this.props.token_data.length[1]
+          : '',
+        length3: this.props.token_data.length[2]
+          ? this.props.token_data.length[2]
+          : '',
         prefix: this.props.token_data.prefix,
         suffix: this.props.token_data.suffix,
         notinvocabulary:
@@ -282,12 +288,18 @@ class WordEditor extends Component {
       } else {
         if (this.state.length1 !== '') {
           temp['length'][0] = this.state.length1;
+        } else {
+          temp['length'][0] = '';
         }
         if (this.state.length2 !== '') {
           temp['length'][1] = this.state.length2;
+        } else {
+          temp['length'][1] = '';
         }
         if (this.state.length3 !== '') {
           temp['length'][2] = this.state.length3;
+        } else {
+          temp['length'][2] = '';
         }
       }
       temp['type'] = 'word';
@@ -600,6 +612,7 @@ class WordEditor extends Component {
                 value={this.state.length1}
                 className={classes.textField}
                 margin="normal"
+                onChange={this.handleValChange('length1')}
               />
               <TextField
                 label="Length 2"
@@ -607,6 +620,7 @@ class WordEditor extends Component {
                 value={this.state.length2}
                 className={classes.textField}
                 margin="normal"
+                onChange={this.handleValChange('length2')}
               />
               <TextField
                 label="Length 3"
@@ -614,6 +628,7 @@ class WordEditor extends Component {
                 value={this.state.length3}
                 className={classes.textField}
                 margin="normal"
+                onChange={this.handleValChange('length3')}
               />
             </FormGroup>
           </FormControl>
