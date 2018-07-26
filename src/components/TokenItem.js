@@ -778,20 +778,31 @@ class Tokenitem extends Component {
           primary={<div className="token_item_text">{this.state.summary}</div>}
           secondary={sub_info}
         />
-        <ReactTooltip id={token_tooltip_index} type="info" effect="solid">
+        <ReactTooltip
+          id={token_tooltip_index}
+          type="info"
+          // effect="solid"
+        >
           <span>{this.state.summary_tooltip}</span>
         </ReactTooltip>
 
         <IconButton
+          data-tip
+          data-for={add_before_button}
           color="primary"
           aria-label="Add"
           onClick={this.handleAddClick}
         >
           <AddIcon />
         </IconButton>
+        <ReactTooltip id={add_before_button} type="info" effect="solid">
+          <span>Add Token Before</span>
+        </ReactTooltip>
+
         <IconButton aria-label="Edit" onClick={this.handleEditClick}>
           <Icon>edit_icon</Icon>
         </IconButton>
+
         <IconButton
           color="secondary"
           aria-label="Delete"
@@ -799,6 +810,7 @@ class Tokenitem extends Component {
         >
           <DeleteIcon />
         </IconButton>
+
         <EditorModal
           current_data={this.state.myToken}
           dialogdisplay={this.state.dialogdisplay}

@@ -11,6 +11,8 @@ import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
 const styles = theme => ({
   input_Number: {
@@ -27,6 +29,16 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     width: 120
+  },
+
+  size: {
+    marginLeft: '0.5em',
+    width: '1em',
+    height: '1.5em'
+  },
+
+  sizeIcon: {
+    fontSize: 22
   }
 });
 
@@ -123,7 +135,7 @@ class NumberEditor extends Component {
     this.setState({ [name]: event.target.value }, () => {
       var temp = this.state.token_data;
       if (name === 'numbers') {
-        var num_arr = this.state.numbers.split(' ');
+        var num_arr = this.state.numbers.trim().split(' ');
         temp['numbers'] = num_arr;
       } else if (name === 'max') {
         temp['maximum'] = this.state.max;
@@ -131,17 +143,17 @@ class NumberEditor extends Component {
         temp['minimum'] = this.state.min;
       } else {
         if (this.state.length1 !== '') {
-          temp['length'][0] = this.state.length1;
+          temp['length'][0] = this.state.length1.trim();
         } else {
           temp['length'][0] = '';
         }
         if (this.state.length2 !== '') {
-          temp['length'][1] = this.state.length2;
+          temp['length'][1] = this.state.length2.trim();
         } else {
           temp['length'][1] = '';
         }
         if (this.state.length3 !== '') {
-          temp['length'][2] = this.state.length3;
+          temp['length'][2] = this.state.length3.trim();
         } else {
           temp['length'][2] = '';
         }
@@ -153,6 +165,7 @@ class NumberEditor extends Component {
 
   render() {
     console.log('number editor');
+
     const { classes } = this.props;
     const inputProps = {
       disableUnderline: true
@@ -188,6 +201,11 @@ class NumberEditor extends Component {
               <FormControlLabel
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.required}
                     onChange={this.handleChange('required')}
                     value="required"
@@ -198,6 +216,11 @@ class NumberEditor extends Component {
               <FormControlLabel
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.output}
                     onChange={this.handleChange('output')}
                     value="output"

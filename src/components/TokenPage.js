@@ -16,6 +16,10 @@ const styles = theme => ({
   root: {
     flexGrow: 1
   },
+  flex: {
+    flex: 1,
+    textAlign: 'center'
+  },
   paper: {
     padding: theme.spacing.unit * 2,
     textAlign: 'center',
@@ -254,9 +258,14 @@ class TokenPage extends Component {
                 onClick={this.click}
               >
                 <BackIcon />
+                <Typography>Back</Typography>
               </IconButton>
-              <Typography variant="title" color="inherit" align="center">
-                Token Page
+              <Typography
+                variant="title"
+                color="inherit"
+                className={classes.flex}
+              >
+                Rule Editor
               </Typography>
             </Toolbar>
           </AppBar>

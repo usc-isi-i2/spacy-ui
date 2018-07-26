@@ -13,6 +13,7 @@ import AddIcon from '@material-ui/icons/Add';
 import EditorModal from './EditorModal';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import ReactTooltip from 'react-tooltip';
 
 const styles = theme => ({
   root: {
@@ -347,14 +348,19 @@ class TokenList extends Component {
             </List>
             <div className={classes.container}>
               <Button
+                data-tip
+                data-for={add_after_button}
                 variant="text"
                 color="secondary"
                 aria-label="add"
                 className={classes.button}
                 onClick={this.handleClickOpen}
               >
-                <AddIcon className={classes.extendedIcon} />Add Token at the end
+                <AddIcon className={classes.extendedIcon} />
               </Button>
+              <ReactTooltip id={add_after_button} type="info" effect="solid">
+                <span>Add Token at the End</span>
+              </ReactTooltip>
             </div>
             <EditorModal
               dialogdisplay={this.state.dialogdisplay}

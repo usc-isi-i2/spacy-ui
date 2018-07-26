@@ -9,6 +9,8 @@ import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import Input from '@material-ui/core/Input';
 
 const styles = theme => ({
@@ -21,6 +23,14 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     width: 120
+  },
+  size: {
+    marginLeft: '0.5em',
+    width: '1em',
+    height: '1.5em'
+  },
+  sizeIcon: {
+    fontSize: 22
   }
 });
 
@@ -100,6 +110,7 @@ class LineBreakEditor extends Component {
   };
 
   render() {
+    const { classes } = this.props;
     return (
       <List className="Shape_wrapper">
         <ListItem className="Shape_props">
@@ -109,6 +120,11 @@ class LineBreakEditor extends Component {
               <FormControlLabel
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.required}
                     onChange={this.handleChange('required')}
                     value="required"
@@ -119,6 +135,11 @@ class LineBreakEditor extends Component {
               <FormControlLabel
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.output}
                     onChange={this.handleChange('output')}
                     value="output"

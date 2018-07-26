@@ -173,7 +173,7 @@ class RuleItem extends Component {
         <ReactTooltip
           id={tooltip_index}
           type="info"
-          effect="solid"
+          // effect="solid"
           wrapper="span"
         >
           {this.state.summary_tooltip}

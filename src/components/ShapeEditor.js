@@ -11,6 +11,8 @@ import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
 const styles = theme => ({
   input_Shape: {
@@ -27,6 +29,16 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     width: 120
+  },
+
+  size: {
+    marginLeft: '0.5em',
+    width: '1em',
+    height: '1.5em'
+  },
+
+  sizeIcon: {
+    fontSize: 22
   }
 });
 
@@ -273,6 +285,11 @@ class ShapeEditor extends Component {
               <FormControlLabel
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.required}
                     onChange={this.handleChange('required')}
                     value="required"
@@ -283,6 +300,11 @@ class ShapeEditor extends Component {
               <FormControlLabel
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.output}
                     onChange={this.handleChange('output')}
                     value="output"
@@ -303,6 +325,11 @@ class ShapeEditor extends Component {
               <FormControlLabel
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.noun}
                     onChange={this.handleChange('noun')}
                     value="noun"
@@ -313,6 +340,11 @@ class ShapeEditor extends Component {
               <FormControlLabel
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.pronoun}
                     onChange={this.handleChange('pronoun')}
                     value="pronoun"
@@ -323,6 +355,11 @@ class ShapeEditor extends Component {
               <FormControlLabel
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.propernoun}
                     onChange={this.handleChange('propernoun')}
                     value="propernoun"
@@ -333,6 +370,11 @@ class ShapeEditor extends Component {
               <FormControlLabel
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.determiner}
                     onChange={this.handleChange('determiner')}
                     value="determiner"
@@ -343,6 +385,11 @@ class ShapeEditor extends Component {
               <FormControlLabel
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.symbol}
                     onChange={this.handleChange('symbol')}
                     value="symbol"
@@ -353,6 +400,11 @@ class ShapeEditor extends Component {
               <FormControlLabel
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.adjective}
                     onChange={this.handleChange('adjective')}
                     value="adjective"
@@ -363,6 +415,11 @@ class ShapeEditor extends Component {
               <FormControlLabel
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.conjunction}
                     onChange={this.handleChange('conjunction')}
                     value="conjunction"
@@ -373,6 +430,11 @@ class ShapeEditor extends Component {
               <FormControlLabel
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.verb}
                     onChange={this.handleChange('verb')}
                     value="verb"
@@ -383,6 +445,11 @@ class ShapeEditor extends Component {
               <FormControlLabel
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.prepost_position}
                     onChange={this.handleChange('prepost_position')}
                     value="prepost_position"
@@ -393,6 +460,11 @@ class ShapeEditor extends Component {
               <FormControlLabel
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.adverb}
                     onChange={this.handleChange('adverb')}
                     value="adverb"
@@ -403,6 +475,11 @@ class ShapeEditor extends Component {
               <FormControlLabel
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.particle}
                     onChange={this.handleChange('particle')}
                     value="particle"
@@ -413,6 +490,11 @@ class ShapeEditor extends Component {
               <FormControlLabel
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.interjection}
                     onChange={this.handleChange('interjection')}
                     value="interjection"

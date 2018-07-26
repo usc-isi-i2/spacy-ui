@@ -107,12 +107,13 @@ class TestArea extends React.Component {
       value: 0,
       input: '',
       test_text: '',
-      res_arr: [],
+      res_arr_length: 0,
       test_tokens: [],
       res_position: [],
       res_token: [],
       token_display: '',
-      test_display: ''
+      test_display: '',
+      number_of_extraction: 0
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -139,7 +140,8 @@ class TestArea extends React.Component {
     var end_output;
     for (var i = start; i < end; i++) {
       extraction_token_set.add(i);
-      extraction_tooltip_arr[i] = 'Exctraction of ' + res_item.identifier;
+      extraction_tooltip_arr[i] =
+        'Exctraction of ' + res_item.identifier + ', not part of output';
     }
     output_loc[res_item.identifier].map(output_pattern => {
       if (res_item.token_based_match_mapping[output_pattern] !== null) {
@@ -214,6 +216,7 @@ class TestArea extends React.Component {
 
     this.setState(
       {
+        number_of_extraction: extraction_token_set.size + output_token_set.size,
         input: pre_input,
         token_display: this.highlightTokens(
           temp_tokens,
@@ -229,7 +232,8 @@ class TestArea extends React.Component {
           output_token_set,
           output_tooltip_arr,
           extraction_tooltip_arr
-        )
+        ),
+        res_arr_length: temp_res_arr.length
       },
       () => {
         console.log('type of token_display', typeof this.state.token_display);
@@ -489,7 +493,7 @@ class TestArea extends React.Component {
             align="center"
             color="primary"
           >
-            Input Area
+            Text Panel
           </Typography>
           <Paper className={classes.paper}>
             <TextField
@@ -513,7 +517,7 @@ class TestArea extends React.Component {
             className={classes.button}
             onClick={this.runRule}
           >
-            Run Rule
+            Run Rules
           </Button>
           <Button
             variant="contained"
@@ -524,7 +528,9 @@ class TestArea extends React.Component {
             Clear
           </Button>
         </div>
-
+        <div>
+          "Number of the extraction results: " {this.state.res_arr_length}
+        </div>
         <Grid item xs={12} className={classes.result}>
           <Tabs
             value={value}
@@ -534,8 +540,8 @@ class TestArea extends React.Component {
             indicatorColor="primary"
             textColor="primary"
           >
-            <Tab label="Result" />
-            <Tab label="Show Token" />
+            <Tab label="Results" />
+            <Tab label="Show Tokens" />
           </Tabs>
 
           {value === 0 && (
@@ -552,6 +558,9 @@ class TestArea extends React.Component {
             <TabContainer>
               <Paper className={classes.display_container}>
                 {this.state.token_display}
+                <div>
+                  "Number of Extractions: " + {this.state.number_of_extraction}
+                </div>
               </Paper>
             </TabContainer>
           )}

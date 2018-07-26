@@ -28,6 +28,10 @@ const styles = theme => ({
     width: '100%',
     maxHeight: 700,
     backgroundColor: theme.palette.background.paper
+  },
+  tab: {
+    width: 'auto',
+    minWidth: 80
   }
 });
 
@@ -136,17 +140,16 @@ class EditorModal extends React.Component {
               value={index}
               onChange={this.handleChange}
               fullWidth
-              // centered
               scrollable
               scrollButtons="on"
               indicatorColor="primary"
               textColor="primary"
             >
-              <Tab label="Word" />back
-              <Tab label="Number" />
-              <Tab label="Shape" />
-              <Tab label="Punctuation" />
-              <Tab label="LineBreak" />
+              <Tab label="Word" className={classes.tab} />
+              <Tab label="Number" className={classes.tab} />
+              <Tab label="Shape" className={classes.tab} />
+              <Tab label="Punctuation" className={classes.tab} />
+              <Tab label="LineBreak" className={classes.tab} />
             </Tabs>
 
             {index === 0 && (
