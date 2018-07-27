@@ -39,6 +39,10 @@ const styles = theme => ({
 
   sizeIcon: {
     fontSize: 22
+  },
+
+  text_label_size: {
+    width: '9em'
   }
 });
 
@@ -283,6 +287,7 @@ class ShapeEditor extends Component {
             <FormLabel component="legend">Props:</FormLabel>
             <FormGroup row>
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -298,6 +303,7 @@ class ShapeEditor extends Component {
                 label="Required"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -323,6 +329,7 @@ class ShapeEditor extends Component {
             <FormLabel component="legend">Part of speech:</FormLabel>
             <FormGroup row>
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -338,6 +345,7 @@ class ShapeEditor extends Component {
                 label="noun"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -353,6 +361,7 @@ class ShapeEditor extends Component {
                 label="pronoun"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -368,6 +377,7 @@ class ShapeEditor extends Component {
                 label="proper noun"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -383,6 +393,7 @@ class ShapeEditor extends Component {
                 label="determiner"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -398,6 +409,7 @@ class ShapeEditor extends Component {
                 label="symbol"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -413,6 +425,7 @@ class ShapeEditor extends Component {
                 label="adjective"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -428,6 +441,7 @@ class ShapeEditor extends Component {
                 label="conjunction"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -443,6 +457,7 @@ class ShapeEditor extends Component {
                 label="verb"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -458,6 +473,7 @@ class ShapeEditor extends Component {
                 label="pre/post-position"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -473,6 +489,7 @@ class ShapeEditor extends Component {
                 label="adverb"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -488,6 +505,7 @@ class ShapeEditor extends Component {
                 label="particle"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}

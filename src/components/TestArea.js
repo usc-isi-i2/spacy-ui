@@ -80,7 +80,12 @@ const styles = theme => ({
     background: '#f6f6f6',
     padding: '2em',
     lineHeight: 2,
+    paddingBottom: '0.3em',
     borderRadius: '1em'
+  },
+
+  extraction_number: {
+    paddingTop: '1.7em'
   },
 
   textField: {
@@ -556,7 +561,7 @@ class TestArea extends React.Component {
             <TabContainer>
               <Paper className={classes.display_container}>
                 {this.state.token_display}
-                <div>
+                <div className={classes.extraction_number}>
                   Number of Extractions: {this.state.number_of_extraction}
                 </div>
               </Paper>

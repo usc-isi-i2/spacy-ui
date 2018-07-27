@@ -39,6 +39,14 @@ const styles = theme => ({
 
   sizeIcon: {
     fontSize: 22
+  },
+
+  text_label_size: {
+    width: '9em'
+  },
+
+  text_label_size: {
+    width: '9em'
   }
 });
 
@@ -199,6 +207,7 @@ class NumberEditor extends Component {
             <FormLabel component="legend">Props:</FormLabel>
             <FormGroup row>
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -214,6 +223,7 @@ class NumberEditor extends Component {
                 label="Required"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}

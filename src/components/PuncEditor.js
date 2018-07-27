@@ -27,6 +27,14 @@ const styles = theme => ({
 
   sizeIcon: {
     fontSize: 22
+  },
+
+  label_size: {
+    width: '3em'
+  },
+
+  text_label_size: {
+    width: '9em'
   }
 });
 
@@ -240,6 +248,7 @@ class PuncEditor extends Component {
             <FormLabel component="legend">Props:</FormLabel>
             <FormGroup row>
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -255,6 +264,7 @@ class PuncEditor extends Component {
                 label="Required"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -280,6 +290,7 @@ class PuncEditor extends Component {
             <FormLabel component="legend">Punctuation Symbols:</FormLabel>
             <FormGroup row>
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -295,6 +306,7 @@ class PuncEditor extends Component {
                 label=","
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -310,6 +322,7 @@ class PuncEditor extends Component {
                 label="."
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -325,6 +338,7 @@ class PuncEditor extends Component {
                 label=";"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -340,6 +354,7 @@ class PuncEditor extends Component {
                 label="?"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -355,6 +370,7 @@ class PuncEditor extends Component {
                 label="~"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -370,6 +386,7 @@ class PuncEditor extends Component {
                 label=":"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -385,6 +402,7 @@ class PuncEditor extends Component {
                 label="&quot;"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -400,6 +418,7 @@ class PuncEditor extends Component {
                 label="'"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -415,6 +434,7 @@ class PuncEditor extends Component {
                 label="+"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -430,6 +450,7 @@ class PuncEditor extends Component {
                 label="_"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -445,6 +466,7 @@ class PuncEditor extends Component {
                 label="&"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -460,6 +482,7 @@ class PuncEditor extends Component {
                 label="!"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -475,6 +498,7 @@ class PuncEditor extends Component {
                 label="("
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -490,6 +514,7 @@ class PuncEditor extends Component {
                 label=")"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -505,6 +530,7 @@ class PuncEditor extends Component {
                 label="["
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -520,6 +546,7 @@ class PuncEditor extends Component {
                 label="]"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -535,6 +562,7 @@ class PuncEditor extends Component {
                 label="{"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -550,6 +578,7 @@ class PuncEditor extends Component {
                 label="}"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -565,6 +594,7 @@ class PuncEditor extends Component {
                 label="|"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -580,6 +610,7 @@ class PuncEditor extends Component {
                 label="-"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -595,6 +626,7 @@ class PuncEditor extends Component {
                 label="^"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -610,6 +642,7 @@ class PuncEditor extends Component {
                 label="#"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -625,6 +658,7 @@ class PuncEditor extends Component {
                 label="<"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -640,6 +674,7 @@ class PuncEditor extends Component {
                 label=">"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -655,6 +690,7 @@ class PuncEditor extends Component {
                 label="="
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -670,6 +706,7 @@ class PuncEditor extends Component {
                 label="%"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -685,6 +722,7 @@ class PuncEditor extends Component {
                 label="\"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -700,6 +738,7 @@ class PuncEditor extends Component {
                 label="/"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -715,6 +754,7 @@ class PuncEditor extends Component {
                 label="*"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -730,6 +770,7 @@ class PuncEditor extends Component {
                 label="$"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
                     className={classes.size}

@@ -39,6 +39,10 @@ const styles = theme => ({
 
   sizeIcon: {
     fontSize: 22
+  },
+
+  text_label_size: {
+    width: '9em'
   }
 });
 
@@ -383,6 +387,7 @@ class WordEditor extends Component {
             <FormLabel component="legend">Props:</FormLabel>
             <FormGroup row>
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -398,6 +403,7 @@ class WordEditor extends Component {
                 label="Required"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -413,6 +419,7 @@ class WordEditor extends Component {
                 label="Part of Output"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -428,6 +435,7 @@ class WordEditor extends Component {
                 label="Match Lemma"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -453,6 +461,7 @@ class WordEditor extends Component {
             <FormLabel component="legend">Part of speech:</FormLabel>
             <FormGroup row>
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -468,6 +477,7 @@ class WordEditor extends Component {
                 label="noun"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -483,6 +493,7 @@ class WordEditor extends Component {
                 label="pronoun"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -498,6 +509,7 @@ class WordEditor extends Component {
                 label="proper noun"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -518,6 +530,7 @@ class WordEditor extends Component {
                 label="determiner"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -533,6 +546,7 @@ class WordEditor extends Component {
                 label="symbol"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -553,6 +567,7 @@ class WordEditor extends Component {
                 label="adjective"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -568,6 +583,7 @@ class WordEditor extends Component {
                 label="conjunction"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -583,6 +599,7 @@ class WordEditor extends Component {
                 label="verb"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -598,6 +615,7 @@ class WordEditor extends Component {
                 label="pre/post-position"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -613,6 +631,7 @@ class WordEditor extends Component {
                 label="adverb"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -628,6 +647,7 @@ class WordEditor extends Component {
                 label="particle"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -651,6 +671,7 @@ class WordEditor extends Component {
             <FormLabel component="legend">Capitalization:</FormLabel>
             <FormGroup row>
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -666,6 +687,7 @@ class WordEditor extends Component {
                 label="exact"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -681,6 +703,7 @@ class WordEditor extends Component {
                 label="lower"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -696,6 +719,7 @@ class WordEditor extends Component {
                 label="upper"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -711,6 +735,7 @@ class WordEditor extends Component {
                 label="title"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
                     className={classes.size}
@@ -783,6 +808,7 @@ class WordEditor extends Component {
               />
               <FormGroup row>
                 <FormControlLabel
+                  className={classes.text_label_size}
                   control={
                     <Checkbox
                       className={classes.size}
@@ -802,6 +828,7 @@ class WordEditor extends Component {
                   label="not in vocabulary"
                 />
                 <FormControlLabel
+                  className={classes.text_label_size}
                   control={
                     <Checkbox
                       className={classes.size}
