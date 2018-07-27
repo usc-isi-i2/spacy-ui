@@ -528,9 +528,7 @@ class TestArea extends React.Component {
             Clear
           </Button>
         </div>
-        <div>
-          "Number of the extraction results: " {this.state.res_arr_length}
-        </div>
+
         <Grid item xs={12} className={classes.result}>
           <Tabs
             value={value}
@@ -559,7 +557,7 @@ class TestArea extends React.Component {
               <Paper className={classes.display_container}>
                 {this.state.token_display}
                 <div>
-                  "Number of Extractions: " + {this.state.number_of_extraction}
+                  Number of Extractions: {this.state.number_of_extraction}
                 </div>
               </Paper>
             </TabContainer>

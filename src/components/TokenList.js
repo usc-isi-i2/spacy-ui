@@ -349,7 +349,7 @@ class TokenList extends Component {
             <div className={classes.container}>
               <Button
                 data-tip
-                data-for={add_after_button}
+                data-for="add_after_button"
                 variant="text"
                 color="secondary"
                 aria-label="add"
@@ -358,7 +358,7 @@ class TokenList extends Component {
               >
                 <AddIcon className={classes.extendedIcon} />
               </Button>
-              <ReactTooltip id={add_after_button} type="info" effect="solid">
+              <ReactTooltip id="add_after_button" type="info" effect="solid">
                 <span>Add Token at the End</span>
               </ReactTooltip>
             </div>

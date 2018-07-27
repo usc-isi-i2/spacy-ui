@@ -788,14 +788,14 @@ class Tokenitem extends Component {
 
         <IconButton
           data-tip
-          data-for={add_before_button}
+          data-for="add_before_button"
           color="primary"
           aria-label="Add"
           onClick={this.handleAddClick}
         >
           <AddIcon />
         </IconButton>
-        <ReactTooltip id={add_before_button} type="info" effect="solid">
+        <ReactTooltip id="add_before_button" type="info" effect="solid">
           <span>Add Token Before</span>
         </ReactTooltip>
 
