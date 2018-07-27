@@ -43,10 +43,6 @@ const styles = theme => ({
 
   text_label_size: {
     width: '9em'
-  },
-
-  text_label_size: {
-    width: '9em'
   }
 });
 
