@@ -232,14 +232,13 @@ class RuleList extends Component {
           </List>
           <div className={classes.addContainer}>
             <Button
-              variant="text"
+              variant="contained"
               color="primary"
-              aria-label="add"
               className={classes.button}
               component={Link}
               to={this.state.path}
             >
-              <AddIcon className={classes.extendedIcon} /> Add Rule
+              Add Rule
             </Button>
           </div>
         </Grid>

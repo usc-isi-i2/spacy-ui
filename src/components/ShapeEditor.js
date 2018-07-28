@@ -67,7 +67,7 @@ class ShapeEditor extends Component {
     this.state = {
       token_data: [],
       output: false,
-      required: false,
+      optional: false,
       shapes: [],
       part_of_speech: [],
       noun: false,
@@ -103,19 +103,19 @@ class ShapeEditor extends Component {
       shapes: [],
       token: [],
       numbers: [],
-      is_in_vocabulary: 'false',
-      is_out_of_vocabulary: 'false',
-      is_required: 'false',
+      is_in_vocabulary: false,
+      is_out_of_vocabulary: false,
+      is_required: true,
       type: '',
-      is_in_output: 'false',
-      match_all_forms: 'false',
-      contain_digit: 'false'
+      is_in_output: false,
+      match_all_forms: false,
+      contain_digit: false
     };
 
     this.setState({
       token_data: initial_token_data,
       output: false,
-      required: false,
+      optional: false,
       shapes: [],
       part_of_speech: [],
       noun: false,
@@ -141,7 +141,7 @@ class ShapeEditor extends Component {
       this.setState({
         token_data: this.props.token_data,
         output: this.props.token_data.is_in_output,
-        required: this.props.token_data.is_required,
+        optional: !this.props.token_data.is_required,
         shapes: this.props.token_data.shapes,
         part_of_speech: this.props.token_data.part_of_speech,
         noun:
@@ -213,7 +213,7 @@ class ShapeEditor extends Component {
       var temp = this.state.token_data;
       temp['part_of_speech'] = this.createAllPartofSpeech();
       temp['is_in_output'] = this.state.output;
-      temp['is_required'] = this.state.required;
+      temp['is_required'] = !this.state.optional;
       temp['type'] = 'shape';
       this.props.callback(temp);
     });
@@ -260,31 +260,8 @@ class ShapeEditor extends Component {
     };
     return (
       <List className="Shape_wrapper">
-        <ListItem className={classes.input_Shape}>
-          <FormControl component="fieldset" className={classes.input_Area}>
-            <FormLabel component="legend">Shapes:</FormLabel>
-            <FormGroup>
-              <Paper className="input_wrapper">
-                <TextField
-                  id="multiline-flexible"
-                  multiline
-                  rows="5"
-                  placeholder="Enter shapes such as ddd, XXXX, Xx and use space to separate the shapes. d is for digits and x for letter, X for capital letter."
-                  value={this.state.shapes}
-                  fullWidth
-                  onChange={this.handleValChange('shapes')}
-                  InputProps={inputProps}
-                />
-              </Paper>
-            </FormGroup>
-          </FormControl>
-        </ListItem>
-
-        <Divider />
-
         <ListItem className="Shape_props">
           <FormControl component="fieldset">
-            <FormLabel component="legend">Props:</FormLabel>
             <FormGroup row>
               <FormControlLabel
                 className={classes.text_label_size}
@@ -295,12 +272,12 @@ class ShapeEditor extends Component {
                       <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
                     }
                     checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
-                    checked={this.state.required}
-                    onChange={this.handleChange('required')}
-                    value="required"
+                    checked={this.state.optional}
+                    onChange={this.handleChange('optional')}
+                    value="optional"
                   />
                 }
-                label="Required"
+                label="Optional"
               />
               <FormControlLabel
                 className={classes.text_label_size}
@@ -318,6 +295,26 @@ class ShapeEditor extends Component {
                 }
                 label="Part of Output"
               />
+            </FormGroup>
+          </FormControl>
+        </ListItem>
+
+        <ListItem className={classes.input_Shape}>
+          <FormControl component="fieldset" className={classes.input_Area}>
+            <FormLabel component="legend">Shapes:</FormLabel>
+            <FormGroup>
+              <Paper className="input_wrapper">
+                <TextField
+                  id="multiline-flexible"
+                  multiline
+                  rows="5"
+                  placeholder="Enter shapes such as ddd, XXXX, Xx and use space to separate the shapes. d is for digits and x for letter, X for capital letter."
+                  value={this.state.shapes}
+                  fullWidth
+                  onChange={this.handleValChange('shapes')}
+                  InputProps={inputProps}
+                />
+              </Paper>
             </FormGroup>
           </FormControl>
         </ListItem>
@@ -526,10 +523,9 @@ class ShapeEditor extends Component {
 
         <Divider />
 
-        <Divider />
         <ListItem className="other">
           <FormControl component="fieldset">
-            <FormLabel component="legend">Other:</FormLabel>
+            <FormLabel component="legend">Properties:</FormLabel>
             <FormGroup row>
               <TextField
                 label="Prefix"

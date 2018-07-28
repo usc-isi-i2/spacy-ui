@@ -45,7 +45,7 @@ class PuncEditor extends Component {
     this.state = {
       token_data: [],
       output: false,
-      required: false,
+      optional: false,
       punctuation_comma: false,
       punctuation_period: false,
       punctuation_semicomma: false,
@@ -96,7 +96,7 @@ class PuncEditor extends Component {
       numbers: [],
       is_in_vocabulary: false,
       is_out_of_vocabulary: false,
-      is_required: false,
+      is_required: true,
       type: '',
       is_in_output: false,
       match_all_forms: false,
@@ -106,7 +106,7 @@ class PuncEditor extends Component {
     this.setState({
       token_data: initial_token_data,
       output: false,
-      required: false,
+      optional: false,
       punctuation_comma: false,
       punctuation_period: false,
       punctuation_semicomma: false,
@@ -149,7 +149,7 @@ class PuncEditor extends Component {
       this.setState({
         token_data: this.props.token_data,
         output: this.props.token_data.is_in_output,
-        required: this.props.token_data.is_required,
+        optional: !this.props.token_data.is_required,
         punctuation_comma: this.props.token_data.token.indexOf(',') > -1,
         punctuation_period: this.props.token_data.token.indexOf('.') > -1,
         punctuation_semicomma: this.props.token_data.token.indexOf(';') > -1,
@@ -196,7 +196,7 @@ class PuncEditor extends Component {
       var temp = this.state.token_data;
       temp['token'] = this.createAllPunctuations();
       temp['is_in_output'] = this.state.output;
-      temp['is_required'] = this.state.required;
+      temp['is_required'] = !this.state.optional;
       temp['type'] = 'punctuation';
       this.props.callback(temp);
     });
@@ -245,7 +245,7 @@ class PuncEditor extends Component {
       <List className="Punc_wrapper">
         <ListItem className="Punc_props">
           <FormControl component="fieldset">
-            <FormLabel component="legend">Props:</FormLabel>
+            // <FormLabel component="legend">Props:</FormLabel>
             <FormGroup row>
               <FormControlLabel
                 className={classes.text_label_size}
@@ -256,12 +256,12 @@ class PuncEditor extends Component {
                       <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
                     }
                     checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
-                    checked={this.state.required}
-                    onChange={this.handleChange('required')}
-                    value="required"
+                    checked={this.state.optional}
+                    onChange={this.handleChange('optional')}
+                    value="optional"
                   />
                 }
-                label="Required"
+                label="Optinal"
               />
               <FormControlLabel
                 className={classes.text_label_size}

@@ -76,16 +76,30 @@ const styles = theme => ({
     whiteSpace: 'pre-wrap'
   },
 
-  display_container: {
+  display_container_result: {
+    background: '#f6f6f6',
+    padding: '2em',
+    lineHeight: 2,
+    borderRadius: '1em',
+    minHeight: '5em'
+  },
+
+  display_container_token: {
     background: '#f6f6f6',
     padding: '2em',
     lineHeight: 2,
     paddingBottom: '0.3em',
-    borderRadius: '1em'
+    borderRadius: '1em',
+    minHeight: '6.7em',
+    position: 'relative'
   },
 
   extraction_number: {
-    paddingTop: '1.7em'
+    position: 'absolute',
+    bottom: 0,
+    paddingTop: '1em',
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    color: 'forestgreen'
   },
 
   textField: {
@@ -498,7 +512,7 @@ class TestArea extends React.Component {
             align="center"
             color="primary"
           >
-            Text Panel
+            Test Panel
           </Typography>
           <Paper className={classes.paper}>
             <TextField
@@ -551,7 +565,7 @@ class TestArea extends React.Component {
             <TabContainer>
               <Paper
                 id="text_display_area"
-                className={classes.display_container}
+                className={classes.display_container_result}
               >
                 {this.state.test_display}
               </Paper>
@@ -559,10 +573,10 @@ class TestArea extends React.Component {
           )}
           {value === 1 && (
             <TabContainer>
-              <Paper className={classes.display_container}>
+              <Paper className={classes.display_container_token}>
                 {this.state.token_display}
                 <div className={classes.extraction_number}>
-                  Number of Extractions: {this.state.number_of_extraction}
+                  Number of Matching Tokens: {this.state.number_of_extraction}
                 </div>
               </Paper>
             </TabContainer>

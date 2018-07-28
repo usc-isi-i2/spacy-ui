@@ -53,7 +53,7 @@ class NumberEditor extends Component {
     this.state = {
       token_data: [],
       output: false,
-      required: false,
+      optional: false,
       numbers: '',
       length1: '',
       length2: '',
@@ -80,7 +80,7 @@ class NumberEditor extends Component {
       numbers: [],
       is_in_vocabulary: false,
       is_out_of_vocabulary: false,
-      is_required: false,
+      is_required: true,
       type: '',
       is_in_output: false,
       match_all_forms: false,
@@ -90,7 +90,7 @@ class NumberEditor extends Component {
     this.setState({
       token_data: initial_token_data,
       output: false,
-      required: false,
+      optional: true,
       numbers: '',
       length: [],
       length1: '',
@@ -106,7 +106,7 @@ class NumberEditor extends Component {
       this.setState({
         token_data: this.props.token_data,
         output: this.props.token_data.is_in_output,
-        required: this.props.token_data.is_required,
+        optional: !this.props.token_data.is_required,
         numbers: this.props.token_data.numbers.join(' '),
         length1: this.props.token_data.length[0]
           ? this.props.token_data.length[0]
@@ -129,7 +129,7 @@ class NumberEditor extends Component {
     this.setState({ [name]: event.target.checked }, () => {
       var temp = this.state.token_data;
       temp['is_in_output'] = this.state.output;
-      temp['is_required'] = this.state.required;
+      temp['is_required'] = !this.state.optional;
       temp['type'] = 'number';
       this.props.callback(temp);
     });
@@ -176,31 +176,8 @@ class NumberEditor extends Component {
     };
     return (
       <List className="Number_wrapper">
-        <ListItem className={classes.input_Number}>
-          <FormControl component="fieldset" className={classes.input_Area}>
-            <FormLabel component="legend">Numbers:</FormLabel>
-            <FormGroup>
-              <Paper className="input_wrapper">
-                <TextField
-                  id="multiline-flexible"
-                  multiline
-                  rows="5"
-                  placeholder="Enter your numbers and use space to separate them"
-                  value={this.state.numbers}
-                  fullWidth
-                  InputProps={inputProps}
-                  onChange={this.handleValChange('numbers')}
-                />
-              </Paper>
-            </FormGroup>
-          </FormControl>
-        </ListItem>
-
-        <Divider />
-
         <ListItem className="Number_props">
           <FormControl component="fieldset">
-            <FormLabel component="legend">Props:</FormLabel>
             <FormGroup row>
               <FormControlLabel
                 className={classes.text_label_size}
@@ -211,12 +188,12 @@ class NumberEditor extends Component {
                       <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
                     }
                     checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
-                    checked={this.state.required}
-                    onChange={this.handleChange('required')}
-                    value="required"
+                    checked={this.state.optional}
+                    onChange={this.handleChange('optional')}
+                    value="optional"
                   />
                 }
-                label="Required"
+                label="Optional"
               />
               <FormControlLabel
                 className={classes.text_label_size}
@@ -234,6 +211,26 @@ class NumberEditor extends Component {
                 }
                 label="Part of Output"
               />
+            </FormGroup>
+          </FormControl>
+        </ListItem>
+
+        <ListItem className={classes.input_Number}>
+          <FormControl component="fieldset" className={classes.input_Area}>
+            <FormLabel component="legend">Numbers:</FormLabel>
+            <FormGroup>
+              <Paper className="input_wrapper">
+                <TextField
+                  id="multiline-flexible"
+                  multiline
+                  rows="5"
+                  placeholder="Enter your numbers and use space to separate them"
+                  value={this.state.numbers}
+                  fullWidth
+                  InputProps={inputProps}
+                  onChange={this.handleValChange('numbers')}
+                />
+              </Paper>
             </FormGroup>
           </FormControl>
         </ListItem>

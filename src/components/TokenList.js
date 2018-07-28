@@ -51,6 +51,11 @@ const styles = theme => ({
     // flexWrap: "wrap"
   },
 
+  button: {
+    margin: theme.spacing.unit,
+    padding: theme.spacing.unit
+  },
+
   formControl: {
     marginLeft: theme.spacing.unit
   },
@@ -299,7 +304,7 @@ class TokenList extends Component {
                   />
                   <TextField
                     id="output_format"
-                    label="Output_format"
+                    label="Output Format"
                     InputLabelProps={{
                       shrink: true
                     }}
@@ -350,13 +355,12 @@ class TokenList extends Component {
               <Button
                 data-tip
                 data-for="add_after_button"
-                variant="text"
+                variant="contained"
                 color="secondary"
-                aria-label="add"
                 className={classes.button}
                 onClick={this.handleClickOpen}
               >
-                <AddIcon className={classes.extendedIcon} />
+                Append Token
               </Button>
               <ReactTooltip id="add_after_button" type="info" effect="solid">
                 <span>Add Token at the End</span>

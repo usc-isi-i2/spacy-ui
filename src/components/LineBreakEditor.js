@@ -44,7 +44,7 @@ class LineBreakEditor extends Component {
 
     this.state = {
       output: false,
-      required: false,
+      optional: false,
       length: '',
       token_data: []
     };
@@ -65,7 +65,7 @@ class LineBreakEditor extends Component {
       numbers: [],
       is_in_vocabulary: false,
       is_out_of_vocabulary: false,
-      is_required: false,
+      is_required: true,
       type: '',
       is_in_output: false,
       match_all_forms: false,
@@ -75,7 +75,7 @@ class LineBreakEditor extends Component {
     this.setState({
       token_data: initial_token_data,
       output: false,
-      required: false,
+      optional: false,
       length: ''
     });
   }
@@ -85,7 +85,7 @@ class LineBreakEditor extends Component {
       this.setState({
         token_data: this.props.token_data,
         output: this.props.token_data.is_in_output,
-        required: this.props.token_data.is_required,
+        optional: !this.props.token_data.is_required,
         length: this.props.token_data.length[0]
           ? this.props.token_data.length[0]
           : ''
@@ -106,7 +106,7 @@ class LineBreakEditor extends Component {
     } else {
       this.setState({ [name]: event.target.checked }, () => {
         temp['is_in_output'] = this.state.output;
-        temp['is_required'] = this.state.required;
+        temp['is_required'] = !this.state.optional;
         temp['type'] = 'linebreak';
         this.props.callback(temp);
       });
@@ -119,7 +119,7 @@ class LineBreakEditor extends Component {
       <List className="Shape_wrapper">
         <ListItem className="Shape_props">
           <FormControl component="fieldset">
-            <FormLabel component="legend">Props:</FormLabel>
+            <FormLabel component="legend">Properties:</FormLabel>
             <FormGroup row>
               <FormControlLabel
                 className={classes.text_label_size}
@@ -130,12 +130,12 @@ class LineBreakEditor extends Component {
                       <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
                     }
                     checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
-                    checked={this.state.required}
-                    onChange={this.handleChange('required')}
-                    value="required"
+                    checked={this.state.optional}
+                    onChange={this.handleChange('optional')}
+                    value="optional"
                   />
                 }
-                label="Required"
+                label="Optional"
               />
               <FormControlLabel
                 className={classes.text_label_size}

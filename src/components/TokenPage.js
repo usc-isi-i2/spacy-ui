@@ -258,7 +258,7 @@ class TokenPage extends Component {
                 onClick={this.click}
               >
                 <BackIcon />
-                <Typography>Back</Typography>
+                <Typography>back</Typography>
               </IconButton>
               <Typography
                 variant="title"
