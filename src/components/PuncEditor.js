@@ -9,12 +9,32 @@ import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
 const styles = theme => ({
   input_Punc: {
     display: 'flex',
     width: '100%'
     // backgroundColor: "#FAFAFA"
+  },
+
+  size: {
+    marginLeft: '0.5em',
+    width: '1em',
+    height: '1.5em'
+  },
+
+  sizeIcon: {
+    fontSize: 22
+  },
+
+  label_size: {
+    width: '3em'
+  },
+
+  text_label_size: {
+    width: '9em'
   }
 });
 
@@ -25,7 +45,7 @@ class PuncEditor extends Component {
     this.state = {
       token_data: [],
       output: false,
-      required: false,
+      optional: false,
       punctuation_comma: false,
       punctuation_period: false,
       punctuation_semicomma: false,
@@ -76,7 +96,7 @@ class PuncEditor extends Component {
       numbers: [],
       is_in_vocabulary: false,
       is_out_of_vocabulary: false,
-      is_required: false,
+      is_required: true,
       type: '',
       is_in_output: false,
       match_all_forms: false,
@@ -86,7 +106,7 @@ class PuncEditor extends Component {
     this.setState({
       token_data: initial_token_data,
       output: false,
-      required: false,
+      optional: false,
       punctuation_comma: false,
       punctuation_period: false,
       punctuation_semicomma: false,
@@ -122,11 +142,14 @@ class PuncEditor extends Component {
   }
 
   componentWillMount() {
-    if (this.props.is_new === 0) {
+    if (
+      this.props.token_data.type === 'punctuation' &&
+      this.props.is_new === 0
+    ) {
       this.setState({
         token_data: this.props.token_data,
         output: this.props.token_data.is_in_output,
-        required: this.props.token_data.is_required,
+        optional: !this.props.token_data.is_required,
         punctuation_comma: this.props.token_data.token.indexOf(',') > -1,
         punctuation_period: this.props.token_data.token.indexOf('.') > -1,
         punctuation_semicomma: this.props.token_data.token.indexOf(';') > -1,
@@ -173,7 +196,7 @@ class PuncEditor extends Component {
       var temp = this.state.token_data;
       temp['token'] = this.createAllPunctuations();
       temp['is_in_output'] = this.state.output;
-      temp['is_required'] = this.state.required;
+      temp['is_required'] = !this.state.optional;
       temp['type'] = 'punctuation';
       this.props.callback(temp);
     });
@@ -184,7 +207,7 @@ class PuncEditor extends Component {
     if (this.state.punctuation_comma) allPunct.push(',');
     if (this.state.punctuation_period) allPunct.push('.');
     if (this.state.punctuation_semicomma) allPunct.push(';');
-    if (this.state.punctuation_qmark) allPunct.push(')');
+    if (this.state.punctuation_qmark) allPunct.push('?');
     if (this.state.punctuation_tilde) allPunct.push('~');
     if (this.state.punctuation_colon) allPunct.push(':');
     if (this.state.punctuation_2quote) allPunct.push('"');
@@ -216,26 +239,39 @@ class PuncEditor extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     console.log('punctuation editor');
     return (
       <List className="Punc_wrapper">
         <ListItem className="Punc_props">
           <FormControl component="fieldset">
-            <FormLabel component="legend">Props:</FormLabel>
+            // <FormLabel component="legend">Props:</FormLabel>
             <FormGroup row>
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
-                    checked={this.state.required}
-                    onChange={this.handleChange('required')}
-                    value="required"
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
+                    checked={this.state.optional}
+                    onChange={this.handleChange('optional')}
+                    value="optional"
                   />
                 }
-                label="Required"
+                label="Optinal"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.output}
                     onChange={this.handleChange('output')}
                     value="output"
@@ -254,8 +290,14 @@ class PuncEditor extends Component {
             <FormLabel component="legend">Punctuation Symbols:</FormLabel>
             <FormGroup row>
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.punctuation_comma}
                     onChange={this.handleChange('punctuation_comma')}
                     value="punctuation_comma"
@@ -264,8 +306,14 @@ class PuncEditor extends Component {
                 label=","
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.punctuation_period}
                     onChange={this.handleChange('punctuation_period')}
                     value="punctuation_period"
@@ -274,8 +322,14 @@ class PuncEditor extends Component {
                 label="."
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.punctuation_semicomma}
                     onChange={this.handleChange('punctuation_semicomma')}
                     value="punctuation_semicomma"
@@ -284,8 +338,14 @@ class PuncEditor extends Component {
                 label=";"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.punctuation_qmark}
                     onChange={this.handleChange('punctuation_qmark')}
                     value="punctuation_qmark"
@@ -294,8 +354,14 @@ class PuncEditor extends Component {
                 label="?"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.punctuation_tilde}
                     onChange={this.handleChange('punctuation_tilde')}
                     value="punctuation_tilde"
@@ -304,8 +370,14 @@ class PuncEditor extends Component {
                 label="~"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.punctuation_colon}
                     onChange={this.handleChange('punctuation_colon')}
                     value="punctuation_colon"
@@ -314,8 +386,14 @@ class PuncEditor extends Component {
                 label=":"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.punctuation_2quote}
                     onChange={this.handleChange('punctuation_2quote')}
                     value="punctuation_2quote"
@@ -324,8 +402,14 @@ class PuncEditor extends Component {
                 label="&quot;"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.punctuation_1quote}
                     onChange={this.handleChange('punctuation_1quote')}
                     value="punctuation_1quote"
@@ -334,8 +418,14 @@ class PuncEditor extends Component {
                 label="'"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.punctuation_plus}
                     onChange={this.handleChange('punctuation_plus')}
                     value="punctuation_plus"
@@ -344,8 +434,14 @@ class PuncEditor extends Component {
                 label="+"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.punctuation_underscore}
                     onChange={this.handleChange('punctuation_underscore')}
                     value="punctuation_underscore"
@@ -354,8 +450,14 @@ class PuncEditor extends Component {
                 label="_"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.punctuation_amperand}
                     onChange={this.handleChange('punctuation_amperand')}
                     value="punctuation_amperand"
@@ -364,8 +466,14 @@ class PuncEditor extends Component {
                 label="&"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.punctuation_bang}
                     onChange={this.handleChange('punctuation_bang')}
                     value="punctuation_bang"
@@ -374,8 +482,14 @@ class PuncEditor extends Component {
                 label="!"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.punctuation_openbracket}
                     onChange={this.handleChange('punctuation_openbracket')}
                     value="punctuation_openbracket"
@@ -384,8 +498,14 @@ class PuncEditor extends Component {
                 label="("
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.punctuation_closebracket}
                     onChange={this.handleChange('punctuation_closebracket')}
                     value="punctuation_closebracket"
@@ -394,8 +514,14 @@ class PuncEditor extends Component {
                 label=")"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.punctuation_open_sbracket}
                     onChange={this.handleChange('punctuation_open_sbracket')}
                     value="punctuation_open_sbracket"
@@ -404,8 +530,14 @@ class PuncEditor extends Component {
                 label="["
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.punctuation_close_sbracket}
                     onChange={this.handleChange('punctuation_close_sbracket')}
                     value="punctuation_close_sbracket"
@@ -414,8 +546,14 @@ class PuncEditor extends Component {
                 label="]"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.punctuation_open_cbracket}
                     onChange={this.handleChange('punctuation_open_cbracket')}
                     value="punctuation_open_cbracket"
@@ -424,8 +562,14 @@ class PuncEditor extends Component {
                 label="{"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.punctuation_close_cbracket}
                     onChange={this.handleChange('punctuation_close_cbracket')}
                     value="punctuation_close_cbracket"
@@ -434,8 +578,14 @@ class PuncEditor extends Component {
                 label="}"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.punctuation_vline}
                     onChange={this.handleChange('punctuation_vline')}
                     value="punctuation_vline"
@@ -444,8 +594,14 @@ class PuncEditor extends Component {
                 label="|"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.punctuation_dash}
                     onChange={this.handleChange('punctuation_dash')}
                     value="punctuation_dash"
@@ -454,8 +610,14 @@ class PuncEditor extends Component {
                 label="-"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.punctuation_caret}
                     onChange={this.handleChange('punctuation_caret')}
                     value="punctuation_caret"
@@ -464,8 +626,14 @@ class PuncEditor extends Component {
                 label="^"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.punctuation_pound}
                     onChange={this.handleChange('punctuation_pound')}
                     value="punctuation_pound"
@@ -474,8 +642,14 @@ class PuncEditor extends Component {
                 label="#"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.punctuation_lessthan}
                     onChange={this.handleChange('punctuation_lessthan')}
                     value="punctuation_lessthan"
@@ -484,8 +658,14 @@ class PuncEditor extends Component {
                 label="<"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.punctuation_greaterthan}
                     onChange={this.handleChange('punctuation_greaterthan')}
                     value="punctuation_greaterthan"
@@ -494,8 +674,14 @@ class PuncEditor extends Component {
                 label=">"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.punctuation_equal}
                     onChange={this.handleChange('punctuation_equal')}
                     value="punctuation_equal"
@@ -504,8 +690,14 @@ class PuncEditor extends Component {
                 label="="
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.punctuation_percent}
                     onChange={this.handleChange('punctuation_percent')}
                     value="punctuation_percent"
@@ -514,8 +706,14 @@ class PuncEditor extends Component {
                 label="%"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.punctuation_backslash}
                     onChange={this.handleChange('punctuation_backslash')}
                     value="punctuation_backslash"
@@ -524,8 +722,14 @@ class PuncEditor extends Component {
                 label="\"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.punctuation_forwardslash}
                     onChange={this.handleChange('punctuation_forwardslash')}
                     value="punctuation_forwardslash"
@@ -534,8 +738,14 @@ class PuncEditor extends Component {
                 label="/"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.punctuation_asterisk}
                     onChange={this.handleChange('punctuation_asterisk')}
                     value="punctuation_asterisk"
@@ -544,8 +754,14 @@ class PuncEditor extends Component {
                 label="*"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.punctuation_dollar}
                     onChange={this.handleChange('punctuation_dollar')}
                     value="punctuation_dollar"
@@ -554,8 +770,14 @@ class PuncEditor extends Component {
                 label="$"
               />
               <FormControlLabel
+                className={classes.label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.punctuation_atsign}
                     onChange={this.handleChange('punctuation_atsign')}
                     value="punctuation_atsign"

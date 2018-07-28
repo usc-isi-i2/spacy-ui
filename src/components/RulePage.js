@@ -480,7 +480,7 @@ class Rule extends Component {
           <AppBar position="static" color="default">
             <Toolbar className={classes.page_title}>
               <Typography variant="title" color="inherit" align="center">
-                Rule Page
+                Rule List Editor
               </Typography>
             </Toolbar>
           </AppBar>

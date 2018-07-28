@@ -11,6 +11,8 @@ import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
 const styles = theme => ({
   input_Shape: {
@@ -27,6 +29,20 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     width: 120
+  },
+
+  size: {
+    marginLeft: '0.5em',
+    width: '1em',
+    height: '1.5em'
+  },
+
+  sizeIcon: {
+    fontSize: 22
+  },
+
+  text_label_size: {
+    width: '9em'
   }
 });
 
@@ -51,7 +67,7 @@ class ShapeEditor extends Component {
     this.state = {
       token_data: [],
       output: false,
-      required: false,
+      optional: false,
       shapes: [],
       part_of_speech: [],
       noun: false,
@@ -87,19 +103,19 @@ class ShapeEditor extends Component {
       shapes: [],
       token: [],
       numbers: [],
-      is_in_vocabulary: 'false',
-      is_out_of_vocabulary: 'false',
-      is_required: 'false',
+      is_in_vocabulary: false,
+      is_out_of_vocabulary: false,
+      is_required: true,
       type: '',
-      is_in_output: 'false',
-      match_all_forms: 'false',
-      contain_digit: 'false'
+      is_in_output: false,
+      match_all_forms: false,
+      contain_digit: false
     };
 
     this.setState({
       token_data: initial_token_data,
       output: false,
-      required: false,
+      optional: false,
       shapes: [],
       part_of_speech: [],
       noun: false,
@@ -121,11 +137,11 @@ class ShapeEditor extends Component {
   }
 
   componentWillMount() {
-    if (this.props.is_new === 0) {
+    if (this.props.token_data.type === 'shape' && this.props.is_new === 0) {
       this.setState({
         token_data: this.props.token_data,
         output: this.props.token_data.is_in_output,
-        required: this.props.token_data.is_required,
+        optional: !this.props.token_data.is_required,
         shapes: this.props.token_data.shapes,
         part_of_speech: this.props.token_data.part_of_speech,
         noun:
@@ -197,7 +213,7 @@ class ShapeEditor extends Component {
       var temp = this.state.token_data;
       temp['part_of_speech'] = this.createAllPartofSpeech();
       temp['is_in_output'] = this.state.output;
-      temp['is_required'] = this.state.required;
+      temp['is_required'] = !this.state.optional;
       temp['type'] = 'shape';
       this.props.callback(temp);
     });
@@ -244,6 +260,45 @@ class ShapeEditor extends Component {
     };
     return (
       <List className="Shape_wrapper">
+        <ListItem className="Shape_props">
+          <FormControl component="fieldset">
+            <FormGroup row>
+              <FormControlLabel
+                className={classes.text_label_size}
+                control={
+                  <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
+                    checked={this.state.optional}
+                    onChange={this.handleChange('optional')}
+                    value="optional"
+                  />
+                }
+                label="Optional"
+              />
+              <FormControlLabel
+                className={classes.text_label_size}
+                control={
+                  <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
+                    checked={this.state.output}
+                    onChange={this.handleChange('output')}
+                    value="output"
+                  />
+                }
+                label="Part of Output"
+              />
+            </FormGroup>
+          </FormControl>
+        </ListItem>
+
         <ListItem className={classes.input_Shape}>
           <FormControl component="fieldset" className={classes.input_Area}>
             <FormLabel component="legend">Shapes:</FormLabel>
@@ -266,43 +321,19 @@ class ShapeEditor extends Component {
 
         <Divider />
 
-        <ListItem className="Shape_props">
-          <FormControl component="fieldset">
-            <FormLabel component="legend">Props:</FormLabel>
-            <FormGroup row>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={this.state.required}
-                    onChange={this.handleChange('required')}
-                    value="required"
-                  />
-                }
-                label="Required"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={this.state.output}
-                    onChange={this.handleChange('output')}
-                    value="output"
-                  />
-                }
-                label="Part of Output"
-              />
-            </FormGroup>
-          </FormControl>
-        </ListItem>
-
-        <Divider />
-
         <ListItem className="part_of_speech">
           <FormControl component="fieldset">
             <FormLabel component="legend">Part of speech:</FormLabel>
             <FormGroup row>
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.noun}
                     onChange={this.handleChange('noun')}
                     value="noun"
@@ -311,8 +342,14 @@ class ShapeEditor extends Component {
                 label="noun"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.pronoun}
                     onChange={this.handleChange('pronoun')}
                     value="pronoun"
@@ -321,8 +358,14 @@ class ShapeEditor extends Component {
                 label="pronoun"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.propernoun}
                     onChange={this.handleChange('propernoun')}
                     value="propernoun"
@@ -331,8 +374,14 @@ class ShapeEditor extends Component {
                 label="proper noun"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.determiner}
                     onChange={this.handleChange('determiner')}
                     value="determiner"
@@ -341,8 +390,14 @@ class ShapeEditor extends Component {
                 label="determiner"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.symbol}
                     onChange={this.handleChange('symbol')}
                     value="symbol"
@@ -351,8 +406,14 @@ class ShapeEditor extends Component {
                 label="symbol"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.adjective}
                     onChange={this.handleChange('adjective')}
                     value="adjective"
@@ -361,8 +422,14 @@ class ShapeEditor extends Component {
                 label="adjective"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.conjunction}
                     onChange={this.handleChange('conjunction')}
                     value="conjunction"
@@ -371,8 +438,14 @@ class ShapeEditor extends Component {
                 label="conjunction"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.verb}
                     onChange={this.handleChange('verb')}
                     value="verb"
@@ -381,8 +454,14 @@ class ShapeEditor extends Component {
                 label="verb"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.prepost_position}
                     onChange={this.handleChange('prepost_position')}
                     value="prepost_position"
@@ -391,8 +470,14 @@ class ShapeEditor extends Component {
                 label="pre/post-position"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.adverb}
                     onChange={this.handleChange('adverb')}
                     value="adverb"
@@ -401,8 +486,14 @@ class ShapeEditor extends Component {
                 label="adverb"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.particle}
                     onChange={this.handleChange('particle')}
                     value="particle"
@@ -411,8 +502,14 @@ class ShapeEditor extends Component {
                 label="particle"
               />
               <FormControlLabel
+                className={classes.text_label_size}
                 control={
                   <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
                     checked={this.state.interjection}
                     onChange={this.handleChange('interjection')}
                     value="interjection"
@@ -426,10 +523,9 @@ class ShapeEditor extends Component {
 
         <Divider />
 
-        <Divider />
         <ListItem className="other">
           <FormControl component="fieldset">
-            <FormLabel component="legend">Other:</FormLabel>
+            <FormLabel component="legend">Properties:</FormLabel>
             <FormGroup row>
               <TextField
                 label="Prefix"

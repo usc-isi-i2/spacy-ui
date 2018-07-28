@@ -76,11 +76,30 @@ const styles = theme => ({
     whiteSpace: 'pre-wrap'
   },
 
-  display_container: {
+  display_container_result: {
     background: '#f6f6f6',
     padding: '2em',
     lineHeight: 2,
-    borderRadius: '1em'
+    borderRadius: '1em',
+    minHeight: '5em'
+  },
+
+  display_container_token: {
+    background: '#f6f6f6',
+    padding: '2em',
+    lineHeight: 2,
+    paddingBottom: '0.3em',
+    borderRadius: '1em',
+    minHeight: '6.7em',
+    position: 'relative'
+  },
+
+  extraction_number: {
+    position: 'absolute',
+    bottom: 0,
+    paddingTop: '1em',
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    color: 'forestgreen'
   },
 
   textField: {
@@ -107,12 +126,13 @@ class TestArea extends React.Component {
       value: 0,
       input: '',
       test_text: '',
-      res_arr: [],
+      res_arr_length: 0,
       test_tokens: [],
       res_position: [],
       res_token: [],
       token_display: '',
-      test_display: ''
+      test_display: '',
+      number_of_extraction: 0
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -139,7 +159,8 @@ class TestArea extends React.Component {
     var end_output;
     for (var i = start; i < end; i++) {
       extraction_token_set.add(i);
-      extraction_tooltip_arr[i] = 'Exctraction of ' + res_item.identifier;
+      extraction_tooltip_arr[i] =
+        'Exctraction of ' + res_item.identifier + ', not part of output';
     }
     output_loc[res_item.identifier].map(output_pattern => {
       if (res_item.token_based_match_mapping[output_pattern] !== null) {
@@ -214,6 +235,7 @@ class TestArea extends React.Component {
 
     this.setState(
       {
+        number_of_extraction: extraction_token_set.size + output_token_set.size,
         input: pre_input,
         token_display: this.highlightTokens(
           temp_tokens,
@@ -229,7 +251,8 @@ class TestArea extends React.Component {
           output_token_set,
           output_tooltip_arr,
           extraction_tooltip_arr
-        )
+        ),
+        res_arr_length: temp_res_arr.length
       },
       () => {
         console.log('type of token_display', typeof this.state.token_display);
@@ -489,7 +512,7 @@ class TestArea extends React.Component {
             align="center"
             color="primary"
           >
-            Input Area
+            Test Panel
           </Typography>
           <Paper className={classes.paper}>
             <TextField
@@ -513,7 +536,7 @@ class TestArea extends React.Component {
             className={classes.button}
             onClick={this.runRule}
           >
-            Run Rule
+            Run Rules
           </Button>
           <Button
             variant="contained"
@@ -534,15 +557,15 @@ class TestArea extends React.Component {
             indicatorColor="primary"
             textColor="primary"
           >
-            <Tab label="Result" />
-            <Tab label="Show Token" />
+            <Tab label="Results" />
+            <Tab label="Show Tokens" />
           </Tabs>
 
           {value === 0 && (
             <TabContainer>
               <Paper
                 id="text_display_area"
-                className={classes.display_container}
+                className={classes.display_container_result}
               >
                 {this.state.test_display}
               </Paper>
@@ -550,8 +573,11 @@ class TestArea extends React.Component {
           )}
           {value === 1 && (
             <TabContainer>
-              <Paper className={classes.display_container}>
+              <Paper className={classes.display_container_token}>
                 {this.state.token_display}
+                <div className={classes.extraction_number}>
+                  Number of Matching Tokens: {this.state.number_of_extraction}
+                </div>
               </Paper>
             </TabContainer>
           )}

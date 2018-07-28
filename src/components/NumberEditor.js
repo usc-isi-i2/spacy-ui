@@ -11,6 +11,8 @@ import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
 const styles = theme => ({
   input_Number: {
@@ -27,6 +29,20 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     width: 120
+  },
+
+  size: {
+    marginLeft: '0.5em',
+    width: '1em',
+    height: '1.5em'
+  },
+
+  sizeIcon: {
+    fontSize: 22
+  },
+
+  text_label_size: {
+    width: '9em'
   }
 });
 
@@ -37,7 +53,7 @@ class NumberEditor extends Component {
     this.state = {
       token_data: [],
       output: false,
-      required: false,
+      optional: false,
       numbers: '',
       length1: '',
       length2: '',
@@ -64,7 +80,7 @@ class NumberEditor extends Component {
       numbers: [],
       is_in_vocabulary: false,
       is_out_of_vocabulary: false,
-      is_required: false,
+      is_required: true,
       type: '',
       is_in_output: false,
       match_all_forms: false,
@@ -74,7 +90,7 @@ class NumberEditor extends Component {
     this.setState({
       token_data: initial_token_data,
       output: false,
-      required: false,
+      optional: true,
       numbers: '',
       length: [],
       length1: '',
@@ -86,15 +102,21 @@ class NumberEditor extends Component {
   }
 
   componentWillMount() {
-    if (this.props.is_new === 0) {
+    if (this.props.token_data.type === 'number' && this.props.is_new === 0) {
       this.setState({
         token_data: this.props.token_data,
         output: this.props.token_data.is_in_output,
-        required: this.props.token_data.is_required,
+        optional: !this.props.token_data.is_required,
         numbers: this.props.token_data.numbers.join(' '),
-        length1: this.props.token_data.length[0],
-        length2: this.props.token_data.length[1],
-        length3: this.props.token_data.length[2],
+        length1: this.props.token_data.length[0]
+          ? this.props.token_data.length[0]
+          : '',
+        length2: this.props.token_data.length[1]
+          ? this.props.token_data.length[1]
+          : '',
+        length3: this.props.token_data.length[2]
+          ? this.props.token_data.length[2]
+          : '',
         max: this.props.token_data.maximum,
         min: this.props.token_data.minimum
       });
@@ -107,7 +129,7 @@ class NumberEditor extends Component {
     this.setState({ [name]: event.target.checked }, () => {
       var temp = this.state.token_data;
       temp['is_in_output'] = this.state.output;
-      temp['is_required'] = this.state.required;
+      temp['is_required'] = !this.state.optional;
       temp['type'] = 'number';
       this.props.callback(temp);
     });
@@ -117,7 +139,7 @@ class NumberEditor extends Component {
     this.setState({ [name]: event.target.value }, () => {
       var temp = this.state.token_data;
       if (name === 'numbers') {
-        var num_arr = this.state.numbers.split(' ');
+        var num_arr = this.state.numbers.trim().split(' ');
         temp['numbers'] = num_arr;
       } else if (name === 'max') {
         temp['maximum'] = this.state.max;
@@ -125,13 +147,19 @@ class NumberEditor extends Component {
         temp['minimum'] = this.state.min;
       } else {
         if (this.state.length1 !== '') {
-          temp['length'][0] = this.state.length1;
+          temp['length'][0] = this.state.length1.trim();
+        } else {
+          temp['length'][0] = '';
         }
         if (this.state.length2 !== '') {
-          temp['length'][1] = this.state.length2;
+          temp['length'][1] = this.state.length2.trim();
+        } else {
+          temp['length'][1] = '';
         }
         if (this.state.length3 !== '') {
-          temp['length'][2] = this.state.length3;
+          temp['length'][2] = this.state.length3.trim();
+        } else {
+          temp['length'][2] = '';
         }
       }
       temp['type'] = 'number';
@@ -141,12 +169,52 @@ class NumberEditor extends Component {
 
   render() {
     console.log('number editor');
+
     const { classes } = this.props;
     const inputProps = {
       disableUnderline: true
     };
     return (
       <List className="Number_wrapper">
+        <ListItem className="Number_props">
+          <FormControl component="fieldset">
+            <FormGroup row>
+              <FormControlLabel
+                className={classes.text_label_size}
+                control={
+                  <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
+                    checked={this.state.optional}
+                    onChange={this.handleChange('optional')}
+                    value="optional"
+                  />
+                }
+                label="Optional"
+              />
+              <FormControlLabel
+                className={classes.text_label_size}
+                control={
+                  <Checkbox
+                    className={classes.size}
+                    icon={
+                      <CheckBoxOutlineBlankIcon className={classes.sizeIcon} />
+                    }
+                    checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
+                    checked={this.state.output}
+                    onChange={this.handleChange('output')}
+                    value="output"
+                  />
+                }
+                label="Part of Output"
+              />
+            </FormGroup>
+          </FormControl>
+        </ListItem>
+
         <ListItem className={classes.input_Number}>
           <FormControl component="fieldset" className={classes.input_Area}>
             <FormLabel component="legend">Numbers:</FormLabel>
@@ -163,36 +231,6 @@ class NumberEditor extends Component {
                   onChange={this.handleValChange('numbers')}
                 />
               </Paper>
-            </FormGroup>
-          </FormControl>
-        </ListItem>
-
-        <Divider />
-
-        <ListItem className="Number_props">
-          <FormControl component="fieldset">
-            <FormLabel component="legend">Props:</FormLabel>
-            <FormGroup row>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={this.state.required}
-                    onChange={this.handleChange('required')}
-                    value="required"
-                  />
-                }
-                label="Required"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={this.state.output}
-                    onChange={this.handleChange('output')}
-                    value="output"
-                  />
-                }
-                label="Part of Output"
-              />
             </FormGroup>
           </FormControl>
         </ListItem>
